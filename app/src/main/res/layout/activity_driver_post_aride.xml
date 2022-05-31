@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/inPRDateTime"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".DriverPostARide">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="390dp"
+        android:layout_height="75dp"
+        android:layout_marginTop="44dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.476"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ptc_logo_2" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="POST A RIDE"
+        android:textColor="@color/ptc_DkBlue"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+    <EditText
+        android:id="@+id/inputTxtDPDateTime"
+        style="@style/Widget.AppCompat.EditText"
+        android:layout_width="294dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="44dp"
+        android:background="@color/material_dynamic_neutral90"
+        android:ems="10"
+        android:foregroundTint="@color/material_dynamic_neutral60"
+        android:hint="Enter Ride Date And Time"
+        android:inputType="datetime"
+        android:textColor="@color/ptc_DkBlue"
+        android:textColorHint="@color/material_dynamic_neutral50"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <EditText
+        android:id="@+id/inputTxtDPPickUpLoc"
+        android:layout_width="246dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="36dp"
+        android:background="@color/material_dynamic_neutral90"
+        android:ems="10"
+        android:hint="Origin Location"
+        android:inputType="text"
+        android:textAlignment="center"
+        android:textColor="@color/ptc_DkBlue"
+        android:textColorHint="@color/material_dynamic_neutral50"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.515"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/inputTxtDPDateTime" />
+
+    <EditText
+        android:id="@+id/inputTxtDPDestLoc"
+        android:layout_width="242dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="28dp"
+        android:background="@color/material_dynamic_neutral90"
+        android:ems="10"
+        android:hint="Destination Location"
+        android:inputType="text"
+        android:textAlignment="center"
+        android:textColor="@color/ptc_DkBlue"
+        android:textColorHint="@color/material_dynamic_neutral50"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/inputTxtDPPickUpLoc" />
+
+    <Button
+        android:id="@+id/btnPostARide"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:text="SUBMIT"
+        android:textColor="@color/ptc_DkBlue"
+        app:layout_constraintBottom_toTopOf="@+id/imageView2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="370dp"
+        android:layout_height="94dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.975"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/ptc_lines_right" />
+
+    <CheckBox
+        android:id="@+id/checkBoxSmokingOK"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="92dp"
+        android:layout_marginTop="12dp"
+        android:text="Smoking OK"
+        android:textColor="@color/ptc_DkBlue"
+        app:layout_constraintEnd_toStartOf="@+id/checkBoxTalkingOK"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/inputTxtDPDestLoc" />
+
+    <CheckBox
+        android:id="@+id/checkBoxTalkingOK"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="92dp"
+        android:text="Talking OK"
+        android:textColor="@color/ptc_DkBlue"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/inputTxtDPDestLoc" />
+
+    <CheckBox
+        android:id="@+id/checkBoxHasCarseat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="76dp"
+        android:layout_marginBottom="16dp"
+        android:text="Have Carseat"
+        android:textColor="@color/ptc_DkBlue"
+        app:layout_constraintBottom_toTopOf="@+id/btnPostARide"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/checkBoxTalkingOK" />
+
+    <CheckBox
+        android:id="@+id/checkBoxEatingOK"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="92dp"
+        android:layout_marginBottom="16dp"
+        android:text="Eating OK"
+        android:textColor="@color/ptc_DkBlue"
+        app:layout_constraintBottom_toTopOf="@+id/btnPostARide"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/checkBoxSmokingOK"
+        app:layout_constraintVertical_bias="1.0" />
+</androidx.constraintlayout.widget.ConstraintLayout>
