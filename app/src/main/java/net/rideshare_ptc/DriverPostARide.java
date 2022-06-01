@@ -12,36 +12,36 @@ import androidx.appcompat.app.AppCompatActivity;
 import org.json.JSONObject;
 
 public class DriverPostARide extends AppCompatActivity {
-    String pickupLoc;
-    String destLoc;
-    String driverID;
-    String rideDateTime; // later handle as date  https://developer.android.com/guide/topics/ui/controls/pickers
-    byte smoking = 0;
-    byte eating = 0;
-    byte talking = 0;
-    byte carseat = 0;
-    int carID;
-    byte isTaken;
-    byte isComplete;
-
-    //get the objects (input fields) from the activity - intialize views
-    EditText pickupLocI = (EditText) findViewById(R.id.inputTxtDPPickUpLoc);
-    EditText destLocI = (EditText) findViewById(R.id.inputTxtDPDestLoc);
-    EditText rideDateTimeI = (EditText) findViewById(R.id.inputTxtDPDestLoc); //this needs to be changed to a date picker
-    CheckBox smokingI = (CheckBox) findViewById(R.id.checkBoxSmokingOK);
-    CheckBox eatingI = (CheckBox) findViewById(R.id.checkBoxEatingOK);
-    CheckBox talkingI = (CheckBox) findViewById(R.id.checkBoxTalkingOK);
-    CheckBox carseatI = (CheckBox) findViewById(R.id.checkBoxHasCarseat);
-    Button drvRideSubmit = (Button) findViewById(R.id.btnPostARide);
-    Ride driverRidePost = new Ride();
-    JSONObject rideData = new JSONObject();
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_driver_post_aride);
+
+        String pickupLoc;
+        String destLoc;
+        String driverID;
+        String rideDateTime; // later handle as date  https://developer.android.com/guide/topics/ui/controls/pickers
+        byte smoking = 0;
+        byte eating = 0;
+        byte talking = 0;
+        byte carseat = 0;
+        int carID;
+        byte isTaken;
+        byte isComplete;
+
+        //get the objects (input fields) from the activity - intialize views
+        EditText pickupLocI = (EditText) findViewById(R.id.inputTxtDPPickUpLoc);
+        EditText destLocI = (EditText) findViewById(R.id.inputTxtDPDestLoc);
+        EditText rideDateTimeI = (EditText) findViewById(R.id.inputTxtDPDateTime); //this needs to be changed to a date picker
+        CheckBox smokingI = (CheckBox) findViewById(R.id.checkBoxSmokingOK);
+        CheckBox eatingI = (CheckBox) findViewById(R.id.checkBoxEatingOK);
+        CheckBox talkingI = (CheckBox) findViewById(R.id.checkBoxTalkingOK);
+        CheckBox carseatI = (CheckBox) findViewById(R.id.checkBoxHasCarseat);
+        Button drvRideSubmit = (Button) findViewById(R.id.btnPostARide);
+        Ride driverRidePost = new Ride();
+        JSONObject rideData = new JSONObject();
 
     }
 }
