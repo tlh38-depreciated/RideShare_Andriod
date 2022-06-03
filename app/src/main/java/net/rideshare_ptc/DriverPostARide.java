@@ -19,24 +19,24 @@ public class DriverPostARide extends AppCompatActivity {
     Button drvRideSubmit;
     Ride driverRidePost;
     EditText pickupLocI;
-    EditText destLocI ;
-    EditText rideDateTimeI ;
-    CheckBox smokingI ;
-    CheckBox eatingI ;
-    CheckBox talkingI ;
-    CheckBox carseatI ;
+    EditText destLocI;
+    EditText rideDateTimeI;
+    CheckBox smokingI;
+    CheckBox eatingI;
+    CheckBox talkingI;
+    CheckBox carseatI;
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_driver_post_aride);
         //get the objects (input fields) from the activity - intialize views
-        EditText pickupLocI = (EditText) findViewById(R.id.inputTxtDPPickUpLoc);
-        EditText destLocI = (EditText) findViewById(R.id.inputTxtDPDestLoc);
-        EditText rideDateTimeI = (EditText) findViewById(R.id.inputTxtDPDateTime); //this needs to be changed to a date picker
-        CheckBox smokingI = (CheckBox) findViewById(R.id.checkBoxSmokingOK);
-        CheckBox eatingI = (CheckBox) findViewById(R.id.checkBoxEatingOK);
-        CheckBox talkingI = (CheckBox) findViewById(R.id.checkBoxTalkingOK);
-        CheckBox carseatI = (CheckBox) findViewById(R.id.checkBoxHasCarseat);
+        pickupLocI = (EditText) findViewById(R.id.inputTxtDPPickUpLoc);
+        destLocI = (EditText) findViewById(R.id.inputTxtDPDestLoc);
+        rideDateTimeI = (EditText) findViewById(R.id.inputTxtDPDateTime); //this needs to be changed to a date picker
+        smokingI = (CheckBox) findViewById(R.id.checkBoxSmokingOK);
+        eatingI = (CheckBox) findViewById(R.id.checkBoxEatingOK);
+        talkingI = (CheckBox) findViewById(R.id.checkBoxTalkingOK);
+        carseatI = (CheckBox) findViewById(R.id.checkBoxHasCarseat);
         drvRideSubmit = (Button) findViewById(R.id.btnPostARide);
 
 
