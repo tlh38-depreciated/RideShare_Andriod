@@ -2,7 +2,9 @@ package net.rideshare_ptc;
 
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -11,9 +13,17 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 public class DriverPostARide extends AppCompatActivity {
     Button drvRideSubmit;
@@ -25,6 +35,7 @@ public class DriverPostARide extends AppCompatActivity {
     CheckBox eatingI;
     CheckBox talkingI;
     CheckBox carseatI;
+    String rideJSON;
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
@@ -43,6 +54,11 @@ public class DriverPostARide extends AppCompatActivity {
         drvRideSubmit.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
+                int SDK_INT = Build.VERSION.SDK_INT;
+                if (SDK_INT >8){
+                    StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+                    StrictMode.setThreadPolicy(policy);
+
                 if (pickupLocI.getText().toString().isEmpty() || destLocI.getText().toString().isEmpty() || rideDateTimeI.getText().toString().isEmpty()) {
                     Toast.makeText(DriverPostARide.this, "Please complete all fields", Toast.LENGTH_SHORT).show();
 
@@ -50,11 +66,11 @@ public class DriverPostARide extends AppCompatActivity {
                     getDriverRideData();
                     try {
                         postDriverRideDataCreateRideInDB();
-                        startActivity(new Intent(DriverPostARide.this,RidePostedSuccess.class));
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
 
+                }
                 }
 
             }
@@ -64,6 +80,10 @@ public class DriverPostARide extends AppCompatActivity {
         //get the data from the form and add to Ride object
         //cannot get an object mapper to work, trying construction JSON Object instead
         driverRidePost = new Ride();
+        driverRidePost.setCarseat((byte)0);
+        driverRidePost.setTalking((byte)0);
+        driverRidePost.setEating((byte)0);
+        driverRidePost.setSmoking((byte)0);
         driverRidePost.setPickUpLoc(pickupLocI.getText().toString());
         driverRidePost.setDest(destLocI.getText().toString());
         driverRidePost.setRideDate(rideDateTimeI.getText().toString());
@@ -86,20 +106,47 @@ public class DriverPostARide extends AppCompatActivity {
         driverRidePost.setDriverID("4816c6dd-8f03-470e-9aa2-c711eb579e7a");
         driverRidePost.setIsCompleted((byte) 0);
         driverRidePost.setIsTaken((byte) 0);
+        //map to JSON
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            rideJSON = mapper.writeValueAsString(driverRidePost);
+        } catch (JsonProcessingException e) {
+            Toast.makeText(DriverPostARide.this, e.toString(), Toast.LENGTH_SHORT).show();
+            e.printStackTrace();
+        }
+
+
+        //startActivity(new Intent(DriverPostARide.this,RidePostedSuccess.class).putExtra("Success Ride Posted","Ride Posted: \n"+ rideJSON));
 }
 
-
     private void postDriverRideDataCreateRideInDB() throws IOException {
-        //send data using Volley
-        //url to which to post
 
-        String url = "http://127.0.0.1:8080/driverpostaride";
 
-        //convert the driverRidePost object to JSON and send to the controller.
-        //Get a response back from the controller to display in the success message.
-        //
+        URL url = new URL("http://10.0.2.2:8080/driverpostaride"); //set URL
+        HttpURLConnection con = (HttpURLConnection) url.openConnection(); //open connection
+        con.setRequestMethod("POST");//set request method
+        con.setRequestProperty("Content-Type", "application/json"); //set the request content-type header parameter
+        con.setDoOutput(true); //enable this to write content to the connection OUTPUT STREAM
+
+        //Create the request body
+        OutputStream os = con.getOutputStream();
+        byte[] input = rideJSON.getBytes("utf-8");   // send the JSON as bye array input
+        os.write(input, 0, input.length);
+
+        //read the response from input stream
+
+                try (BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream(), "utf-8"))) {
+                    StringBuilder response = new StringBuilder();
+                    String responseLine = null;
+                    while ((responseLine = br.readLine()) != null) {
+                        response.append(responseLine.trim());
+                    }
+                    String strResponse = response.toString();
+                    startActivity(new Intent(DriverPostARide.this, RidePostedSuccess.class).putExtra("Success Ride Posted", "Ride Posted: \n" + strResponse));
+                    //get response status code
+
+                con.disconnect();
+            }
 
     }
-
-
 }
