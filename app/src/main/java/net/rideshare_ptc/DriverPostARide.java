@@ -79,6 +79,8 @@ public class DriverPostARide extends AppCompatActivity {
     private void getDriverRideData() {
         //get the data from the form and add to Ride object
         //cannot get an object mapper to work, trying construction JSON Object instead
+        //TODO: Enhance input validation- calendar selector for date/time, implement Google API for locations
+        //TODO: Add calculations for duration, distance, cost similarly to how handled in webapp
         driverRidePost = new Ride();
         driverRidePost.setCarseat((byte)0);
         driverRidePost.setTalking((byte)0);
@@ -134,6 +136,7 @@ public class DriverPostARide extends AppCompatActivity {
         os.write(input, 0, input.length);
 
         //read the response from input stream
+                //TODO: Add error handling for any response code other than 200
 
                 try (BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream(), "utf-8"))) {
                     StringBuilder response = new StringBuilder();
@@ -142,7 +145,8 @@ public class DriverPostARide extends AppCompatActivity {
                         response.append(responseLine.trim());
                     }
                     String strResponse = response.toString();
-                    startActivity(new Intent(DriverPostARide.this, RidePostedSuccess.class).putExtra("Success Ride Posted", "Ride Posted: \n" + strResponse));
+
+                    startActivity(new Intent(DriverPostARide.this, RidePostedSuccess.class).putExtra("Success Ride Posted", "Ride Successfully Posted: \n" + driverRidePost.toString()));
                     //get response status code
 
                 con.disconnect();
