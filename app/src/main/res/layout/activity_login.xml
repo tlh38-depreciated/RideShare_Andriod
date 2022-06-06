@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".LoginActivity">
+
+    <ImageView
+        android:id="@+id/imgLoginLogo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.147"
+        app:srcCompat="@drawable/ptc_logo_1" />
+
+    <Button
+        android:id="@+id/btnSubmitUser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="76dp"
+        android:text="Submit"
+        android:textColor="@color/ptc_DkBlue"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgLoginLogo"
+        app:layout_constraintVertical_bias="0.845" />
+
+    <EditText
+        android:id="@+id/txtInputLoginEM"
+        android:layout_width="302dp"
+        android:layout_height="43dp"
+        android:layout_marginTop="53dp"
+        android:background="@color/material_dynamic_neutral90"
+        android:backgroundTint="@color/material_dynamic_neutral70"
+        android:ems="10"
+        android:foregroundTint="@color/material_dynamic_neutral60"
+        android:hint="user@students.ptc.edu"
+        android:inputType="textEmailAddress"
+        android:textAlignment="center"
+        android:textColor="@color/ptc_DkBlue"
+        android:textColorHint="@color/material_dynamic_neutral50"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgLoginLogo"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <EditText
+        android:id="@+id/txtInputLoginPW"
+        android:layout_width="300dp"
+        android:layout_height="45dp"
+        android:background="@color/material_dynamic_neutral90"
+        android:backgroundTint="@color/material_dynamic_neutral70"
+        android:ems="10"
+        android:foregroundTint="@color/material_dynamic_neutral60"
+        android:hint="Password"
+        android:inputType="textShortMessage|textWebEditText|textEmailAddress|textWebPassword"
+        android:textAlignment="center"
+        android:textColor="@color/ptc_DkBlue"
+        android:textColorHint="@color/material_dynamic_neutral50"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/btnSubmitUser"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtInputLoginEM"
+        app:layout_constraintVertical_bias="0.328" />
+</androidx.constraintlayout.widget.ConstraintLayout>

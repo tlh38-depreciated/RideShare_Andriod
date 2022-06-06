@@ -212,7 +212,7 @@ public class Ride {
 
         @Override
         public String toString() {
-            return "Ride Details: \n Pick Up: " + pickUpLoc + "\n Destination: " + dest  + " \n Date and Time =" + rideDate;
+            return "Ride Details: \n Pick Up: " + pickUpLoc + "\n Destination: " + dest  + " \n Date and Time:" + rideDate;
         }
 
     }

@@ -59,18 +59,18 @@ public class DriverPostARide extends AppCompatActivity {
                     StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
                     StrictMode.setThreadPolicy(policy);
 
-                if (pickupLocI.getText().toString().isEmpty() || destLocI.getText().toString().isEmpty() || rideDateTimeI.getText().toString().isEmpty()) {
-                    Toast.makeText(DriverPostARide.this, "Please complete all fields", Toast.LENGTH_SHORT).show();
+                    if (pickupLocI.getText().toString().isEmpty() || destLocI.getText().toString().isEmpty() || rideDateTimeI.getText().toString().isEmpty()) {
+                        Toast.makeText(DriverPostARide.this, "Please complete all fields", Toast.LENGTH_SHORT).show();
 
-                } else {
-                    getDriverRideData();
-                    try {
-                        postDriverRideDataCreateRideInDB();
-                    } catch (IOException e) {
-                        e.printStackTrace();
+                    } else {
+                        getDriverRideData();
+                        try {
+                            postDriverRideDataCreateRideInDB();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
                     }
-
-                }
                 }
 
             }
@@ -149,8 +149,8 @@ public class DriverPostARide extends AppCompatActivity {
                     startActivity(new Intent(DriverPostARide.this, RidePostedSuccess.class).putExtra("Success Ride Posted", "Ride Successfully Posted: \n" + driverRidePost.toString()));
                     //get response status code
 
-                con.disconnect();
             }
+        con.disconnect();
 
     }
 }

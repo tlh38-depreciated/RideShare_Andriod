@@ -38,10 +38,23 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="4dp"
         android:text="Main Menu"
+        android:textColor="@color/ptc_DkBlue"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btnRPosSucRides"
         app:layout_constraintTop_toBottomOf="@+id/txtPostSucc"
-        app:layout_constraintVertical_bias="0.625" />
+        app:layout_constraintVertical_bias="0.375" />
+
+    <Button
+        android:id="@+id/btnRPosSucRides"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="72dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="24dp"
+        android:text="All Rides"
+        android:textColor="@color/ptc_DkBlue"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtPostSucc" />
 </androidx.constraintlayout.widget.ConstraintLayout>
