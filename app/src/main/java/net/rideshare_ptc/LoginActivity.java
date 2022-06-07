@@ -23,11 +23,12 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 public class LoginActivity extends AppCompatActivity {
-    EditText userEmailInpt ;
+    EditText userEmailInpt;
     EditText userPWInpt;
     String entEmailAdd;// user's typed in e-mail address
     String entPassword; // TODO: not yet implemented (password validation)
     String userInfoRes;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -37,14 +38,15 @@ public class LoginActivity extends AppCompatActivity {
         //get the user input data
         userEmailInpt = (EditText) findViewById(R.id.txtInputLoginEM);
         userPWInpt = (EditText) findViewById(R.id.txtInputLoginPW);
-        entEmailAdd = userEmailInpt.getText().toString();
-        entPassword = userPWInpt.getText().toString();
+
         Button btnSubmit = (Button) findViewById(R.id.btnSubmitUser);
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 int SDK_INT = Build.VERSION.SDK_INT;
-                if (SDK_INT >8) {
+                entEmailAdd = userEmailInpt.getText().toString();
+                entPassword = userPWInpt.getText().toString();
+                if (SDK_INT > 8) {
                     StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
                     StrictMode.setThreadPolicy(policy);
 
@@ -57,40 +59,37 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
-        }
+    }
 
     private void getUserLoginData() throws IOException {
 
-    URL url = new URL("http://10.0.2.2:8080/login?eMail="+entEmailAdd); //set URL
-    HttpURLConnection con = (HttpURLConnection) url.openConnection(); //open connection
+        URL url = new URL("http://10.0.2.2:8080/login?eMail=" + entEmailAdd); //set URL
+        HttpURLConnection con = (HttpURLConnection) url.openConnection(); //open connection
+        con.setUseCaches(false);
         con.setRequestMethod("GET");//set request method
-        con.setRequestProperty("Content-Type", "application/json"); //set the request content-type header parameter
-        con.setDoOutput(true); //enable this to write content to the connection OUTPUT STREAM
+
+        //con.setDoOutput(true); //enable this to write content to the connection OUTPUT STREAM
+        //con.setDoInput(true);
         con.connect();
-        int respCode = con.getResponseCode();
-    //Create the request body
-    OutputStream os = con.getOutputStream();
-    byte[] input = userInfoRes.getBytes("utf-8");   // send the JSON as bye array input
-        os.write(input, 0, input.length);
 
-    //read the response from input stream
-    //TODO: Add error handling for any response code other than 200
-        StringBuilder response = new StringBuilder();
-        String strResponse = response.toString();
-
-        try (BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream(), "utf-8"))) {
-
-        String responseLine = null;
-            while ((responseLine = br.readLine()) != null) {
-                response.append(responseLine.trim());
+        //read the response from input stream
+        //TODO: Add error handling for any response code other than 200
+        try{
+            StringBuilder result = new StringBuilder();
+            BufferedReader rd = new BufferedReader(new InputStreamReader(con.getInputStream()));
+            String line;
+            while ((line = rd.readLine()) != null) {
+                result.append(line);
             }
-
-        startActivity(new Intent(LoginActivity.this, RidePostedSuccess.class).putExtra("Success Ride Posted", "User info: \n" + strResponse));
-        //get response status code
+            rd.close();
+            String strResponse = result.toString();
+            int respCode = con.getResponseCode();
+            startActivity(new Intent(LoginActivity.this, RidePostedSuccess.class).putExtra("Success Ride Posted", "User info: \n" + respCode + "\n"+ strResponse));
+            //get response status code
 
         }
         catch (IOException e){
-            startActivity(new Intent(LoginActivity.this, RidePostedSuccess.class).putExtra("Success Ride Posted", "User info: \n" + respCode));
+            startActivity(new Intent(LoginActivity.this, RidePostedSuccess.class).putExtra("Success Ride Posted", "User info: \n ERROR \n"+ e + entEmailAdd));
         }
     con.disconnect();
 
