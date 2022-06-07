@@ -141,15 +141,16 @@ public class DriverPostARide extends AppCompatActivity {
                 try (BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream(), "utf-8"))) {
                     StringBuilder response = new StringBuilder();
                     String responseLine = null;
-                    while ((responseLine = br.readLine()) != null) {
-                        response.append(responseLine.trim());
-                    }
-                    String strResponse = response.toString();
+                        while ((responseLine = br.readLine()) != null) {
+                            response.append(responseLine.trim());
+                        }
+                        String strResponse = response.toString();
 
                     startActivity(new Intent(DriverPostARide.this, RidePostedSuccess.class).putExtra("Success Ride Posted", "Ride Successfully Posted: \n" + driverRidePost.toString()));
                     //get response status code
 
-            }
+                }
+
         con.disconnect();
 
     }
