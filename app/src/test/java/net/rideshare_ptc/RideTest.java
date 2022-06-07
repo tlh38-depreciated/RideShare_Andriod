@@ -200,8 +200,8 @@ public class RideTest {
         String expected = "Ride Details: \nPick Up: Starting Loc\nDestination: Dest\nDate and Time: 12-12-2000";
         String actual = testRide.toString();
 
-        assertEquals("ToString did not properly format the ride information:\n" +
-                "Expected: " + expected + "\n\nActual: " + actual, expected.equals(actual));
+        assertTrue("ToString did not properly format the ride information:\n" +
+                "Expected: \n" + expected + "\n\nActual: \n" + actual, expected.equals(actual));
 
     }
 }
