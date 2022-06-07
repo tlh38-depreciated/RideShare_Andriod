@@ -150,10 +150,8 @@ public class DriverPostARide extends AppCompatActivity {
                     //get response status code
 
                 }
-                finally {
-                    con.disconnect();
-                }
 
+        con.disconnect();
 
     }
 }
