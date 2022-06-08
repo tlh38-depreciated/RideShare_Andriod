@@ -2,10 +2,14 @@ package net.rideshare_ptc;
 
 
 import static androidx.test.espresso.Espresso.*;
+import static androidx.test.espresso.action.ViewActions.*;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.*;
 
 
+import androidx.test.espresso.Espresso;
+import androidx.test.espresso.action.ViewActions;
+import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
@@ -32,15 +36,42 @@ public class LoginActivityTest {
     public void tearDown() throws Exception {
     }
 
+
     @Test
     public void Test_LoginPage_EmailInputIsPresent()
     {
         onView(withHint("user@students.ptc.edu")).check(matches(isDisplayed()));
     }
 
+    /**
+     * Tests that the password input is present on the login
+     * page
+     */
     @Test
     public void Test_LoginPage_PasswordInputIsPresent()
     {
         onView(withHint("Password")).check(matches(isDisplayed()));
+    }
+
+    /**
+     * Tests that, given correct credentials, the user
+     * can login via the login page.
+     *
+     * REMEMBER TO HAVE THE WEBSERVICE RUNNING ON YOUR LOCALHOST WHEN YOU RUN THIS TEST
+     */
+    @Test
+    public void Test_LoginPage_LogsInWithCredentials()
+    {
+        //type in the username
+        onView(withId(R.id.txtInputLoginEM)).perform(typeText("RSC14@students.ptcollege.edu"), ViewActions.closeSoftKeyboard());
+
+        //type in the password
+        onView(withId(R.id.txtInputLoginPW)).perform(typeText("Password12!"), ViewActions.closeSoftKeyboard());
+
+        //click submit
+        onView(withId(R.id.btnSubmitUser)).perform(click());
+
+        //Check to see that we have been routed to the correct intent
+        onView(withId(R.id.txtPostSucc)).check(matches(isDisplayed()));
     }
 }
