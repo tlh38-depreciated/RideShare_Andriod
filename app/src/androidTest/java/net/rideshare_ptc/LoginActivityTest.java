@@ -74,4 +74,27 @@ public class LoginActivityTest {
         //Check to see that we have been routed to the correct intent
         onView(withId(R.id.txtPostSucc)).check(matches(isDisplayed()));
     }
+
+    /**
+     * Tests that, given INCORRECT login information,
+     * the user cannot login (is not redirected away from the login page)
+     *
+     * Assumes that the app does not redirect if the user inputs bad login information
+     */
+    @Test
+    public void Test_LoginPage_DoesNotRedirectWithIncorrectCredentials()
+    {
+        //type in the username
+        onView(withId(R.id.txtInputLoginEM)).perform(typeText("fakeUser@iAmEpic.com"), ViewActions.closeSoftKeyboard());
+
+        //type in the password
+        onView(withId(R.id.txtInputLoginPW)).perform(typeText("FakePasswordForMyEquallyFakeEmail!"), ViewActions.closeSoftKeyboard());
+
+        //click submit
+        onView(withId(R.id.btnSubmitUser)).perform(click());
+
+        //Check to see that we are still on the login page
+        onView(withId(R.id.txtInputLoginPW)).check(matches(isDisplayed()));
+    }
+
 }
