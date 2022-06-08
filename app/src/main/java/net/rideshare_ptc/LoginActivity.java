@@ -103,8 +103,6 @@ public class LoginActivity extends AppCompatActivity {
                         System.out.println(me);
                     }
 
-
-
         }
         catch (IOException e){
             startActivity(new Intent(LoginActivity.this, RidePostedSuccess.class).putExtra("Success Ride Posted", "User info: \n ERROR \n"+ e + entEmailAdd));
