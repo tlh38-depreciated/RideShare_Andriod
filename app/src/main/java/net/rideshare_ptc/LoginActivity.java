@@ -13,6 +13,10 @@ import android.widget.Button;
 import android.widget.EditText;
 
 
+import com.fasterxml.jackson.core.JsonGenerationException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -28,6 +32,7 @@ public class LoginActivity extends AppCompatActivity {
     String entEmailAdd;// user's typed in e-mail address
     String entPassword; // TODO: not yet implemented (password validation)
     String userInfoRes;
+    User loggingUser = new User(entEmailAdd); //create instance of User to capture deets of user attempting to login
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,15 +48,17 @@ public class LoginActivity extends AppCompatActivity {
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int SDK_INT = Build.VERSION.SDK_INT;
+
                 entEmailAdd = userEmailInpt.getText().toString();
                 entPassword = userPWInpt.getText().toString();
+                int SDK_INT = Build.VERSION.SDK_INT;
                 if (SDK_INT > 8) {
                     StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
                     StrictMode.setThreadPolicy(policy);
 
                     try {
                         getUserLoginData();
+                        loginUserToLoginManager();
                     } catch (IOException e) {
                         e.printStackTrace();
                         startActivity(new Intent(LoginActivity.this, RidePostedSuccess.class).putExtra("Success Ride Posted", "User info: \n" + entEmailAdd));
@@ -84,8 +91,19 @@ public class LoginActivity extends AppCompatActivity {
             rd.close();
             String strResponse = result.toString();
             int respCode = con.getResponseCode();
-            startActivity(new Intent(LoginActivity.this, RidePostedSuccess.class).putExtra("Success Ride Posted", "User info: \n" + respCode + "\n"+ strResponse));
-            //get response status code
+            //Map JSON Object to User Object
+            ObjectMapper mapper = new ObjectMapper();
+                    try {
+                        loggingUser = mapper.readValue(strResponse, User.class);
+                    }
+                    catch (JsonGenerationException ge){
+                        System.out.println(ge);
+                    }
+                    catch (JsonMappingException me) {
+                        System.out.println(me);
+                    }
+
+
 
         }
         catch (IOException e){
@@ -93,5 +111,11 @@ public class LoginActivity extends AppCompatActivity {
         }
     con.disconnect();
 
-}
+    }
+    private void loginUserToLoginManager(){
+        LoginManager mgr = LoginManager.getInstance();
+        mgr.setLoggedInUsers(loggingUser);
+        startActivity(new Intent(LoginActivity.this, RidePostedSuccess.class).putExtra("Success Ride Posted", "User added to LoginMgr List "+ mgr.getLoggedInUsers().toString()));
+        //get response status code
+    }
 }

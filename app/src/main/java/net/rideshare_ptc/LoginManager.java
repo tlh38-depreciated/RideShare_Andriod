@@ -33,7 +33,7 @@ public class LoginManager {
             loggedInUsers.add(loggedInUser);  //add the user to the list
             response = "User added to the list successfully"; //return success message
         }
-        return response;
+        return response; //these returns are a way to return  a status for debugging
     }
 
     public String removeLoggedInUsers(User loggedInUser) { //attempt login user taking the User obj as param.
@@ -46,7 +46,7 @@ public class LoginManager {
             //do nothing
             response = "No user is logged in"; //return success message
         }
-        return response;
+        return response; //these returns are a way to return  a status for debugging
     }
 
 

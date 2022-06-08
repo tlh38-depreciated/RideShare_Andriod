@@ -27,6 +27,7 @@ import java.net.URL;
 
 public class DriverPostARide extends AppCompatActivity {
     Button drvRideSubmit;
+    Button retToMenu;
     Ride driverRidePost;
     EditText pickupLocI;
     EditText destLocI;
@@ -49,7 +50,7 @@ public class DriverPostARide extends AppCompatActivity {
         talkingI = (CheckBox) findViewById(R.id.checkBoxTalkingOK);
         carseatI = (CheckBox) findViewById(R.id.checkBoxHasCarseat);
         drvRideSubmit = (Button) findViewById(R.id.btnPostARide);
-
+        retToMenu = (Button) findViewById(R.id.btnPostARideRetMenu);
 
         drvRideSubmit.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -75,6 +76,17 @@ public class DriverPostARide extends AppCompatActivity {
 
             }
         });
+
+        retToMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), MainMenu.class);
+                startActivity(intent);
+            }
+
+        });
+
+
     }
     private void getDriverRideData() {
         //get the data from the form and add to Ride object
