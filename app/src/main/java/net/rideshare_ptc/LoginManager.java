@@ -20,8 +20,12 @@ public class LoginManager {
     //The variable that the singleton object will maintain (the list)
     List<User> loggedInUsers = new ArrayList<User>(); // size of this list should be 1 or 0 always.
 
-    public List<User> getLoggedInUsers() {
+    public List<User> getLoggedInUserList() {
         return loggedInUsers;
+    }
+
+    public User getLoggedInUser(){
+        return this.getLoggedInUserList().get(0);
     }
 
     public String setLoggedInUsers(User loggedInUser) { //attempt login user taking the User obj as param.

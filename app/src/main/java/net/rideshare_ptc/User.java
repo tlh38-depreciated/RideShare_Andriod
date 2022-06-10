@@ -15,11 +15,11 @@ public class User {
     Integer uStudID;
     //profile image? //TODO: handle profile image association & display
 
+    public User() {};
 
     public User(String userEmail){
         this.userEmail = userEmail;
     }
-
 
     public String getUserEmail() {
         return userEmail;
@@ -91,5 +91,20 @@ public class User {
 
     public void setuStudID(Integer uStudID) {
         this.uStudID = uStudID;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "userEmail='" + userEmail + '\'' +
+                ", userName='" + userName + '\'' +
+                ", userID='" + userID + '\'' +
+                ", userFName='" + userFName + '\'' +
+                ", userLName='" + userLName + '\'' +
+                ", uDriverScore=" + uDriverScore +
+                ", uRiderScore=" + uRiderScore +
+                ", isDriver=" + isDriver +
+                ", uStudID=" + uStudID +
+                '}';
     }
 }

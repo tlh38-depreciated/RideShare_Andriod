@@ -29,7 +29,7 @@ public class MainMenu extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 LoginManager mgr = LoginManager.getInstance();
-                Integer numUsersLoggedin = mgr.getLoggedInUsers().size();
+                Integer numUsersLoggedin = mgr.getLoggedInUserList().size();
                 btnLogout.setText(numUsersLoggedin.toString());//just checking that my login manager works
                 //if this turns to 1, that is good! woooo it worked...will
                 //fix and implement the logout tomorrow.
