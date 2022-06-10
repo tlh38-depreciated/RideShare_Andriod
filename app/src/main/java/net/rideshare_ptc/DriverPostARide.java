@@ -92,8 +92,8 @@ public class DriverPostARide extends AppCompatActivity {
             else {
                 //splash screen message then re-route to main menu. For now, just re-route to main
                 //menu.
-                startActivity(new Intent(DriverPostARide.this,DriverPostARide.class).putExtra("Success Ride Posted","Ride Posted: \n"+ rideJSON));
-                startActivity(new Intent(DriverPostARide.this, MainMenu.class));
+                startActivity(new Intent(DriverPostARide.this,DriverOnlySplash.class).putExtra("Success Ride Posted","Unavailable: not a driver \n This feature is limited to approved drivers only."));
+                //startActivity(new Intent(DriverPostARide.this, MainMenu.class));
             }
         }
         private void getDriverRideData() {

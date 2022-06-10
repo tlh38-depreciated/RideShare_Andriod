@@ -23,7 +23,7 @@
             android:name=".MainMenu"
             android:exported="false" />
         <activity
-            android:name=".RidePostedSuccess"
+            android:name=".DriverOnlySplash"
             android:exported="false" />
         <activity
             android:name=".DriverPostARide"
