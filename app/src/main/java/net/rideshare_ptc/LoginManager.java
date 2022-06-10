@@ -40,7 +40,7 @@ public class LoginManager {
         return response; //these returns are a way to return  a status for debugging
     }
 
-    public String removeLoggedInUsers(User loggedInUser) { //attempt login user taking the User obj as param.
+    public String removeLoggedInUsers() { //attempt login user taking the User obj as param.
         String response = "";
         if (this.loggedInUsers.size() ==1){
             loggedInUsers.clear();

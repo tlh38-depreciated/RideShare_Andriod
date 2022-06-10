@@ -29,10 +29,9 @@ public class MainMenu extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 LoginManager mgr = LoginManager.getInstance();
-                Integer numUsersLoggedin = mgr.getLoggedInUserList().size();
-                btnLogout.setText(numUsersLoggedin.toString());//just checking that my login manager works
-                //if this turns to 1, that is good! woooo it worked...will
-                //fix and implement the logout tomorrow.
+                mgr.removeLoggedInUsers();
+                //startActivity(new Intent(MainMenu.this,DriverOnlySplash.class).putExtra("Success Ride Posted","User Logged out: "+ mgr.getLoggedInUserList().toString()));
+                startActivity(new Intent(MainMenu.this,MainActivity.class));
             }
         });
         
