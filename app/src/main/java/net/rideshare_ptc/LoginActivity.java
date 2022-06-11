@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,11 +18,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 
 public class LoginActivity extends AppCompatActivity {
@@ -32,7 +28,7 @@ public class LoginActivity extends AppCompatActivity {
     String entEmailAdd;// user's typed in e-mail address
     String entPassword; // TODO: not yet implemented (password validation)
     String userInfoRes;
-    User loggingUser = new User(entEmailAdd); //create instance of User to capture deets of user attempting to login
+    User loggingUser = new User(); //create instance of User to capture deets of user attempting to login
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +57,7 @@ public class LoginActivity extends AppCompatActivity {
                         loginUserToLoginManager();
                     } catch (IOException e) {
                         e.printStackTrace();
-                        startActivity(new Intent(LoginActivity.this, RidePostedSuccess.class).putExtra("Success Ride Posted", "User info: \n" + entEmailAdd));
+                        startActivity(new Intent(LoginActivity.this, DriverOnlySplash.class).putExtra("Success Ride Posted", "User info: \n" + entEmailAdd));
                     }
                 }
             }
@@ -105,7 +101,7 @@ public class LoginActivity extends AppCompatActivity {
 
         }
         catch (IOException e){
-            startActivity(new Intent(LoginActivity.this, RidePostedSuccess.class).putExtra("Success Ride Posted", "User info: \n ERROR \n"+ e + entEmailAdd));
+            startActivity(new Intent(LoginActivity.this, DriverOnlySplash.class).putExtra("Success Ride Posted", "User info: \n ERROR \n"+ e + entEmailAdd));
         }
     con.disconnect();
 
@@ -113,7 +109,7 @@ public class LoginActivity extends AppCompatActivity {
     private void loginUserToLoginManager(){
         LoginManager mgr = LoginManager.getInstance();
         mgr.setLoggedInUsers(loggingUser);
-        startActivity(new Intent(LoginActivity.this, RidePostedSuccess.class).putExtra("Success Ride Posted", "User added to LoginMgr List "+ mgr.getLoggedInUsers().toString()));
+        startActivity(new Intent(LoginActivity.this, DriverOnlySplash.class).putExtra("Success Ride Posted", "User added to LoginMgr List "+ mgr.getLoggedInUser().toString()));
         //get response status code
     }
 }

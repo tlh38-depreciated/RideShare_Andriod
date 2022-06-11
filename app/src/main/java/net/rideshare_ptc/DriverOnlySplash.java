@@ -9,7 +9,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-public class RidePostedSuccess extends AppCompatActivity {
+import java.util.Timer;
+import java.util.TimerTask;
+
+public class DriverOnlySplash extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,6 +23,15 @@ public class RidePostedSuccess extends AppCompatActivity {
         setContentView(R.layout.activity_ride_posted_success);
         TextView msg = (TextView) findViewById(R.id.txtPostSucc);
         msg.setText(successMsg);
+        TimerTask task = new TimerTask() {
+            @Override
+            public void run(){
+                finish();
+                startActivity(new Intent(DriverOnlySplash.this,MainMenu.class));
+            }
+        };
+        Timer show5secs  = new Timer();
+        show5secs.schedule(task,10000);
 
         Button btnMainRet = (Button) findViewById(R.id.btnRPosSucMain);
         //TODO: Route the below ALL RIDES Button the Rides Page that doesn't exist yet

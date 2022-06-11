@@ -20,8 +20,12 @@ public class LoginManager {
     //The variable that the singleton object will maintain (the list)
     List<User> loggedInUsers = new ArrayList<User>(); // size of this list should be 1 or 0 always.
 
-    public List<User> getLoggedInUsers() {
+    public List<User> getLoggedInUserList() {
         return loggedInUsers;
+    }
+
+    public User getLoggedInUser(){
+        return this.getLoggedInUserList().get(0);
     }
 
     public String setLoggedInUsers(User loggedInUser) { //attempt login user taking the User obj as param.
@@ -36,7 +40,7 @@ public class LoginManager {
         return response; //these returns are a way to return  a status for debugging
     }
 
-    public String removeLoggedInUsers(User loggedInUser) { //attempt login user taking the User obj as param.
+    public String removeLoggedInUsers() { //attempt login user taking the User obj as param.
         String response = "";
         if (this.loggedInUsers.size() ==1){
             loggedInUsers.clear();

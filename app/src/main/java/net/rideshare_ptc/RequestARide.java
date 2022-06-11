@@ -23,39 +23,37 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class DriverPostARide extends AppCompatActivity {
-    Button drvRideSubmit;
+public class RequestARide extends AppCompatActivity {
+    Button riderReq;
     Button retToMenu;
-    Ride driverRidePost;
-    EditText pickupLocI;
-    EditText destLocI;
-    EditText rideDateTimeI;
-    CheckBox smokingI;
-    CheckBox eatingI;
-    CheckBox talkingI;
-    CheckBox carseatI;
-    String rideJSON;
+    Ride riderRidePost;
+    EditText rpickupLocI;
+    EditText rdestLocI;
+    EditText rrideDateTimeI;
+    CheckBox rsmokingI;
+    CheckBox reatingI;
+    CheckBox rtalkingI;
+    CheckBox rcarseatI;
+    String rrideJSON;
+    LoginManager mgr = LoginManager.getInstance();
+    User loggedInUser = mgr.getLoggedInUser();
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_driver_post_aride);
+        setContentView(R.layout.activity_request_aride);
         //get the objects (input fields) from the activity - intialize views
-        pickupLocI = (EditText) findViewById(R.id.inptReqPickUpLoc);
-        destLocI = (EditText) findViewById(R.id.inptReqDestLoc);
-        rideDateTimeI = (EditText) findViewById(R.id.inptReqDateTime); //this needs to be changed to a date picker
-        smokingI = (CheckBox) findViewById(R.id.ReqcheckBoxSmoking);
-        eatingI = (CheckBox) findViewById(R.id.ReqcheckBoxEating);
-        talkingI = (CheckBox) findViewById(R.id.ReqcheckBoxTalking);
-        carseatI = (CheckBox) findViewById(R.id.ReqcheckBoxHasCarseat);
-        drvRideSubmit = (Button) findViewById(R.id.btnReqARide);
+        rpickupLocI = (EditText) findViewById(R.id.inptReqPickUpLoc);
+        rdestLocI = (EditText) findViewById(R.id.inptReqDestLoc);
+        rrideDateTimeI = (EditText) findViewById(R.id.inptReqDateTime); //this needs to be changed to a date picker
+        rsmokingI = (CheckBox) findViewById(R.id.ReqcheckBoxSmoking);
+        reatingI = (CheckBox) findViewById(R.id.ReqcheckBoxEating);
+        rtalkingI = (CheckBox) findViewById(R.id.ReqcheckBoxTalking);
+        rcarseatI = (CheckBox) findViewById(R.id.ReqcheckBoxHasCarseat);
+        riderReq = (Button) findViewById(R.id.btnReqARide);
         retToMenu = (Button) findViewById(R.id.btnReqRideRetMenu);
 
-        //Check if logged in user is a driver; if so, show post A ride, if not, re-route
-        //with message.
-        LoginManager mgr = LoginManager.getInstance();
-        User loggedInUser = mgr.getLoggedInUser();
-            if (loggedInUser.getIsDriver() ==1 ) {
-                drvRideSubmit.setOnClickListener(new View.OnClickListener() {
+
+                riderReq.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         int SDK_INT = Build.VERSION.SDK_INT;
@@ -63,13 +61,13 @@ public class DriverPostARide extends AppCompatActivity {
                             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
                             StrictMode.setThreadPolicy(policy);
 
-                            if (pickupLocI.getText().toString().isEmpty() || destLocI.getText().toString().isEmpty() || rideDateTimeI.getText().toString().isEmpty()) {
-                                Toast.makeText(DriverPostARide.this, "Please complete all fields", Toast.LENGTH_SHORT).show();
+                            if (rpickupLocI.getText().toString().isEmpty() || rdestLocI.getText().toString().isEmpty() || rrideDateTimeI.getText().toString().isEmpty()) {
+                                Toast.makeText(RequestARide.this, "Please complete all fields", Toast.LENGTH_SHORT).show();
 
                             } else {
-                                getDriverRideData();
+                                getRiderRideData();
                                 try {
-                                    postDriverRideDataCreateRideInDB();
+                                    postRiderRideDataCreateRideInDB();
                                 } catch (IOException e) {
                                     e.printStackTrace();
                                 }
@@ -89,51 +87,43 @@ public class DriverPostARide extends AppCompatActivity {
 
                 });
             }
-            else {
-                //splash screen message then re-route to main menu. For now, just re-route to main
-                //menu.
-                startActivity(new Intent(DriverPostARide.this,DriverOnlySplash.class).putExtra("Success Ride Posted","Unavailable: not a driver \n This feature is limited to approved drivers only."));
-                //startActivity(new Intent(DriverPostARide.this, MainMenu.class));
-            }
-        }
-        private void getDriverRideData() {
+
+        private void getRiderRideData() {
             //get the data from the form and add to Ride object
             //cannot get an object mapper to work, trying construction JSON Object instead
             //TODO: Enhance input validation- calendar selector for date/time, implement Google API for locations
             //TODO: Add calculations for duration, distance, cost similarly to how handled in webapp
-            driverRidePost = new Ride();
-            driverRidePost.setCarseat((byte)0);
-            driverRidePost.setTalking((byte)0);
-            driverRidePost.setEating((byte)0);
-            driverRidePost.setSmoking((byte)0);
-            driverRidePost.setPickUpLoc(pickupLocI.getText().toString());
-            driverRidePost.setDest(destLocI.getText().toString());
-            driverRidePost.setRideDate(rideDateTimeI.getText().toString());
-            if (smokingI.isChecked()) {
-                driverRidePost.setSmoking((byte) 1);
+            riderRidePost = new Ride();
+            riderRidePost.setRiderID(loggedInUser.getUserID());
+            riderRidePost.setRiderScore(loggedInUser.getuRiderScore());
+            riderRidePost.setCarseat((byte)0);
+            riderRidePost.setTalking((byte)0);
+            riderRidePost.setEating((byte)0);
+            riderRidePost.setSmoking((byte)0);
+            riderRidePost.setPickUpLoc(rpickupLocI.getText().toString());
+            riderRidePost.setDest(rdestLocI.getText().toString());
+            riderRidePost.setRideDate(rrideDateTimeI.getText().toString());
+            if (rsmokingI.isChecked()) {
+                riderRidePost.setSmoking((byte) 1);
             }
-            ;
-            if (talkingI.isChecked()) {
-                driverRidePost.setTalking((byte) 1);
+            if (rtalkingI.isChecked()) {
+                riderRidePost.setTalking((byte) 1);
             }
-            ;
-            if (carseatI.isChecked()) {
-                driverRidePost.setCarseat((byte) 1);
+            if (rcarseatI.isChecked()) {
+                riderRidePost.setCarseat((byte) 1);
             }
-            ;
-            if (eatingI.isChecked()) {
-                driverRidePost.setEating((byte) 1);
+            if (reatingI.isChecked()) {
+                riderRidePost.setEating((byte) 1);
             }
-            ;
-            driverRidePost.setDriverID("4816c6dd-8f03-470e-9aa2-c711eb579e7a");
-            driverRidePost.setIsCompleted((byte) 0);
-            driverRidePost.setIsTaken((byte) 0);
+
+            riderRidePost.setIsCompleted((byte) 0);
+            riderRidePost.setIsTaken((byte) 0);
             //map to JSON
             ObjectMapper mapper = new ObjectMapper();
             try {
-                rideJSON = mapper.writeValueAsString(driverRidePost);
+                rrideJSON = mapper.writeValueAsString(riderRidePost);
             } catch (JsonProcessingException e) {
-                Toast.makeText(DriverPostARide.this, e.toString(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(RequestARide.this, e.toString(), Toast.LENGTH_SHORT).show();
                 e.printStackTrace();
             }
 
@@ -141,7 +131,7 @@ public class DriverPostARide extends AppCompatActivity {
             //startActivity(new Intent(DriverPostARide.this,RidePostedSuccess.class).putExtra("Success Ride Posted","Ride Posted: \n"+ rideJSON));
     }
 
-        private void postDriverRideDataCreateRideInDB() throws IOException {
+        private void postRiderRideDataCreateRideInDB() throws IOException {
 
 
             URL url = new URL("http://10.0.2.2:8080/driverpostaride"); //set URL
@@ -152,7 +142,7 @@ public class DriverPostARide extends AppCompatActivity {
 
             //Create the request body
             OutputStream os = con.getOutputStream();
-            byte[] input = rideJSON.getBytes("utf-8");   // send the JSON as bye array input
+            byte[] input = rrideJSON.getBytes("utf-8");   // send the JSON as bye array input
             os.write(input, 0, input.length);
 
             //read the response from input stream
@@ -166,7 +156,7 @@ public class DriverPostARide extends AppCompatActivity {
                 }
                 String strResponse = response.toString();
 
-                startActivity(new Intent(DriverPostARide.this, DriverOnlySplash.class).putExtra("Success Ride Posted", "Ride Successfully Posted: \n" + driverRidePost.toString()));
+                startActivity(new Intent(RequestARide.this, DriverOnlySplash.class).putExtra("Success Ride Posted", "Ride Successfully Posted: \n" + riderRidePost.toString()));
                 //get response status code
 
             }

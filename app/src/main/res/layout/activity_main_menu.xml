@@ -7,7 +7,7 @@
     tools:context=".MainMenu">
 
     <ImageView
-        android:id="@+id/imageView4"
+        android:id="@+id/imgLogoMenu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="64dp"
@@ -21,25 +21,27 @@
         android:id="@+id/btnMenuPost"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="30dp"
         android:text="Post Ride"
         android:textColor="@color/ptc_DkBlue"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnMenuViewRides" />
+        app:layout_constraintTop_toBottomOf="@+id/btnMenuViewRides"
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
         android:id="@+id/btnMenuViewRides"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="36dp"
         android:text="View Available Rides"
         android:textColor="@color/ptc_DkBlue"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView4" />
+        app:layout_constraintTop_toBottomOf="@+id/button" />
 
     <Button
         android:id="@+id/btnMenuViewProf"
@@ -50,8 +52,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnMenuPost"
-        app:layout_constraintVertical_bias="0.139" />
+        app:layout_constraintTop_toBottomOf="@+id/btnMenuReq"
+        app:layout_constraintVertical_bias="0.161" />
 
     <Button
         android:id="@+id/btnMenuLogOut"
@@ -65,4 +67,39 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.942" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:text="My Rides"
+        android:textColor="@color/ptc_DkBlue"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.485"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgLogoMenu" />
+
+    <Button
+        android:id="@+id/btnMenuReq"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="26dp"
+        android:text="Request A Ride"
+        android:textColor="@color/ptc_DkBlue"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnMenuPost" />
+
+    <ImageView
+        android:id="@+id/imgLinesMenu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="56dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnMenuViewProf"
+        app:layout_constraintVertical_bias="1.0"
+        app:srcCompat="@drawable/ptc_lines_left" />
 </androidx.constraintlayout.widget.ConstraintLayout>
