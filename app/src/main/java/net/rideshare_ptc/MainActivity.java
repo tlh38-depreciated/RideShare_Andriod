@@ -3,6 +3,7 @@ package net.rideshare_ptc;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -30,6 +31,14 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), LoginActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        signUpBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Will need to test/ confirm this works when we launch the web app
+                //startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://localhost:7298/")));
             }
         });
     }

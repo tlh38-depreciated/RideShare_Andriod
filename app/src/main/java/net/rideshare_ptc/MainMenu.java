@@ -13,9 +13,12 @@ public class MainMenu extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
-        Button btnLogin = (Button) findViewById(R.id.btnMenuPost);
+        Button btnReqRide = (Button) findViewById(R.id.btnMenuReq);
         Button btnLogout = (Button) findViewById(R.id.btnMenuLogOut);
-        btnLogin.setOnClickListener(new View.OnClickListener() {
+        Button btnPostRide  = (Button) findViewById(R.id.btnMenuPost);
+//Buttons for MyRides, All Rides, and User Profile TBA
+
+        btnPostRide.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(view.getContext(), DriverPostARide.class);
@@ -23,9 +26,15 @@ public class MainMenu extends AppCompatActivity {
                 }
         });
 
+        btnReqRide.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(view.getContext(), RequestARide.class);
+                startActivity(intent);
+            }
+        });
+
         btnLogout.setOnClickListener(new View.OnClickListener() {
-
-
             @Override
             public void onClick(View v) {
                 LoginManager mgr = LoginManager.getInstance();
