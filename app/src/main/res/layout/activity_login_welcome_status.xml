@@ -4,12 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DriverOnlySplash">
+    tools:context=".LoginWelcomeStatusActivity">
 
     <TextView
-        android:id="@+id/txtPostSucc"
-        android:layout_width="394dp"
-        android:layout_height="512dp"
+        android:id="@+id/txtLoginMessage"
+        android:layout_width="347dp"
+        android:layout_height="503dp"
         android:layout_marginBottom="84dp"
         android:textAlignment="textStart"
         android:textColor="@color/ptc_DkBlue"
@@ -20,11 +20,11 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
-        android:id="@+id/imageView5"
+        android:id="@+id/imgLoginLogo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="44dp"
-        app:layout_constraintBottom_toTopOf="@+id/txtPostSucc"
+        app:layout_constraintBottom_toTopOf="@+id/txtLoginMessage"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -33,28 +33,29 @@
         app:srcCompat="@drawable/ptc_logo_2" />
 
     <Button
-        android:id="@+id/btnRPosSucMain"
+        android:id="@+id/btnStatusToRegister"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="4dp"
-        android:text="Main Menu"
+        android:text="Register"
         android:textColor="@color/ptc_DkBlue"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/btnRPosSucRides"
-        app:layout_constraintTop_toBottomOf="@+id/txtPostSucc"
+        app:layout_constraintStart_toEndOf="@+id/btnStatusToLogin"
+        app:layout_constraintTop_toBottomOf="@+id/txtLoginMessage"
         app:layout_constraintVertical_bias="0.375" />
 
     <Button
-        android:id="@+id/btnRPosSucRides"
+        android:id="@+id/btnStatusToLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="72dp"
         android:layout_marginTop="12dp"
         android:layout_marginBottom="24dp"
-        android:text="All Rides"
+        android:text="Login"
         android:textColor="@color/ptc_DkBlue"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtPostSucc" />
+        app:layout_constraintTop_toBottomOf="@+id/txtLoginMessage" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

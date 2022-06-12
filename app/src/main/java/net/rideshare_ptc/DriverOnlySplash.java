@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import java.util.Timer;
@@ -20,8 +19,8 @@ public class DriverOnlySplash extends AppCompatActivity {
         Intent intent = this.getIntent();
         Bundle bundle = intent.getExtras();
         String successMsg = bundle.getString("Success Ride Posted");
-        setContentView(R.layout.activity_ride_posted_success);
-        TextView msg = (TextView) findViewById(R.id.txtPostSucc);
+        setContentView(R.layout.activity_driver_only_splash);
+        TextView msg = (TextView) findViewById(R.id.txtCarDetails);
         msg.setText(successMsg);
         TimerTask task = new TimerTask() {
             @Override
@@ -33,9 +32,9 @@ public class DriverOnlySplash extends AppCompatActivity {
         Timer show5secs  = new Timer();
         show5secs.schedule(task,10000);
 
-        Button btnMainRet = (Button) findViewById(R.id.btnRPosSucMain);
+        Button btnMainRet = (Button) findViewById(R.id.btnCarToMainMenu);
         //TODO: Route the below ALL RIDES Button the Rides Page that doesn't exist yet
-        Button btnAllRides = (Button) findViewById(R.id.btnRPosSucRides);
+        Button btnAllRides = (Button) findViewById(R.id.btnCarToMyRides);
         btnMainRet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

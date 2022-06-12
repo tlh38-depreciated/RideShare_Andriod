@@ -29,6 +29,7 @@ public class LoginActivity extends AppCompatActivity {
     String entPassword; // TODO: not yet implemented (password validation)
     String userInfoRes;
     User loggingUser = new User(); //create instance of User to capture deets of user attempting to login
+    Integer respCode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +45,7 @@ public class LoginActivity extends AppCompatActivity {
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String ptcCheck = "@students.ptcollege.edu";
 
                 entEmailAdd = userEmailInpt.getText().toString();
                 entPassword = userPWInpt.getText().toString();
@@ -51,13 +53,18 @@ public class LoginActivity extends AppCompatActivity {
                 if (SDK_INT > 8) {
                     StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
                     StrictMode.setThreadPolicy(policy);
+                    if (entEmailAdd.contains(ptcCheck)) {
+                        try {
+                            getUserLoginData();
+                            loginUserToLoginManager();
 
-                    try {
-                        getUserLoginData();
-                        loginUserToLoginManager();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                        startActivity(new Intent(LoginActivity.this, DriverOnlySplash.class).putExtra("Success Ride Posted", "User info: \n" + entEmailAdd));
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                            startActivity(new Intent(LoginActivity.this, DriverOnlySplash.class).putExtra("Success Ride Posted", "User info: \n" + entEmailAdd));
+                        }
+                    }
+                    else {
+                        startActivity(new Intent(LoginActivity.this, LoginWelcomeStatusActivity.class).putExtra("Login Status", "This user-name does not appear to be registered. \n"));
                     }
                 }
             }
@@ -70,9 +77,6 @@ public class LoginActivity extends AppCompatActivity {
         HttpURLConnection con = (HttpURLConnection) url.openConnection(); //open connection
         con.setUseCaches(false);
         con.setRequestMethod("GET");//set request method
-
-        //con.setDoOutput(true); //enable this to write content to the connection OUTPUT STREAM
-        //con.setDoInput(true);
         con.connect();
 
         //read the response from input stream
@@ -86,7 +90,7 @@ public class LoginActivity extends AppCompatActivity {
             }
             rd.close();
             String strResponse = result.toString();
-            int respCode = con.getResponseCode();
+            respCode = con.getResponseCode();
             //Map JSON Object to User Object
             ObjectMapper mapper = new ObjectMapper();
                     try {
@@ -101,15 +105,20 @@ public class LoginActivity extends AppCompatActivity {
 
         }
         catch (IOException e){
-            startActivity(new Intent(LoginActivity.this, DriverOnlySplash.class).putExtra("Success Ride Posted", "User info: \n ERROR \n"+ e + entEmailAdd));
+            startActivity(new Intent(LoginActivity.this, LoginWelcomeStatusActivity.class).putExtra("Login Status", "User info: \n ERROR \n"+ e + entEmailAdd));
         }
     con.disconnect();
 
     }
     private void loginUserToLoginManager(){
-        LoginManager mgr = LoginManager.getInstance();
-        mgr.setLoggedInUsers(loggingUser);
-        startActivity(new Intent(LoginActivity.this, DriverOnlySplash.class).putExtra("Success Ride Posted", "User added to LoginMgr List "+ mgr.getLoggedInUser().toString()));
-        //get response status code
+        if (respCode ==200) {
+            LoginManager mgr = LoginManager.getInstance();
+            mgr.setLoggedInUsers(loggingUser);
+            startActivity(new Intent(LoginActivity.this, MainMenu.class));
+        }
+        else
+        {
+            startActivity(new Intent(LoginActivity.this, LoginWelcomeStatusActivity.class).putExtra("Login Status", "Invalid data returned"));
+        }
     }
 }

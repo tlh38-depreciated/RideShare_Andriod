@@ -16,6 +16,7 @@ public class MainMenu extends AppCompatActivity {
         Button btnReqRide = (Button) findViewById(R.id.btnMenuReq);
         Button btnLogout = (Button) findViewById(R.id.btnMenuLogOut);
         Button btnPostRide  = (Button) findViewById(R.id.btnMenuPost);
+        Button btnUserProf = (Button) findViewById(R.id.btnMenuViewProf);
 //Buttons for MyRides, All Rides, and User Profile TBA
 
         btnPostRide.setOnClickListener(new View.OnClickListener() {
@@ -41,6 +42,13 @@ public class MainMenu extends AppCompatActivity {
                 mgr.removeLoggedInUsers();
                 //startActivity(new Intent(MainMenu.this,DriverOnlySplash.class).putExtra("Success Ride Posted","User Logged out: "+ mgr.getLoggedInUserList().toString()));
                 startActivity(new Intent(MainMenu.this,MainActivity.class));
+            }
+        });
+        //Testing button- not routed to correct activity- change when correct activity ready
+        btnUserProf.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               startActivity(new Intent(MainMenu.this,DriverCarInfo.class));
             }
         });
         
