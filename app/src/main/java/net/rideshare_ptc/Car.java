@@ -62,10 +62,10 @@ public class Car {
 
     @Override
     public String toString() {
-        return "Car Details" +
-                "\n carMake='" + carMake +
-                "\n carModel='" + carModel +
-                "\n carColor='" + carColor  +
-                "\n carPlateNum='" + carPlateNum;
+        return "Vehicle Information: \n" +
+                "\n   Make: " + carMake +
+                "\n   Model:" + carModel +
+                "\n   Color: " + carColor  +
+                "\n   License Plate: " + carPlateNum;
     }
 }
