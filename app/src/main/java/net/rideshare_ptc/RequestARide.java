@@ -2,6 +2,8 @@ package net.rideshare_ptc;
 
 
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -43,8 +45,8 @@ public class RequestARide extends AppCompatActivity {
 
     Boolean errorsFound = false;
 
-    //TODO: Needs to be hidden
-    static String apiKey = "AIzaSyA589cW4cUqppb8inQ4JXDPRFoVZv5NfuM";
+    ApplicationInfo appInfo;
+    static String apiKey;
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
@@ -60,8 +62,20 @@ public class RequestARide extends AppCompatActivity {
         riderReq = (Button) findViewById(R.id.btnReqARide);
         retToMenu = (Button) findViewById(R.id.btnReqRideRetMenu);
 
+        //Grab Meta Data from Android Manifest
+        try{
+            appInfo = getPackageManager().getApplicationInfo(getPackageName(), PackageManager.GET_META_DATA);
 
-                riderReq.setOnClickListener(new View.OnClickListener() {
+            if(appInfo != null){
+                apiKey = appInfo.metaData.getString("com.google.android.geo.API_KEY");
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+            //Meta data could not be grabbed
+            return;
+        }
+
+
+        riderReq.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         int SDK_INT = Build.VERSION.SDK_INT;
