@@ -13,7 +13,9 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.BufferedReader;
@@ -22,6 +24,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+
 
 public class RequestARide extends AppCompatActivity {
     Button riderReq;
@@ -37,6 +40,11 @@ public class RequestARide extends AppCompatActivity {
     String rrideJSON;
     LoginManager mgr = LoginManager.getInstance();
     User loggedInUser = mgr.getLoggedInUser();
+
+    Boolean errorsFound = false;
+
+    //TODO: Needs to be hidden
+    static String apiKey = "AIzaSyA589cW4cUqppb8inQ4JXDPRFoVZv5NfuM";
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
@@ -61,17 +69,20 @@ public class RequestARide extends AppCompatActivity {
                             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
                             StrictMode.setThreadPolicy(policy);
 
+                            errorsFound = false;
+
                             if (rpickupLocI.getText().toString().isEmpty() || rdestLocI.getText().toString().isEmpty() || rrideDateTimeI.getText().toString().isEmpty()) {
                                 Toast.makeText(RequestARide.this, "Please complete all fields", Toast.LENGTH_SHORT).show();
 
                             } else {
                                 getRiderRideData();
-                                try {
-                                    postRiderRideDataCreateRideInDB();
-                                } catch (IOException e) {
-                                    e.printStackTrace();
+                                if(!errorsFound){ //if we have no errors (mainly used to ensure distance matrix properly worked)
+                                    try {
+                                        postRiderRideDataCreateRideInDB();
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
                                 }
-
                             }
                         }
 
@@ -91,7 +102,6 @@ public class RequestARide extends AppCompatActivity {
         private void getRiderRideData() {
             //get the data from the form and add to Ride object
             //cannot get an object mapper to work, trying construction JSON Object instead
-            //TODO: Enhance input validation- calendar selector for date/time, implement Google API for locations
             //TODO: Add calculations for duration, distance, cost similarly to how handled in webapp
             riderRidePost = new Ride();
             riderRidePost.setRiderID(loggedInUser.getUserID());
@@ -103,6 +113,48 @@ public class RequestARide extends AppCompatActivity {
             riderRidePost.setPickUpLoc(rpickupLocI.getText().toString());
             riderRidePost.setDest(rdestLocI.getText().toString());
             riderRidePost.setRideDate(rrideDateTimeI.getText().toString());
+
+            //Get Distance Using Google Maps API
+            try{
+                URL url = new URL("https://maps.googleapis.com/maps/api/distancematrix/json?origins=" + rpickupLocI.getText().toString() + "&destinations=" + rdestLocI.getText().toString() + "&units=imperial&key=" + apiKey); //set URL
+                HttpURLConnection con = (HttpURLConnection) url.openConnection(); //open connection
+                con.setUseCaches(false);
+                con.setRequestMethod("GET");//set request method
+                con.connect();
+
+                //get the result
+                StringBuilder result = new StringBuilder();
+                BufferedReader rd = new BufferedReader(new InputStreamReader(con.getInputStream()));
+                String line;
+                while ((line = rd.readLine()) != null) {
+                    result.append(line);
+                }
+                rd.close();
+                String strResponse = result.toString();
+                Integer respCode = con.getResponseCode();
+                if(respCode == 200){
+                    //Map JSON Object to User Object
+                    ObjectMapper mapper = new ObjectMapper();
+                    try {
+                        Ride ride = mapper.readValue(strResponse, Ride.class); //TODO: Needs proper mapping class (DistanceMatrixMapee)
+                        riderRidePost.setDistance(ride.getDistance());
+
+                    }
+                    catch (JsonGenerationException ge){
+                        //System.out.println(ge);
+                        errorsFound = true;
+                    }
+                    catch (JsonMappingException me) {
+                        //System.out.println(me);
+                        errorsFound = true;
+                    }
+                }
+
+            }catch (IOException e) {
+                //IO Exception thrown by the response when it's a bad request
+                errorsFound = true;
+            }
+
             if (rsmokingI.isChecked()) {
                 riderRidePost.setSmoking((byte) 1);
             }
