@@ -44,11 +44,11 @@ public class MainMenu extends AppCompatActivity {
                 startActivity(new Intent(MainMenu.this,MainActivity.class));
             }
         });
-        //Testing button- not routed to correct activity- change when correct activity ready
+        //Testing button- Route updated to UserProfile
         btnUserProf.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               startActivity(new Intent(MainMenu.this,DriverCarInfo.class));
+               startActivity(new Intent(MainMenu.this, UserProfile.class));
             }
         });
         
