@@ -27,6 +27,8 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import Distance_Matrix.DistanceMatrixResponseShell;
+
 
 public class RequestARide extends AppCompatActivity {
     Button riderReq;
@@ -146,12 +148,35 @@ public class RequestARide extends AppCompatActivity {
                 rd.close();
                 String strResponse = result.toString();
                 Integer respCode = con.getResponseCode();
+                con.disconnect();
                 if(respCode == 200){
                     //Map JSON Object to User Object
                     ObjectMapper mapper = new ObjectMapper();
                     try {
-                        Ride ride = mapper.readValue(strResponse, Ride.class); //TODO: Needs proper mapping class (DistanceMatrixMapee)
-                        riderRidePost.setDistance(ride.getDistance());
+                        DistanceMatrixResponseShell response = mapper.readValue(strResponse, DistanceMatrixResponseShell.class);
+
+                        String distanceVal = response.getRows().get(0).getElements().get(0).getDistance().getText();
+                        String durationVal = response.getRows().get(0).getElements().get(0).getDuration().getText();
+
+                        //get rid of "mi" from the text
+                        distanceVal = distanceVal.replace("mi", "");
+
+                        //reformat the duration into minutes
+                        int timeIndex = durationVal.indexOf(" hour");
+                        String hour = durationVal.substring(0, timeIndex);
+                        Float hourFl = Float.parseFloat(hour);
+                        hourFl *= 60; //convert hourFl to mins
+
+                        int lastHrIndex = timeIndex + 6;
+                        int minIndex = durationVal.indexOf(" mins");
+                        String mins = durationVal.substring(lastHrIndex, minIndex);
+                        Float minFl = Float.parseFloat(mins);
+
+                        Float totalMins = hourFl + minFl;
+                        Float distance = Float.parseFloat(distanceVal);
+
+                        riderRidePost.setDuration(totalMins);
+                        riderRidePost.setDistance(distance);
 
                     }
                     catch (JsonGenerationException ge){
@@ -160,6 +185,13 @@ public class RequestARide extends AppCompatActivity {
                     }
                     catch (JsonMappingException me) {
                         //System.out.println(me);
+                        errorsFound = true;
+                    }
+                    catch(NumberFormatException nfe){
+                        //System.out.println(nfe);
+                        errorsFound = true;
+                    }catch(NullPointerException npe){
+                        //System.out.println(npe);
                         errorsFound = true;
                     }
                 }
@@ -199,7 +231,6 @@ public class RequestARide extends AppCompatActivity {
 
         private void postRiderRideDataCreateRideInDB() throws IOException {
 
-
             URL url = new URL("http://10.0.2.2:8080/driverpostaride"); //set URL
             HttpURLConnection con = (HttpURLConnection) url.openConnection(); //open connection
             con.setRequestMethod("POST");//set request method
@@ -212,21 +243,27 @@ public class RequestARide extends AppCompatActivity {
             os.write(input, 0, input.length);
 
             //read the response from input stream
-            //TODO: Add error handling for any response code other than 200
+            if(con.getResponseCode() >= 400)
+            {
+                errorsFound = true;
+                return; //short circuit
+            }else{
+                try{
+                    BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream(), "utf-8"));
+                    StringBuilder response = new StringBuilder();
+                    String responseLine = null;
+                    while ((responseLine = br.readLine()) != null) {
+                        response.append(responseLine.trim());
+                    }
+                    String strResponse = response.toString();
 
-            try (BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream(), "utf-8"))) {
-                StringBuilder response = new StringBuilder();
-                String responseLine = null;
-                while ((responseLine = br.readLine()) != null) {
-                    response.append(responseLine.trim());
+                    startActivity(new Intent(RequestARide.this, DriverOnlySplash.class).putExtra("Success Ride Posted", "Ride Successfully Posted: \n" + riderRidePost.toString()));
+                    //get response status code
+
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
-                String strResponse = response.toString();
-
-                startActivity(new Intent(RequestARide.this, DriverOnlySplash.class).putExtra("Success Ride Posted", "Ride Successfully Posted: \n" + riderRidePost.toString()));
-                //get response status code
-
             }
-
             con.disconnect();
     }
 }
