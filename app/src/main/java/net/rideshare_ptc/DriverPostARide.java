@@ -2,6 +2,8 @@ package net.rideshare_ptc;
 
 
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -13,7 +15,9 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.BufferedReader;
@@ -22,6 +26,8 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+
+import Distance_Matrix.DistanceMatrixResponseShell;
 
 public class DriverPostARide extends AppCompatActivity {
     Button drvRideSubmit;
@@ -35,6 +41,11 @@ public class DriverPostARide extends AppCompatActivity {
     CheckBox talkingI;
     CheckBox carseatI;
     String rideJSON;
+
+    Boolean errorsFound = false;
+
+    ApplicationInfo appInfo;
+    static String apiKey;
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
@@ -49,6 +60,18 @@ public class DriverPostARide extends AppCompatActivity {
         carseatI = (CheckBox) findViewById(R.id.ReqcheckBoxHasCarseat);
         drvRideSubmit = (Button) findViewById(R.id.btnReqARide);
         retToMenu = (Button) findViewById(R.id.btnReqRideRetMenu);
+
+        //Grab Meta Data from Android Manifest
+        try{
+            appInfo = getPackageManager().getApplicationInfo(getPackageName(), PackageManager.GET_META_DATA);
+
+            if(appInfo != null){
+                apiKey = appInfo.metaData.getString("com.google.android.geo.API_KEY");
+            }
+        }catch(PackageManager.NameNotFoundException e){
+            //Meta data could not be grabbed
+            return;
+        }
 
         //Check if logged in user is a driver; if so, show post A ride, if not, re-route
         //with message.
@@ -68,12 +91,16 @@ public class DriverPostARide extends AppCompatActivity {
 
                             } else {
                                 getDriverRideData();
-                                try {
-                                    postDriverRideDataCreateRideInDB();
-                                } catch (IOException e) {
-                                    e.printStackTrace();
+                                if(!errorsFound){
+                                    try {
+                                        postDriverRideDataCreateRideInDB();
+                                    } catch (IOException e) {
+                                        //TODO: Add Error output for the user
+                                        e.printStackTrace();
+                                    }
+                                }else{
+                                    //TODO: Add error output for the user
                                 }
-
                             }
                         }
 
@@ -109,6 +136,70 @@ public class DriverPostARide extends AppCompatActivity {
             driverRidePost.setPickUpLoc(pickupLocI.getText().toString());
             driverRidePost.setDest(destLocI.getText().toString());
             driverRidePost.setRideDate(rideDateTimeI.getText().toString());
+
+            //Get Distance Using Google Maps API
+            try{
+                URL url = new URL("https://maps.googleapis.com/maps/api/distancematrix/json?origins=" + pickupLocI.getText().toString() + "&destinations=" + destLocI.getText().toString() + "&units=imperial&key=" + apiKey); //set URL
+                HttpURLConnection con = (HttpURLConnection) url.openConnection(); //open connection
+                con.setUseCaches(false);
+                con.setRequestMethod("GET");//set request method
+                con.connect();
+
+                //get the result
+                StringBuilder result = new StringBuilder();
+                BufferedReader rd = new BufferedReader(new InputStreamReader(con.getInputStream()));
+                String line;
+                while ((line = rd.readLine()) != null) {
+                    result.append(line);
+                }
+                rd.close();
+                String strResponse = result.toString();
+                Integer respCode = con.getResponseCode();
+                con.disconnect(); //disconnect from API
+                if(respCode == 200){
+                    //Map JSON Object to User Object
+                    ObjectMapper mapper = new ObjectMapper();
+                    try {
+                        DistanceMatrixResponseShell response = mapper.readValue(strResponse, DistanceMatrixResponseShell.class);
+
+                        String distanceVal = response.getRows().get(0).getElements().get(0).getDistance().getText();
+                        String durationVal = response.getRows().get(0).getElements().get(0).getDuration().getText();
+
+                        //get rid of "mi" from the text
+                        distanceVal = distanceVal.replace("mi", "");
+
+                        //reformat the duration into minutes
+                        float totalMins = parseDistanceMatrixStringToFloat(durationVal);
+
+                        //parse distance float
+                        float distance = Float.parseFloat(distanceVal);
+
+                        driverRidePost.setDuration(totalMins);
+                        driverRidePost.setDistance(distance);
+
+                    }
+                    catch (JsonGenerationException ge){
+                        //System.out.println(ge);
+                        errorsFound = true;
+                    }
+                    catch (JsonMappingException me) {
+                        //System.out.println(me);
+                        errorsFound = true;
+                    }
+                    catch(NumberFormatException nfe){
+                        //System.out.println(nfe);
+                        errorsFound = true;
+                    }catch(NullPointerException npe){
+                        //System.out.println(npe);
+                        errorsFound = true;
+                    }
+            }
+            }
+            catch (IOException e) {
+                //IO Exception thrown by the response when it's a bad request
+                errorsFound = true;
+            }
+
             if (smokingI.isChecked()) {
                 driverRidePost.setSmoking((byte) 1);
             }
@@ -142,35 +233,98 @@ public class DriverPostARide extends AppCompatActivity {
     }
 
         private void postDriverRideDataCreateRideInDB() throws IOException {
-
-
             URL url = new URL("http://10.0.2.2:8080/driverpostaride"); //set URL
-            HttpURLConnection con = (HttpURLConnection) url.openConnection(); //open connection
-            con.setRequestMethod("POST");//set request method
-            con.setRequestProperty("Content-Type", "application/json"); //set the request content-type header parameter
-            con.setDoOutput(true); //enable this to write content to the connection OUTPUT STREAM
+            HttpURLConnection conWeb = (HttpURLConnection) url.openConnection(); //open connection
+            conWeb.setRequestMethod("POST");//set request method
+            conWeb.setRequestProperty("Content-Type", "application/json"); //set the request content-type header parameter
+            conWeb.setDoOutput(true); //enable this to write content to the connection OUTPUT STREAM
 
             //Create the request body
-            OutputStream os = con.getOutputStream();
+            OutputStream os = conWeb.getOutputStream();
             byte[] input = rideJSON.getBytes("utf-8");   // send the JSON as bye array input
             os.write(input, 0, input.length);
 
             //read the response from input stream
             //TODO: Add error handling for any response code other than 200
 
-            try (BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream(), "utf-8"))) {
-                StringBuilder response = new StringBuilder();
-                String responseLine = null;
-                while ((responseLine = br.readLine()) != null) {
-                    response.append(responseLine.trim());
+            if(conWeb.getResponseCode() >= 400)
+            {
+                //TODO: Add error output for the user
+                conWeb.disconnect();
+                return; //short circuit
+            }else{
+                try{
+                    BufferedReader br = new BufferedReader(new InputStreamReader(conWeb.getInputStream(), "utf-8"));
+                    StringBuilder response = new StringBuilder();
+                    String responseLine = null;
+                    while ((responseLine = br.readLine()) != null) {
+                        response.append(responseLine.trim());
+                    }
+                    String strResponse = response.toString();
+
+                    startActivity(new Intent(DriverPostARide.this, DriverOnlySplash.class).putExtra("Success Ride Posted", "Ride Successfully Posted: \n" + driverRidePost.toString()));
+                    //get response status code
+
+                } catch (IOException e) {
+                    //TODO: Add error message for user
+                    e.printStackTrace();
+                }finally {
+                    conWeb.disconnect();
                 }
-                String strResponse = response.toString();
-
-                startActivity(new Intent(DriverPostARide.this, DriverOnlySplash.class).putExtra("Success Ride Posted", "Ride Successfully Posted: \n" + driverRidePost.toString()));
-                //get response status code
-
             }
+    }
 
-            con.disconnect();
+    public static float parseDistanceMatrixStringToFloat(String distanceMatrixString){
+        String hours;
+        float hoursParsed = 0.0f;
+        String minutes;
+        float minutesParsed = 0.0f;
+
+        boolean isHourPlural = distanceMatrixString.contains("hours"); //flag to see if the hour value is plural
+        boolean isMinutePlural = distanceMatrixString.contains("mins"); //flag to see if the minute is plural
+
+        if(isHourPlural) //if the hours are plural
+        {
+            //get the hour value
+            int indexOfHours = distanceMatrixString.indexOf("hours");
+            hours = distanceMatrixString.substring(0, indexOfHours);
+            hoursParsed = Float.parseFloat(hours);
+        }else{
+            if(distanceMatrixString.contains("hour"))
+            {
+                hoursParsed = 1.0f; //we have 1 hour
+            }
+            else{
+                hoursParsed = 0.0f; //we don't actually have an hour
+            }
+        }
+
+        if(isMinutePlural) //if the minutes are plural
+        {
+            int indexOfMinutes = distanceMatrixString.indexOf("mins");
+            int indexOfHours = 0;
+            int buffer = 0;
+            if(distanceMatrixString.contains("hours")){
+                indexOfHours = distanceMatrixString.indexOf("hours");
+                buffer = 5;
+            }else if(distanceMatrixString.contains("hour")){
+                indexOfHours = distanceMatrixString.indexOf("hour");
+                buffer = 4;
+            }
+            minutes = distanceMatrixString.substring(indexOfHours + buffer, indexOfMinutes);
+            minutesParsed = Float.parseFloat(minutes);
+        }else{
+            if(distanceMatrixString.contains("min"))
+            {
+                minutesParsed = 1.0f; //we have 1 minute
+            }
+            else{
+                minutesParsed = 0.0f; //we don't actually have a minute
+            }
+        }
+
+        float totalSeconds = (hoursParsed * 3600) + (minutesParsed * 60);
+
+        return totalSeconds;
     }
 }
