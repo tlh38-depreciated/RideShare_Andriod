@@ -98,6 +98,8 @@ public class RequestARide extends AppCompatActivity {
                                     } catch (IOException e) {
                                         e.printStackTrace();
                                     }
+                                }else{
+                                    //TODO: Add error output for the user
                                 }
                             }
                         }
@@ -148,7 +150,7 @@ public class RequestARide extends AppCompatActivity {
                 rd.close();
                 String strResponse = result.toString();
                 Integer respCode = con.getResponseCode();
-                con.disconnect();
+                con.disconnect(); //disconnect from API
                 if(respCode == 200){
                     //Map JSON Object to User Object
                     ObjectMapper mapper = new ObjectMapper();
@@ -221,7 +223,8 @@ public class RequestARide extends AppCompatActivity {
             try {
                 rrideJSON = mapper.writeValueAsString(riderRidePost);
             } catch (JsonProcessingException e) {
-                Toast.makeText(RequestARide.this, e.toString(), Toast.LENGTH_SHORT).show();
+                //TODO: Add user error validation
+                //Toast.makeText(RequestARide.this, e.toString(), Toast.LENGTH_SHORT).show();
                 e.printStackTrace();
             }
 
@@ -232,24 +235,25 @@ public class RequestARide extends AppCompatActivity {
         private void postRiderRideDataCreateRideInDB() throws IOException {
 
             URL url = new URL("http://10.0.2.2:8080/driverpostaride"); //set URL
-            HttpURLConnection con = (HttpURLConnection) url.openConnection(); //open connection
-            con.setRequestMethod("POST");//set request method
-            con.setRequestProperty("Content-Type", "application/json"); //set the request content-type header parameter
-            con.setDoOutput(true); //enable this to write content to the connection OUTPUT STREAM
+            HttpURLConnection conWeb = (HttpURLConnection) url.openConnection(); //open connection
+            conWeb.setRequestMethod("POST");//set request method
+            conWeb.setRequestProperty("Content-Type", "application/json"); //set the request content-type header parameter
+            conWeb.setDoOutput(true); //enable this to write content to the connection OUTPUT STREAM
 
             //Create the request body
-            OutputStream os = con.getOutputStream();
+            OutputStream os = conWeb.getOutputStream();
             byte[] input = rrideJSON.getBytes("utf-8");   // send the JSON as bye array input
             os.write(input, 0, input.length);
 
             //read the response from input stream
-            if(con.getResponseCode() >= 400)
+            if(conWeb.getResponseCode() >= 400)
             {
-                errorsFound = true;
+                //TODO: Add error output for the user
+                conWeb.disconnect();
                 return; //short circuit
             }else{
                 try{
-                    BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream(), "utf-8"));
+                    BufferedReader br = new BufferedReader(new InputStreamReader(conWeb.getInputStream(), "utf-8"));
                     StringBuilder response = new StringBuilder();
                     String responseLine = null;
                     while ((responseLine = br.readLine()) != null) {
@@ -261,9 +265,12 @@ public class RequestARide extends AppCompatActivity {
                     //get response status code
 
                 } catch (IOException e) {
+                    //TODO: Add error message for user
                     e.printStackTrace();
+                }finally {
+                    conWeb.disconnect();
                 }
             }
-            con.disconnect();
+
     }
 }
