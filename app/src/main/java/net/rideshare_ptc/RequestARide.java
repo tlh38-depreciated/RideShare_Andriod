@@ -98,6 +98,8 @@ public class RequestARide extends AppCompatActivity {
                                     } catch (IOException e) {
                                         e.printStackTrace();
                                     }
+                                }else{
+                                    //TODO: Add error output for the user
                                 }
                             }
                         }
@@ -148,7 +150,7 @@ public class RequestARide extends AppCompatActivity {
                 rd.close();
                 String strResponse = result.toString();
                 Integer respCode = con.getResponseCode();
-                con.disconnect();
+                con.disconnect(); //disconnect from API
                 if(respCode == 200){
                     //Map JSON Object to User Object
                     ObjectMapper mapper = new ObjectMapper();
@@ -162,18 +164,10 @@ public class RequestARide extends AppCompatActivity {
                         distanceVal = distanceVal.replace("mi", "");
 
                         //reformat the duration into minutes
-                        int timeIndex = durationVal.indexOf(" hour");
-                        String hour = durationVal.substring(0, timeIndex);
-                        Float hourFl = Float.parseFloat(hour);
-                        hourFl *= 60; //convert hourFl to mins
+                        float totalMins = parseDistanceMatrixStringToFloat(durationVal);
 
-                        int lastHrIndex = timeIndex + 6;
-                        int minIndex = durationVal.indexOf(" mins");
-                        String mins = durationVal.substring(lastHrIndex, minIndex);
-                        Float minFl = Float.parseFloat(mins);
-
-                        Float totalMins = hourFl + minFl;
-                        Float distance = Float.parseFloat(distanceVal);
+                        //parse distance float
+                        float distance = Float.parseFloat(distanceVal);
 
                         riderRidePost.setDuration(totalMins);
                         riderRidePost.setDistance(distance);
@@ -221,7 +215,8 @@ public class RequestARide extends AppCompatActivity {
             try {
                 rrideJSON = mapper.writeValueAsString(riderRidePost);
             } catch (JsonProcessingException e) {
-                Toast.makeText(RequestARide.this, e.toString(), Toast.LENGTH_SHORT).show();
+                //TODO: Add user error validation
+                //Toast.makeText(RequestARide.this, e.toString(), Toast.LENGTH_SHORT).show();
                 e.printStackTrace();
             }
 
@@ -232,24 +227,25 @@ public class RequestARide extends AppCompatActivity {
         private void postRiderRideDataCreateRideInDB() throws IOException {
 
             URL url = new URL("http://10.0.2.2:8080/driverpostaride"); //set URL
-            HttpURLConnection con = (HttpURLConnection) url.openConnection(); //open connection
-            con.setRequestMethod("POST");//set request method
-            con.setRequestProperty("Content-Type", "application/json"); //set the request content-type header parameter
-            con.setDoOutput(true); //enable this to write content to the connection OUTPUT STREAM
+            HttpURLConnection conWeb = (HttpURLConnection) url.openConnection(); //open connection
+            conWeb.setRequestMethod("POST");//set request method
+            conWeb.setRequestProperty("Content-Type", "application/json"); //set the request content-type header parameter
+            conWeb.setDoOutput(true); //enable this to write content to the connection OUTPUT STREAM
 
             //Create the request body
-            OutputStream os = con.getOutputStream();
+            OutputStream os = conWeb.getOutputStream();
             byte[] input = rrideJSON.getBytes("utf-8");   // send the JSON as bye array input
             os.write(input, 0, input.length);
 
             //read the response from input stream
-            if(con.getResponseCode() >= 400)
+            if(conWeb.getResponseCode() >= 400)
             {
-                errorsFound = true;
+                //TODO: Add error output for the user
+                conWeb.disconnect();
                 return; //short circuit
             }else{
                 try{
-                    BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream(), "utf-8"));
+                    BufferedReader br = new BufferedReader(new InputStreamReader(conWeb.getInputStream(), "utf-8"));
                     StringBuilder response = new StringBuilder();
                     String responseLine = null;
                     while ((responseLine = br.readLine()) != null) {
@@ -261,9 +257,75 @@ public class RequestARide extends AppCompatActivity {
                     //get response status code
 
                 } catch (IOException e) {
+                    //TODO: Add error message for user
                     e.printStackTrace();
+                }finally {
+                    conWeb.disconnect();
                 }
             }
-            con.disconnect();
+    }
+
+    /**
+     * Takes the duration string given by the distance matrix api
+     * and converts its value into a float that represents
+     * the expected duration of the ride in seconds.
+     *
+     * Distance matrix strings are given in this format:
+     * x hour(s) y minute(s) :::
+     * Where plurals are added depending on the value of the hour/minute.
+     * i.e. "1 hour 54 minutes" or "4 hours 1 minute"
+     */
+    public static float parseDistanceMatrixStringToFloat(String distanceMatrixString){
+        String hours;
+        float hoursParsed = 0.0f;
+        String minutes;
+        float minutesParsed = 0.0f;
+
+        boolean isHourPlural = distanceMatrixString.contains("hours"); //flag to see if the hour value is plural
+        boolean isMinutePlural = distanceMatrixString.contains("mins"); //flag to see if the minute is plural
+
+        if(isHourPlural) //if the hours are plural
+        {
+            //get the hour value
+            int indexOfHours = distanceMatrixString.indexOf("hours");
+            hours = distanceMatrixString.substring(0, indexOfHours);
+            hoursParsed = Float.parseFloat(hours);
+        }else{
+            if(distanceMatrixString.contains("hour"))
+            {
+                hoursParsed = 1.0f; //we have 1 hour
+            }
+            else{
+                hoursParsed = 0.0f; //we don't actually have an hour
+            }
+        }
+
+        if(isMinutePlural) //if the minutes are plural
+        {
+            int indexOfMinutes = distanceMatrixString.indexOf("mins");
+            int indexOfHours = 0;
+            int buffer = 0;
+            if(distanceMatrixString.contains("hours")){
+                indexOfHours = distanceMatrixString.indexOf("hours");
+                buffer = 5;
+            }else if(distanceMatrixString.contains("hour")){
+                indexOfHours = distanceMatrixString.indexOf("hour");
+                buffer = 4;
+            }
+            minutes = distanceMatrixString.substring(indexOfHours + buffer, indexOfMinutes);
+            minutesParsed = Float.parseFloat(minutes);
+        }else{
+            if(distanceMatrixString.contains("min"))
+            {
+                minutesParsed = 1.0f; //we have 1 minute
+            }
+            else{
+                minutesParsed = 0.0f; //we don't actually have a minute
+            }
+        }
+
+        float totalSeconds = (hoursParsed * 3600) + (minutesParsed * 60);
+
+        return totalSeconds;
     }
 }
