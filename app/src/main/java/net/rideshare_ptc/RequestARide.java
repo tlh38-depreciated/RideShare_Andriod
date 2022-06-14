@@ -164,18 +164,10 @@ public class RequestARide extends AppCompatActivity {
                         distanceVal = distanceVal.replace("mi", "");
 
                         //reformat the duration into minutes
-                        int timeIndex = durationVal.indexOf(" hour");
-                        String hour = durationVal.substring(0, timeIndex);
-                        Float hourFl = Float.parseFloat(hour);
-                        hourFl *= 60; //convert hourFl to mins
+                        float totalMins = parseDistanceMatrixStringToFloat(durationVal);
 
-                        int lastHrIndex = timeIndex + 6;
-                        int minIndex = durationVal.indexOf(" mins");
-                        String mins = durationVal.substring(lastHrIndex, minIndex);
-                        Float minFl = Float.parseFloat(mins);
-
-                        Float totalMins = hourFl + minFl;
-                        Float distance = Float.parseFloat(distanceVal);
+                        //parse distance float
+                        float distance = Float.parseFloat(distanceVal);
 
                         riderRidePost.setDuration(totalMins);
                         riderRidePost.setDistance(distance);
@@ -271,6 +263,69 @@ public class RequestARide extends AppCompatActivity {
                     conWeb.disconnect();
                 }
             }
+    }
 
+    /**
+     * Takes the duration string given by the distance matrix api
+     * and converts its value into a float that represents
+     * the expected duration of the ride in seconds.
+     *
+     * Distance matrix strings are given in this format:
+     * x hour(s) y minute(s) :::
+     * Where plurals are added depending on the value of the hour/minute.
+     * i.e. "1 hour 54 minutes" or "4 hours 1 minute"
+     */
+    public static float parseDistanceMatrixStringToFloat(String distanceMatrixString){
+        String hours;
+        float hoursParsed = 0.0f;
+        String minutes;
+        float minutesParsed = 0.0f;
+
+        boolean isHourPlural = distanceMatrixString.contains("hours"); //flag to see if the hour value is plural
+        boolean isMinutePlural = distanceMatrixString.contains("mins"); //flag to see if the minute is plural
+
+        if(isHourPlural) //if the hours are plural
+        {
+            //get the hour value
+            int indexOfHours = distanceMatrixString.indexOf("hours");
+            hours = distanceMatrixString.substring(0, indexOfHours);
+            hoursParsed = Float.parseFloat(hours);
+        }else{
+            if(distanceMatrixString.contains("hour"))
+            {
+                hoursParsed = 1.0f; //we have 1 hour
+            }
+            else{
+                hoursParsed = 0.0f; //we don't actually have an hour
+            }
+        }
+
+        if(isMinutePlural) //if the minutes are plural
+        {
+            int indexOfMinutes = distanceMatrixString.indexOf("mins");
+            int indexOfHours = 0;
+            int buffer = 0;
+            if(distanceMatrixString.contains("hours")){
+                indexOfHours = distanceMatrixString.indexOf("hours");
+                buffer = 5;
+            }else if(distanceMatrixString.contains("hour")){
+                indexOfHours = distanceMatrixString.indexOf("hour");
+                buffer = 4;
+            }
+            minutes = distanceMatrixString.substring(indexOfHours + buffer, indexOfMinutes);
+            minutesParsed = Float.parseFloat(minutes);
+        }else{
+            if(distanceMatrixString.contains("min"))
+            {
+                minutesParsed = 1.0f; //we have 1 minute
+            }
+            else{
+                minutesParsed = 0.0f; //we don't actually have a minute
+            }
+        }
+
+        float totalSeconds = (hoursParsed * 3600) + (minutesParsed * 60);
+
+        return totalSeconds;
     }
 }
