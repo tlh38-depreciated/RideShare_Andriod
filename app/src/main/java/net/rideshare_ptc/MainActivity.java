@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Button loginBtn = (Button) findViewById(R.id.btnLogin);
         Button signUpBtn = (Button) findViewById(R.id.btnSignUp);
+        Button btnAllRides = (Button) findViewById(R.id.btnAllRides);
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -39,6 +40,14 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 //Will need to test/ confirm this works when we launch the web app
                 //startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://localhost:7298/")));
+            }
+        });
+
+        btnAllRides.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(view.getContext(), ViewAllRides.class);
+                startActivity(intent);
             }
         });
     }
