@@ -24,6 +24,12 @@
             android:exported="false" />
         <activity
             android:name=".DriverCarInfo"
+
+
+            android:exported="false" />
+        <activity
+            android:name=".UserProfile"
+
             android:exported="false" />
         <activity
             android:name=".LoginActivity"
