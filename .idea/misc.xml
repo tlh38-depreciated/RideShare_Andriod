@@ -3,23 +3,13 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/MobileFinal/RideShare_Andriod/app/src/main/res/layout/activity_driver_car_info.xml" value="0.36666666666666664" />
-        <entry key="..\:/MobileFinal/RideShare_Andriod/app/src/main/res/layout/activity_driver_only_splash.xml" value="0.36666666666666664" />
-        <entry key="..\:/MobileFinal/RideShare_Andriod/app/src/main/res/layout/activity_driver_post_aride.xml" value="0.125" />
-        <entry key="..\:/MobileFinal/RideShare_Andriod/app/src/main/res/layout/activity_login.xml" value="0.36666666666666664" />
-        <entry key="..\:/MobileFinal/RideShare_Andriod/app/src/main/res/layout/activity_login_welcome_status.xml" value="0.36666666666666664" />
-        <entry key="..\:/MobileFinal/RideShare_Andriod/app/src/main/res/layout/activity_main.xml" value="0.36666666666666664" />
-        <entry key="..\:/MobileFinal/RideShare_Andriod/app/src/main/res/layout/activity_main_menu.xml" value="0.36666666666666664" />
-        <entry key="..\:/MobileFinal/RideShare_Andriod/app/src/main/res/layout/activity_request_aride.xml" value="0.36666666666666664" />
-        <entry key="..\:/MobileFinal/RideShare_Andriod/app/src/main/res/layout/activity_view_all_rides2.xml" value="0.33" />
-        <entry key="..\:/MobileFinal/RideShare_Andriod/app/src/main/res/layout/item_ride.xml" value="0.365625" />
         <entry key="..\:/PTC/ITP262 - Enterprise Apps/Peer Repos/Android/RideShare_Android/app/src/main/res/layout/activity_login.xml" value="0.19322916666666667" />
-        <entry key="..\:/Users/ChristinaSereday/AndroidStudioProjects/RideShare_PTC/app/src/main/res/layout/activity_driver_car_info.xml" value="0.128" />
+        <entry key="..\:/PTC/ITP262 - Enterprise Apps/Peer Repos/Android/RideShare_Android/app/src/main/res/layout/activity_login_welcome_status.xml" value="0.371875" />
+        <entry key="..\:/PTC/ITP262 - Enterprise Apps/Peer Repos/Android/RideShare_Android/app/src/main/res/layout/activity_main.xml" value="0.371875" />
+        <entry key="..\:/PTC/ITP262 - Enterprise Apps/Peer Repos/Android/RideShare_Android/app/src/main/res/layout/activity_main_menu.xml" value="0.371875" />
+        <entry key="..\:/PTC/ITP262 - Enterprise Apps/Peer Repos/Android/RideShare_Android/app/src/main/res/layout/activity_ride_posted_success.xml" value="0.18645833333333334" />
         <entry key="..\:/Users/ChristinaSereday/AndroidStudioProjects/RideShare_PTC/app/src/main/res/layout/activity_driver_post_aride.xml" value="0.264" />
-        <entry key="..\:/Users/ChristinaSereday/AndroidStudioProjects/RideShare_PTC/app/src/main/res/layout/activity_login_welcome_status.xml" value="0.1111111111111111" />
         <entry key="..\:/Users/ChristinaSereday/AndroidStudioProjects/RideShare_PTC/app/src/main/res/layout/activity_main.xml" value="0.1766304347826087" />
-        <entry key="..\:/Users/ChristinaSereday/AndroidStudioProjects/RideShare_PTC/app/src/main/res/layout/activity_main_menu.xml" value="0.25" />
-        <entry key="..\:/Users/ChristinaSereday/AndroidStudioProjects/RideShare_PTC/app/src/main/res/layout/activity_request_aride.xml" value="0.11141304347826086" />
         <entry key="..\:/Users/ChristinaSereday/AndroidStudioProjects/RideShare_PTC/app/src/main/res/layout/activity_ride_posted_success.xml" value="0.18795289855072464" />
         <entry key="..\:/Users/jdste/OneDrive/Documents/GitHub/RideShare_Andriod/app/src/main/res/layout/activity_driver_post_aride.xml" value="0.25" />
         <entry key="..\:/Users/jdste/OneDrive/Documents/GitHub/RideShare_Andriod/app/src/main/res/layout/activity_login.xml" value="0.25" />
