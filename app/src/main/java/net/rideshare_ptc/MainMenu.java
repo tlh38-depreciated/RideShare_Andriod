@@ -17,6 +17,7 @@ public class MainMenu extends AppCompatActivity {
         Button btnLogout = (Button) findViewById(R.id.btnMenuLogOut);
         Button btnPostRide  = (Button) findViewById(R.id.btnMenuPost);
         Button btnUserProf = (Button) findViewById(R.id.btnMenuViewProf);
+
 //Buttons for MyRides, All Rides, and User Profile TBA
 
         btnPostRide.setOnClickListener(new View.OnClickListener() {
@@ -44,13 +45,15 @@ public class MainMenu extends AppCompatActivity {
                 startActivity(new Intent(MainMenu.this,MainActivity.class));
             }
         });
-        //Testing button- not routed to correct activity- change when correct activity ready
+        //Testing button- Route updated to UserProfile
         btnUserProf.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               startActivity(new Intent(MainMenu.this,DriverCarInfo.class));
+               startActivity(new Intent(MainMenu.this, UserProfile.class));
             }
         });
+
+
         
     }
 }

@@ -3,4 +3,19 @@
     <string name="signUpBtnTxt">Sign Up</string>
     <string name="logInBtnTxt">Login</string>
     <string name="welcomeScrnTxt">RideShare is a resource for PTC students to find or provide rides for their friends and classmates to and from the school.</string>
+
+    <string name="RiderName">Rider Name</string>
+    <string name="DriverName">Driver Name</string>
+    <string name="RiderRating">Rider Rating</string>
+    <string name="DriverRating">Driver Rating</string>
+    <string name="PickupLocation">Pick Up Location</string>
+    <string name="Destination">Destination</string>
+    <string name="Datetime">Date/Time</string>
+
+    <!-- Strings needed for User Profile Page -->
+    <string name="FirstNameText">First Name:</string>
+    <string name="LastNameText">Last Name:</string>
+    <string name="RiderScoreText">Rider Score:</string>
+    <string name="DriverScoreText">Driver Score:</string>
+
 </resources>

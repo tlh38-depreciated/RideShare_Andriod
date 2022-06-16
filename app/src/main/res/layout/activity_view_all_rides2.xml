@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ViewAllRides">
+
+    <ImageView
+        android:id="@+id/imgCarLogo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+
+        android:layout_alignParentTop="true"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.037"
+        app:srcCompat="@drawable/ptc_logo_2" />
+
+    <TableLayout
+        android:id="@+id/tableLayout"
+        android:layout_width="434dp"
+        android:layout_height="114dp"
+        android:layout_margin="40dp"
+        android:background="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.2">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="126dp"
+            android:background="@color/PTCBlue">
+
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="4"
+                android:gravity="center_horizontal"
+                android:padding="10sp"
+                android:text="@string/PickupLocation"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+
+                />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="4"
+                android:gravity="center_horizontal"
+                android:padding="10sp"
+                android:text="@string/Destination"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+
+                />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="4"
+                android:gravity="center_horizontal"
+                android:padding="10sp"
+                android:text="@string/Datetime"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+
+                />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="4"
+                android:gravity="center_horizontal"
+                android:padding="10sp"
+                android:text=""
+                android:textColor="@color/white"
+                android:textSize="14sp"
+
+                />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/PTCGreen">
+
+            <TextView
+                android:id="@+id/ViewRidesPickUp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="4"
+                android:gravity="center_horizontal"
+                android:padding="10sp"
+                android:text="Somewhere"
+                android:textColor="@color/PTCBlue"
+                android:textSize="14sp"
+
+                />
+
+            <TextView
+                android:id="@+id/ViewRidesDes"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="4"
+                android:gravity="center_horizontal"
+                android:padding="10sp"
+                android:text="Somewhere"
+                android:textColor="@color/PTCBlue"
+                android:textSize="14sp"
+
+                />
+
+            <TextView
+                android:id="@+id/ViewRidesDateTime"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="4"
+                android:gravity="center_horizontal"
+                android:padding="10sp"
+                android:text="6/14/2022"
+                android:textColor="@color/PTCBlue"
+                android:textSize="14sp"
+
+                />
+
+            <Button
+                android:id="@+id/btnDetails"
+                android:layout_width="101dp"
+                android:layout_height="48dp"
+                android:layout_marginBottom="20dp"
+                android:background="@color/PTCBlue"
+                android:text="Details"
+                android:textColor="#81D4FA" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/PTCGreen"
+
+            />
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/PTCGreen"
+
+            />
+    </TableLayout>
+
+    <ListView
+        android:layout_width="485dp"
+        android:layout_height="472dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tableLayout" />
+</androidx.constraintlayout.widget.ConstraintLayout>
