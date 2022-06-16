@@ -96,6 +96,17 @@ public class RequestARideTests {
      */
     @Test
     public void Test_RequestARide_PostInformationIsCorrect(){
+        onView(withId(R.id.inptReqDateTime)).perform(typeText("12-12-2000"), ViewActions.closeSoftKeyboard());
+
+        //Pick up location and destination use the examples from the sample distance matrix api request
+        //Distance Expected: 228 (mi)
+        //Duration Expected: 14220 (seconds)
+        onView(withId(R.id.inptReqPickUpLoc)).perform(typeText("New York, NY"), ViewActions.closeSoftKeyboard());
+        onView(withId(R.id.inptReqDestLoc)).perform(typeText("Washington, DC"), ViewActions.closeSoftKeyboard());
+
+        //click submit
+        onView(withId(R.id.btnReqARide)).perform(click());
+
         
     }
 }
