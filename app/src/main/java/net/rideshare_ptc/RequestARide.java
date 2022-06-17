@@ -74,6 +74,7 @@ public class RequestARide extends AppCompatActivity implements DatePickerDialog.
     String dateTime;
 
 
+
     Button calendar;
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,7 +85,6 @@ public class RequestARide extends AppCompatActivity implements DatePickerDialog.
         txtCalendar = (TextView) findViewById(R.id.txtCalendar);
         rpickupLocI = (EditText) findViewById(R.id.inptReqPickUpLoc);
         rdestLocI = (EditText) findViewById(R.id.inptReqDestLoc);
-        rrideDateTimeI = (EditText) findViewById(R.id.inptReqDateTime); //this needs to be changed to a date picker
         rsmokingI = (CheckBox) findViewById(R.id.ReqcheckBoxSmoking);
         reatingI = (CheckBox) findViewById(R.id.ReqcheckBoxEating);
         rtalkingI = (CheckBox) findViewById(R.id.ReqcheckBoxTalking);
@@ -117,9 +117,7 @@ public class RequestARide extends AppCompatActivity implements DatePickerDialog.
 
                             errorsFound = false;
 
-                            if (rpickupLocI.getText().toString().isEmpty() || rdestLocI.getText().toString().isEmpty() || dateTime.isEmpty()) {
-
-                                if (rpickupLocI.getText().toString().isEmpty() || rdestLocI.getText().toString().isEmpty() || txtCalendar.getText().toString().isEmpty()) {
+                                if (rpickupLocI.getText().toString().isEmpty() || rdestLocI.getText().toString().isEmpty() || dateTime.isEmpty()) {
 
                                     Toast.makeText(RequestARide.this, "Please complete all fields", Toast.LENGTH_SHORT).show();
 
@@ -135,8 +133,6 @@ public class RequestARide extends AppCompatActivity implements DatePickerDialog.
                                         //TODO: Add error output for the user
                                     }
                                 }
-                            }
-
                         }
                     }
                 });
@@ -168,7 +164,7 @@ public class RequestARide extends AppCompatActivity implements DatePickerDialog.
         public void onDateSet(DatePicker datePicker, int year, int month, int dayOfMonth) {
             myYear = year;
             myday = dayOfMonth;
-            myMonth = month;
+            myMonth = month + 1;
             Calendar c = Calendar.getInstance();
             hour = c.get(Calendar.HOUR);
             minute = c.get(Calendar.MINUTE);
@@ -180,6 +176,8 @@ public class RequestARide extends AppCompatActivity implements DatePickerDialog.
         public void onTimeSet(TimePicker timePicker, int hourOfDay, int minute) {
             myHour = hourOfDay;
             myMinute = minute;
+            String displayTime;
+            String meridian = "AM";
 
             dateTime = (myYear + "-" +
                     myMonth + "-" +
@@ -187,7 +185,17 @@ public class RequestARide extends AppCompatActivity implements DatePickerDialog.
                     myHour + ":" +
                     myMinute);
 
-            txtCalendar.setText(dateTime);
+            if (myHour > 12){
+                myHour = myHour - 12;
+                meridian = "PM";
+            }
+            displayTime = (myYear + "-" +
+                    myMonth + "-" +
+                    myday + " " +
+                    myHour + ":" +
+                    myMinute + " " + meridian);
+
+            txtCalendar.setText(displayTime);
 
 
         }
