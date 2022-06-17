@@ -13,6 +13,14 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
+//Calendar imports
+import android.widget.DatePicker;
+import android.widget.TextView;
+import android.widget.TimePicker;
+import android.text.format.DateFormat;
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.fasterxml.jackson.core.JsonGenerationException;
@@ -20,17 +28,24 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import org.w3c.dom.Text;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Calendar;
+
 
 import Distance_Matrix.DistanceMatrixResponseShell;
 
 
-public class RequestARide extends AppCompatActivity {
+
+
+public class RequestARide extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener{
+
     Button riderReq;
     Button retToMenu;
     Ride riderRidePost;
@@ -42,18 +57,31 @@ public class RequestARide extends AppCompatActivity {
     CheckBox rtalkingI;
     CheckBox rcarseatI;
     String rrideJSON;
+    TextView txtCalendar;
     LoginManager mgr = LoginManager.getInstance();
     User loggedInUser = mgr.getLoggedInUser();
+
 
     Boolean errorsFound = false;
 
     ApplicationInfo appInfo;
     static String apiKey;
+    //Calendar Stuff
+
+    int day, month, year, hour, minute;
+    int myday, myMonth, myYear, myHour, myMinute;
+
+    String dateTime;
+
+
+    Button calendar;
+
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_request_aride);
         //get the objects (input fields) from the activity - intialize views
+        txtCalendar = (TextView) findViewById(R.id.txtCalendar);
         rpickupLocI = (EditText) findViewById(R.id.inptReqPickUpLoc);
         rdestLocI = (EditText) findViewById(R.id.inptReqDestLoc);
         rrideDateTimeI = (EditText) findViewById(R.id.inptReqDateTime); //this needs to be changed to a date picker
@@ -61,6 +89,7 @@ public class RequestARide extends AppCompatActivity {
         reatingI = (CheckBox) findViewById(R.id.ReqcheckBoxEating);
         rtalkingI = (CheckBox) findViewById(R.id.ReqcheckBoxTalking);
         rcarseatI = (CheckBox) findViewById(R.id.ReqcheckBoxHasCarseat);
+        calendar = (Button) findViewById(R.id.btnCalendar);
         riderReq = (Button) findViewById(R.id.btnReqARide);
         retToMenu = (Button) findViewById(R.id.btnReqRideRetMenu);
 
@@ -85,25 +114,30 @@ public class RequestARide extends AppCompatActivity {
                             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
                             StrictMode.setThreadPolicy(policy);
 
+
                             errorsFound = false;
 
-                            if (rpickupLocI.getText().toString().isEmpty() || rdestLocI.getText().toString().isEmpty() || rrideDateTimeI.getText().toString().isEmpty()) {
-                                Toast.makeText(RequestARide.this, "Please complete all fields", Toast.LENGTH_SHORT).show();
+                            if (rpickupLocI.getText().toString().isEmpty() || rdestLocI.getText().toString().isEmpty() || dateTime.isEmpty()) {
 
-                            } else {
-                                getRiderRideData();
-                                if(!errorsFound){ //if we have no errors (mainly used to ensure distance matrix properly worked)
-                                    try {
-                                        postRiderRideDataCreateRideInDB();
-                                    } catch (IOException e) {
-                                        e.printStackTrace();
+                                if (rpickupLocI.getText().toString().isEmpty() || rdestLocI.getText().toString().isEmpty() || txtCalendar.getText().toString().isEmpty()) {
+
+                                    Toast.makeText(RequestARide.this, "Please complete all fields", Toast.LENGTH_SHORT).show();
+
+                                } else {
+                                    getRiderRideData();
+                                    if (!errorsFound) { //if we have no errors (mainly used to ensure distance matrix properly worked)
+                                        try {
+                                            postRiderRideDataCreateRideInDB();
+                                        } catch (IOException e) {
+                                            e.printStackTrace();
+                                        }
+                                    } else {
+                                        //TODO: Add error output for the user
                                     }
-                                }else{
-                                    //TODO: Add error output for the user
                                 }
                             }
-                        }
 
+                        }
                     }
                 });
 
@@ -115,7 +149,49 @@ public class RequestARide extends AppCompatActivity {
                     }
 
                 });
+
+                calendar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Calendar calendar = Calendar.getInstance();
+                        year = calendar.get(Calendar.YEAR);
+                        month = calendar.get(Calendar.MONTH);
+                        day = calendar.get(Calendar.DAY_OF_MONTH);
+                        DatePickerDialog datePickerDialog = new DatePickerDialog(RequestARide.this, RequestARide.this,year, month,day);
+                        datePickerDialog.show();
+                    }
+                });
             }
+
+
+        @Override
+        public void onDateSet(DatePicker datePicker, int year, int month, int dayOfMonth) {
+            myYear = year;
+            myday = dayOfMonth;
+            myMonth = month;
+            Calendar c = Calendar.getInstance();
+            hour = c.get(Calendar.HOUR);
+            minute = c.get(Calendar.MINUTE);
+            TimePickerDialog timePickerDialog = new TimePickerDialog(RequestARide.this, RequestARide.this, hour, minute, DateFormat.is24HourFormat(this));
+            timePickerDialog.show();
+        }
+
+        @Override
+        public void onTimeSet(TimePicker timePicker, int hourOfDay, int minute) {
+            myHour = hourOfDay;
+            myMinute = minute;
+
+            dateTime = (myYear + "-" +
+                    myMonth + "-" +
+                    myday + " " +
+                    myHour + ":" +
+                    myMinute);
+
+            txtCalendar.setText(dateTime);
+
+
+        }
+
 
         private void getRiderRideData() {
             //get the data from the form and add to Ride object
@@ -130,7 +206,8 @@ public class RequestARide extends AppCompatActivity {
             riderRidePost.setSmoking((byte)0);
             riderRidePost.setPickUpLoc(rpickupLocI.getText().toString());
             riderRidePost.setDest(rdestLocI.getText().toString());
-            riderRidePost.setRideDate(rrideDateTimeI.getText().toString());
+
+            riderRidePost.setRideDate(dateTime.toString());
 
             //Get Distance Using Google Maps API
             try{
@@ -171,6 +248,7 @@ public class RequestARide extends AppCompatActivity {
 
                         riderRidePost.setDuration(totalMins);
                         riderRidePost.setDistance(distance);
+                        riderRidePost.setRideDate(dateTime.toString());
 
                     }
                     catch (JsonGenerationException ge){
@@ -194,6 +272,8 @@ public class RequestARide extends AppCompatActivity {
                 //IO Exception thrown by the response when it's a bad request
                 errorsFound = true;
             }
+
+
 
             if (rsmokingI.isChecked()) {
                 riderRidePost.setSmoking((byte) 1);
@@ -328,4 +408,6 @@ public class RequestARide extends AppCompatActivity {
 
         return totalSeconds;
     }
+
+
 }
