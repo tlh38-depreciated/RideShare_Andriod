@@ -11,7 +11,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.Calendar;
+import android.widget.DatePicker;
+import android.widget.TextView;
+import android.widget.TimePicker;
+import android.text.format.DateFormat;
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -29,7 +38,7 @@ import java.net.URL;
 
 import Distance_Matrix.DistanceMatrixResponseShell;
 
-public class DriverPostARide extends AppCompatActivity {
+public class DriverPostARide extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
     Button drvRideSubmit;
     Button retToMenu;
     Ride driverRidePost;
@@ -41,11 +50,18 @@ public class DriverPostARide extends AppCompatActivity {
     CheckBox talkingI;
     CheckBox carseatI;
     String rideJSON;
+    TextView txtCalendar;
 
     Boolean errorsFound = false;
 
     ApplicationInfo appInfo;
     static String apiKey;
+
+    int day, month, year, hour, minute;
+    int myday, myMonth, myYear, myHour, myMinute;
+    String dateTime;
+    Button calendar;
+
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
@@ -53,7 +69,8 @@ public class DriverPostARide extends AppCompatActivity {
         //get the objects (input fields) from the activity - intialize views
         pickupLocI = (EditText) findViewById(R.id.inptReqPickUpLoc);
         destLocI = (EditText) findViewById(R.id.inptReqDestLoc);
-        rideDateTimeI = (EditText) findViewById(R.id.inptReqDateTime); //this needs to be changed to a date picker
+        calendar = (Button) findViewById(R.id.btnCalendar);
+        txtCalendar = (TextView) findViewById(R.id.txtCalendar);
         smokingI = (CheckBox) findViewById(R.id.ReqcheckBoxSmoking);
         eatingI = (CheckBox) findViewById(R.id.ReqcheckBoxEating);
         talkingI = (CheckBox) findViewById(R.id.ReqcheckBoxTalking);
@@ -86,7 +103,7 @@ public class DriverPostARide extends AppCompatActivity {
                             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
                             StrictMode.setThreadPolicy(policy);
 
-                            if (pickupLocI.getText().toString().isEmpty() || destLocI.getText().toString().isEmpty() || rideDateTimeI.getText().toString().isEmpty()) {
+                            if (pickupLocI.getText().toString().isEmpty() || destLocI.getText().toString().isEmpty() || dateTime.isEmpty()) {
                                 Toast.makeText(DriverPostARide.this, "Please complete all fields", Toast.LENGTH_SHORT).show();
 
                             } else {
@@ -115,6 +132,18 @@ public class DriverPostARide extends AppCompatActivity {
                     }
 
                 });
+
+                calendar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Calendar calendar = Calendar.getInstance();
+                        year = calendar.get(Calendar.YEAR);
+                        month = calendar.get(Calendar.MONTH);
+                        day = calendar.get(Calendar.DAY_OF_MONTH);
+                        DatePickerDialog datePickerDialog = new DatePickerDialog(DriverPostARide.this, DriverPostARide.this,year, month,day);
+                        datePickerDialog.show();
+                    }
+                });
             }
             else {
                 //splash screen message then re-route to main menu. For now, just re-route to main
@@ -123,6 +152,47 @@ public class DriverPostARide extends AppCompatActivity {
                 //startActivity(new Intent(DriverPostARide.this, MainMenu.class));
             }
         }
+
+
+    @Override
+    public void onDateSet(DatePicker datePicker, int year, int month, int dayOfMonth) {
+        myYear = year;
+        myday = dayOfMonth;
+        myMonth = month + 1;
+        Calendar c = Calendar.getInstance();
+        hour = c.get(Calendar.HOUR);
+        minute = c.get(Calendar.MINUTE);
+        TimePickerDialog timePickerDialog = new TimePickerDialog(DriverPostARide.this, DriverPostARide.this, hour, minute, DateFormat.is24HourFormat(this));
+        timePickerDialog.show();
+    }
+
+    @Override
+    public void onTimeSet(TimePicker timePicker, int hourOfDay, int minute) {
+        myHour = hourOfDay;
+        myMinute = minute;
+        String displayTime;
+        String meridian = "AM";
+
+        dateTime = (myYear + "-" +
+                myMonth + "-" +
+                myday + " " +
+                myHour + ":" +
+                myMinute);
+
+        if (myHour > 12){
+            myHour = myHour - 12;
+            meridian = "PM";
+        }
+        displayTime = (myYear + "-" +
+                myMonth + "-" +
+                myday + " " +
+                myHour + ":" +
+                myMinute + " " + meridian);
+
+        txtCalendar.setText(displayTime);
+    }
+
+
         private void getDriverRideData() {
             //get the data from the form and add to Ride object
             //cannot get an object mapper to work, trying construction JSON Object instead
@@ -135,7 +205,7 @@ public class DriverPostARide extends AppCompatActivity {
             driverRidePost.setSmoking((byte)0);
             driverRidePost.setPickUpLoc(pickupLocI.getText().toString());
             driverRidePost.setDest(destLocI.getText().toString());
-            driverRidePost.setRideDate(rideDateTimeI.getText().toString());
+            driverRidePost.setRideDate(dateTime.toString());
 
             //Get Distance Using Google Maps API
             try{
@@ -327,4 +397,6 @@ public class DriverPostARide extends AppCompatActivity {
 
         return totalSeconds;
     }
+
+
 }

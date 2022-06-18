@@ -70,11 +70,7 @@ public class RequestARide extends AppCompatActivity implements DatePickerDialog.
 
     int day, month, year, hour, minute;
     int myday, myMonth, myYear, myHour, myMinute;
-
     String dateTime;
-
-
-
     Button calendar;
 
     protected void onCreate(Bundle savedInstanceState) {
