@@ -17,8 +17,8 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ptc_logo_2" />
 
-    <ScrollView
-        android:id="@+id/sclViewRideDetails"
+    <TextView
+        android:id="@+id/txtViewRideDetails"
         android:layout_width="333dp"
         android:layout_height="287dp"
         android:layout_marginBottom="272dp"
@@ -33,7 +33,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical" />
-    </ScrollView>
+    </TextView>
 
     <TextView
         android:id="@+id/txtRideDetailTitle"
