@@ -21,6 +21,18 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.concurrent.Executor;
+
+import android.widget.ImageButton;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.biometric.BiometricManager;
+import androidx.biometric.BiometricPrompt;
+import androidx.core.content.ContextCompat;
+
 
 public class LoginActivity extends AppCompatActivity {
     EditText userEmailInpt;
@@ -30,6 +42,8 @@ public class LoginActivity extends AppCompatActivity {
     String userInfoRes;
     User loggingUser = new User(); //create instance of User to capture deets of user attempting to login
     Integer respCode;
+    ImageButton fingerPButton;
+    TextView loginMsg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,8 +54,76 @@ public class LoginActivity extends AppCompatActivity {
         //get the user input data
         userEmailInpt = (EditText) findViewById(R.id.txtInputLoginEM);
         userPWInpt = (EditText) findViewById(R.id.txtInputLoginPW);
+        loginMsg = (TextView) findViewById(R.id.txt_LoginMethodMsg);
 
         Button btnSubmit = (Button) findViewById(R.id.btnSubmitUser);
+
+        //Biometric auth
+        fingerPButton = (ImageButton) findViewById(R.id.imgBtn_fingerprintLogin);
+        // creating a variable for our BiometricManager
+        // and lets check if our user can use biometric sensor or not
+        BiometricManager biometricManager = androidx.biometric.BiometricManager.from(this);
+        switch (biometricManager.canAuthenticate()) {
+
+            // this means we can use biometric sensor
+            case BiometricManager.BIOMETRIC_SUCCESS:
+
+                loginMsg.setText("You can use the fingerprint sensor to login");
+                //loginMsg.setTextColor(Color.parseColor("#fafafa"));
+                break;
+
+            // this means that the device doesn't have fingerprint sensor
+            case BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE:
+                loginMsg.setText("This device doesnot have a fingerprint sensor");
+                fingerPButton.setVisibility(View.GONE);
+                break;
+
+            // this means that biometric sensor is not available
+            case BiometricManager.BIOMETRIC_ERROR_HW_UNAVAILABLE:
+                loginMsg.setText("The biometric sensor is currently unavailable");
+                fingerPButton.setVisibility(View.GONE);
+                break;
+
+            // this means that the device doesn't contain your fingerprint
+            case BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED:
+                loginMsg.setText("Your device doesn't have fingerprint saved,please check your security settings or login with password");
+                fingerPButton.setVisibility(View.GONE);
+                break;
+        }
+        // creating a variable for our Executor
+        Executor executor = ContextCompat.getMainExecutor(this);
+        // this will give us result of AUTHENTICATION
+        final BiometricPrompt biometricPrompt = new BiometricPrompt(LoginActivity.this, executor, new BiometricPrompt.AuthenticationCallback() {
+            @Override
+            public void onAuthenticationError(int errorCode, @NonNull CharSequence errString) {
+                super.onAuthenticationError(errorCode, errString);
+            }
+
+            // THIS METHOD IS CALLED WHEN AUTHENTICATION IS SUCCESS
+            @Override
+            public void onAuthenticationSucceeded(@NonNull BiometricPrompt.AuthenticationResult result) {
+                super.onAuthenticationSucceeded(result);
+                Toast.makeText(getApplicationContext(), "Login Success", Toast.LENGTH_SHORT).show();
+                loginMsg.setText("Login Successful");
+            }
+            @Override
+            public void onAuthenticationFailed() {
+                super.onAuthenticationFailed();
+            }
+        });
+        // creating a variable for our promptInfo
+        // BIOMETRIC DIALOG
+        final BiometricPrompt.PromptInfo promptInfo = new BiometricPrompt.PromptInfo.Builder().setTitle("GFG")
+                .setDescription("Use your fingerprint to login ").setNegativeButtonText("Cancel").build();
+        fingerPButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                biometricPrompt.authenticate(promptInfo);
+
+            }
+        });
+
+
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
