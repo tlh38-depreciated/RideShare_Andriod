@@ -68,13 +68,13 @@ public class LoginActivity extends AppCompatActivity {
             // this means we can use biometric sensor
             case BiometricManager.BIOMETRIC_SUCCESS:
 
-                loginMsg.setText("You can use the fingerprint sensor to login");
+                loginMsg.setText("You may use the fingerprint sensor to login");
                 //loginMsg.setTextColor(Color.parseColor("#fafafa"));
                 break;
 
             // this means that the device doesn't have fingerprint sensor
             case BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE:
-                loginMsg.setText("This device doesnot have a fingerprint sensor");
+                loginMsg.setText("This device does not have a fingerprint sensor");
                 fingerPButton.setVisibility(View.GONE);
                 break;
 
@@ -86,7 +86,7 @@ public class LoginActivity extends AppCompatActivity {
 
             // this means that the device doesn't contain your fingerprint
             case BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED:
-                loginMsg.setText("Your device doesn't have fingerprint saved,please check your security settings or login with password");
+                loginMsg.setText("Your device doesn't have fingerprint saved, please check your security settings or login with password");
                 fingerPButton.setVisibility(View.GONE);
                 break;
         }
@@ -104,7 +104,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onAuthenticationSucceeded(@NonNull BiometricPrompt.AuthenticationResult result) {
                 super.onAuthenticationSucceeded(result);
                 Toast.makeText(getApplicationContext(), "Login Success", Toast.LENGTH_SHORT).show();
-                loginMsg.setText("Login Successful");
+                loginMsg.setText("Biometric authentication successful");
             }
             @Override
             public void onAuthenticationFailed() {
@@ -113,7 +113,7 @@ public class LoginActivity extends AppCompatActivity {
         });
         // creating a variable for our promptInfo
         // BIOMETRIC DIALOG
-        final BiometricPrompt.PromptInfo promptInfo = new BiometricPrompt.PromptInfo.Builder().setTitle("GFG")
+        final BiometricPrompt.PromptInfo promptInfo = new BiometricPrompt.PromptInfo.Builder().setTitle("Fingerprint Login")
                 .setDescription("Use your fingerprint to login ").setNegativeButtonText("Cancel").build();
         fingerPButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -135,7 +135,7 @@ public class LoginActivity extends AppCompatActivity {
                 if (SDK_INT > 8) {
                     StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
                     StrictMode.setThreadPolicy(policy);
-                    if (entEmailAdd.contains(ptcCheck)) {
+                    if (entEmailAdd.contains(ptcCheck) && loginMsg.getText().equals("Biometric authentication successful")) {
                         try {
                             getUserLoginData();
                             loginUserToLoginManager();
