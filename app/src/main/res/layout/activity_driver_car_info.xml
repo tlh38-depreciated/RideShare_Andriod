@@ -8,28 +8,26 @@
 
     <TextView
         android:id="@+id/txtCarDetails"
-        android:layout_width="384dp"
-        android:layout_height="356dp"
-        android:layout_marginBottom="84dp"
+        android:layout_width="319dp"
+        android:layout_height="216dp"
+        android:layout_marginBottom="188dp"
         android:textAlignment="textStart"
         android:textColor="@color/ptc_DkBlue"
         android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.47"
         app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
         android:id="@+id/imgCarLogo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="44dp"
-        app:layout_constraintBottom_toTopOf="@+id/txtCarDetails"
+        android:layout_width="405dp"
+        android:layout_height="66dp"
+        android:layout_marginBottom="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/txtCarTitle"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintVertical_bias="1.0"
         app:srcCompat="@drawable/ptc_logo_2" />
 
     <Button
@@ -49,43 +47,41 @@
         android:id="@+id/btnCarToMyRides"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="72dp"
+        android:layout_marginStart="64dp"
         android:layout_marginTop="12dp"
         android:layout_marginBottom="24dp"
         android:text="My Rides"
         android:textColor="@color/ptc_DkBlue"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtCarDetails" />
+        app:layout_constraintTop_toBottomOf="@+id/txtCarDetails"
+        app:layout_constraintVertical_bias="0.375" />
 
     <TextView
         android:id="@+id/txtCarTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginBottom="16dp"
         android:text="Car Details for Driver: "
         android:textColor="@color/ptc_DkBlue"
         android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/txtCarUserName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imgCarLogo" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
         android:id="@+id/txtCarUserName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="37dp"
-        android:layout_marginBottom="36dp"
+        android:layout_marginBottom="24dp"
         android:ems="10"
         android:textAlignment="center"
         android:textColor="@color/ptc_DkBlue"
         android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@+id/txtCarDetails"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtCarTitle"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
