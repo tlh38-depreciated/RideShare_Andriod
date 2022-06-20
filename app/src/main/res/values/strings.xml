@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">PTCRideShare</string>
+    <string name="app_name">PTC Ride Share App</string>
     <string name="signUpBtnTxt">Sign Up</string>
     <string name="logInBtnTxt">Login</string>
     <string name="welcomeScrnTxt">RideShare is a resource for PTC students to find or provide rides for their friends and classmates to and from the school.</string>

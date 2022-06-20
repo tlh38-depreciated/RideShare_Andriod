@@ -8,28 +8,26 @@
 
     <TextView
         android:id="@+id/txtLoginMessage"
-        android:layout_width="347dp"
-        android:layout_height="503dp"
-        android:layout_marginBottom="84dp"
+        android:layout_width="361dp"
+        android:layout_height="270dp"
+        android:layout_marginBottom="216dp"
         android:textAlignment="textStart"
         android:textColor="@color/ptc_DkBlue"
         android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.47"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgLoginLogo"
+        app:layout_constraintVertical_bias="0.606" />
 
     <ImageView
         android:id="@+id/imgLoginLogo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="44dp"
-        app:layout_constraintBottom_toTopOf="@+id/txtLoginMessage"
+        android:layout_width="404dp"
+        android:layout_height="80dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.428"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/ptc_logo_2" />
 
     <Button
@@ -41,21 +39,23 @@
         android:textColor="@color/ptc_DkBlue"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.57"
         app:layout_constraintStart_toEndOf="@+id/btnStatusToLogin"
         app:layout_constraintTop_toBottomOf="@+id/txtLoginMessage"
-        app:layout_constraintVertical_bias="0.375" />
+        app:layout_constraintVertical_bias="0.374" />
 
     <Button
         android:id="@+id/btnStatusToLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="72dp"
+        android:layout_marginStart="68dp"
         android:layout_marginTop="12dp"
         android:layout_marginBottom="24dp"
         android:text="Login"
         android:textColor="@color/ptc_DkBlue"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtLoginMessage" />
+        app:layout_constraintTop_toBottomOf="@+id/txtLoginMessage"
+        app:layout_constraintVertical_bias="0.374" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
