@@ -5,19 +5,28 @@ import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
 import static androidx.test.espresso.matcher.ViewMatchers.withHint;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static org.junit.Assert.*;
 
+import android.widget.DatePicker;
+
 import androidx.test.espresso.action.ViewActions;
+import androidx.test.espresso.contrib.PickerActions;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import org.hamcrest.Matchers;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import java.io.IOException;
+
+import dagger.hilt.android.testing.HiltAndroidTest;
 
 /**
  * Integration tests for Ride Posting features in the app
@@ -38,12 +47,12 @@ public class RequestARideTests {
      * Runs before all tests to ensure that they function properly.
      * Assume that tests in LoginActivityTests.java are all passing.
      */
-    private void login() {
+    private void login() throws IOException {
         //type in the username
         onView(withId(R.id.txtInputLoginEM)).perform(typeText("RSC14@students.ptcollege.edu"), ViewActions.closeSoftKeyboard());
 
         //type in the password
-        onView(withId(R.id.txtInputLoginPW)).perform(typeText("Password12!"), ViewActions.closeSoftKeyboard());
+        onView(withId(R.id.txtInputLoginPW)).perform(typeText("password1"), ViewActions.closeSoftKeyboard());
 
         //click submit
         onView(withId(R.id.btnSubmitUser)).perform(click());
@@ -56,6 +65,21 @@ public class RequestARideTests {
      */
     private void navigateToRequestARide(){
         onView(withId(R.id.btnMenuReq)).perform(click());
+    }
+
+    /**
+     * Picks the date and time from the date-time picker button
+     * on the Request A Ride Page
+     */
+    private void pickDateAndTime(){
+        //click on the calendar button
+        onView(withId(R.id.btnCalendar)).perform(click());
+
+        //Find the calendar and set a date
+        onView(withClassName(Matchers.equalTo(DatePicker.class.getName()))).perform(PickerActions.setDate(2000, 1, 1));
+
+        //Find the Clock and set a time
+
     }
 
     /**
@@ -72,12 +96,13 @@ public class RequestARideTests {
 
     @After
     public void tearDown() throws Exception {
+
     }
 
     @Test
     public void Test_RequestARide_AllElementsAreDisplayed(){
         navigateToRequestARide(); //navigate to request a ride from home page
-        onView(withId(R.id.inptReqDateTime)).check(matches(isDisplayed()));
+        onView(withId(R.id.btnCalendar)).check(matches(isDisplayed()));
         onView(withId(R.id.inptReqPickUpLoc)).check(matches(isDisplayed()));
         onView(withId(R.id.inptReqDestLoc)).check(matches(isDisplayed()));
         onView(withId(R.id.ReqcheckBoxSmoking)).check(matches(isDisplayed()));
@@ -96,8 +121,11 @@ public class RequestARideTests {
      */
     @Test
     public void Test_RequestARide_PostInformationIsCorrect(){
-        onView(withId(R.id.inptReqDateTime)).perform(typeText("12-12-2000"), ViewActions.closeSoftKeyboard());
+        navigateToRequestARide();
+        pickDateAndTime();
 
+
+        /*
         //Pick up location and destination use the examples from the sample distance matrix api request
         //Distance Expected: 228 (mi)
         //Duration Expected: 14220 (seconds)
@@ -106,7 +134,7 @@ public class RequestARideTests {
 
         //click submit
         onView(withId(R.id.btnReqARide)).perform(click());
-
+        */
         
     }
 }
