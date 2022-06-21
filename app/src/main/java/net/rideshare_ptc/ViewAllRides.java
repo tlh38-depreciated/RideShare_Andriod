@@ -7,11 +7,13 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -35,6 +37,7 @@ public class ViewAllRides extends AppCompatActivity {
     TextView rideDate; //used java.sql date
     Ride ride = new Ride();
     Button retToMenu;
+    ListView allRidesView;
 @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,21 +51,31 @@ public class ViewAllRides extends AppCompatActivity {
             try {
                 getRidesFromDB();
                 RideAdapter rideAdapter = new RideAdapter(this, Rides);
-                ListView allRidesView = findViewById(R.id.ridesList);
+                allRidesView = findViewById(R.id.ridesList);
                 allRidesView.setAdapter(rideAdapter);
-             //   startActivity(new Intent(ViewAllRides.this, DriverOnlySplash.class).putExtra("Success Ride Posted", "JSON Response: " + Rides.toString()));
-                //pickUpLoc.setText(Rides.toString());
-                //dest.setText(ride.getDest());
+
             } catch (IOException e) {
                 e.printStackTrace();
                 startActivity(new Intent(ViewAllRides.this, DriverOnlySplash.class).putExtra("Success Ride Posted", "IO Error: " + e.toString()));
             }
+            retToMenu.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(ViewAllRides.this, MainMenu.class));
+                }
+            });
 
+            // ListView on item selected listener.
+            allRidesView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
+                public void onItemClick(AdapterView<?> adapter, View v, int position, long id) {
 
+                    Ride selItem = (Ride) Rides.get(position); //
+                    String rideInfo = selItem.toString(); //getter method
+                    Toast.makeText(ViewAllRides.this, rideInfo, Toast.LENGTH_LONG).show();
+                }
+            });
         }
-
-
     }
 
     private void getRidesFromDB() throws IOException {

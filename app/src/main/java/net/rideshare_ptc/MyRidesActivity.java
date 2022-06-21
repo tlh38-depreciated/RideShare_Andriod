@@ -58,8 +58,6 @@ public class MyRidesActivity extends AppCompatActivity {
                         startActivity(new Intent(MyRidesActivity.this, DriverOnlySplash.class).putExtra("Success Ride Posted", "IO Error: " + e.toString()));
                     }
 
-
-
             }
         }
 
