@@ -2,7 +2,6 @@ package net.rideshare_ptc;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -10,7 +9,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.net.Uri.Builder;
 
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -19,17 +17,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import net.rideshare_ptc.adapters.RideAdapter;
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.List;
+
 public class MyRidesActivity extends AppCompatActivity {
 
         static ArrayList<Ride> Rides = new ArrayList<Ride>();
@@ -39,7 +32,7 @@ public class MyRidesActivity extends AppCompatActivity {
         Ride ride = new Ride();
         User loggedInUser;
         String lUserId;
-        Button retMyRideToMenu;
+
         @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
@@ -48,7 +41,8 @@ public class MyRidesActivity extends AppCompatActivity {
             LoginManager mgr = LoginManager.getInstance();
             loggedInUser = mgr.getLoggedInUser();
             lUserId = loggedInUser.getUserID();
-            retMyRideToMenu = (Button) findViewById(R.id.btnMyRidesReturnMenu);
+            Button retMyRideToMenu = (Button) findViewById(R.id.btnMyRidesReturn);
+
 
             int SDK_INT = Build.VERSION.SDK_INT;
             if (SDK_INT > 8) {
@@ -64,8 +58,9 @@ public class MyRidesActivity extends AppCompatActivity {
                         startActivity(new Intent(MyRidesActivity.this, DriverOnlySplash.class).putExtra("Success Ride Posted", "IO Error: " + e.toString()));
                     }
 
-            }
 
+
+            }
         }
 
 

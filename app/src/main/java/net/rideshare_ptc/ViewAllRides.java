@@ -58,14 +58,7 @@ public class ViewAllRides extends AppCompatActivity {
                 startActivity(new Intent(ViewAllRides.this, DriverOnlySplash.class).putExtra("Success Ride Posted", "IO Error: " + e.toString()));
             }
 
-            retToMenu.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(v.getContext(), MainMenu.class);
-                    startActivity(intent);
-                }
 
-            });
 
         }
 
