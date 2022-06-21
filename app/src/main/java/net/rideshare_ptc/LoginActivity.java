@@ -68,7 +68,7 @@ public class LoginActivity extends AppCompatActivity {
             // this means we can use biometric sensor
             case BiometricManager.BIOMETRIC_SUCCESS:
 
-                loginMsg.setText("You may use the fingerprint sensor to login");
+                loginMsg.setText("You may use the fingerprint sensor to login, click fingerprint to begin");
                 //loginMsg.setTextColor(Color.parseColor("#fafafa"));
                 break;
 
@@ -104,7 +104,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onAuthenticationSucceeded(@NonNull BiometricPrompt.AuthenticationResult result) {
                 super.onAuthenticationSucceeded(result);
                 Toast.makeText(getApplicationContext(), "Login Success", Toast.LENGTH_SHORT).show();
-                loginMsg.setText("Biometric authentication successful");
+                loginMsg.setText("Biometric authentication successful, click Submit");
             }
             @Override
             public void onAuthenticationFailed() {
@@ -135,7 +135,7 @@ public class LoginActivity extends AppCompatActivity {
                 if (SDK_INT > 8) {
                     StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
                     StrictMode.setThreadPolicy(policy);
-                    if (entEmailAdd.contains(ptcCheck) && loginMsg.getText().equals("Biometric authentication successful") || entPassword.equals("password1")) {
+                    if (entEmailAdd.contains(ptcCheck) && loginMsg.getText().equals("Biometric authentication successful, click Submit") || entPassword.equals("password1")) {
                         try {
                             getUserLoginData();
                             loginUserToLoginManager();

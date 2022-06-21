@@ -13,21 +13,29 @@ public class MainMenu extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
-        Button btnMyRides = (Button) findViewById(R.id.btnMenuViewRides);
+        Button btnMyRides = (Button) findViewById(R.id.btnMainMyRides);
         Button btnReqRide = (Button) findViewById(R.id.btnMenuReq);
         Button btnLogout = (Button) findViewById(R.id.btnMenuLogOut);
         Button btnPostRide  = (Button) findViewById(R.id.btnMenuPost);
         Button btnUserProf = (Button) findViewById(R.id.btnMenuViewProf);
+        Button btnAllRides = (Button) findViewById(R.id.btnMenuViewRides);
 
-//Buttons for MyRides, All Rides, and User Profile TBA
-        btnMyRides.setOnClickListener(new View.OnClickListener() {
+
+        btnAllRides.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                LoginManager mgr = LoginManager.getInstance();
-                //startActivity(new Intent(MainMenu.this,DriverOnlySplash.class).putExtra("Success Ride Posted","User Logged out: "+ mgr.getLoggedInUserList().toString()));
-                Intent intent = new Intent(v.getContext(), RideDetailsActivity.class);
+            public void onClick(View view) {
+                Intent intent = new Intent(view.getContext(), ViewAllRides.class);
                 startActivity(intent);
             }
+
+        });
+        btnMyRides.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(view.getContext(), MyRidesActivity.class);
+                startActivity(intent);
+            }
+
         });
 
         btnPostRide.setOnClickListener(new View.OnClickListener() {
@@ -35,8 +43,9 @@ public class MainMenu extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(view.getContext(), DriverPostARide.class);
                 startActivity(intent);
-                }
+            }
         });
+
 
         btnReqRide.setOnClickListener(new View.OnClickListener() {
             @Override

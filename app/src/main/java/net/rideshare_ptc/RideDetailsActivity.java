@@ -11,6 +11,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.fasterxml.jackson.core.JsonGenerationException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -19,13 +20,14 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 
 import android.os.Bundle;
 
 public class RideDetailsActivity extends AppCompatActivity {
 
-
+    static ArrayList<Ride> Rides = new ArrayList<Ride>();
 
     TextView rideDetails;
     Ride ride = new Ride();
@@ -33,7 +35,7 @@ public class RideDetailsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ride_details);
-
+        // Get A RIDE specific
         rideDetails = (TextView) findViewById(R.id.txtViewRideDetails);
         String rideData = ride.toString();
         try {
@@ -49,7 +51,10 @@ public class RideDetailsActivity extends AppCompatActivity {
     }
 
     private void getRidesFromDB() throws IOException {
-        URL url = new URL("http://10.0.2.2:8080/viewRides"); //?Origin="+New Jersey+"&"+Destination+"=New&DateTime="+5/26/2022");
+        int resCode = 0;
+        String strResponse = "";
+        URL url =new URL("http://10.0.2.2:8080/viewRides");
+
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setUseCaches(false);
         con.setRequestMethod("GET");
@@ -64,18 +69,18 @@ public class RideDetailsActivity extends AppCompatActivity {
                 stringBuilder.append(line);
             }
             buffread.close();
-            String strResponse = stringBuilder.toString();
-            int resCode = con.getResponseCode();
+            strResponse = stringBuilder.toString();
+            resCode = con.getResponseCode();
             ObjectMapper mapper = new ObjectMapper();
             try {
-                ride = mapper.readValue(strResponse, Ride.class);
+                Rides = mapper.readValue(strResponse, new TypeReference<ArrayList<Ride>>(){});
             } catch (JsonGenerationException ge) {
                 System.out.println(ge);
             } catch (JsonMappingException me) {
                 System.out.println(me);
             }
         } catch (IOException e){
-            startActivity(new Intent(RideDetailsActivity.this, DriverOnlySplash.class).putExtra("Success Ride Posted", "User info: \n ERROR \n"+ e + ride.toString()));
+            startActivity(new Intent(RideDetailsActivity.this, DriverOnlySplash.class).putExtra("Success Ride Posted", "Connection Error: \n ERROR \n"+ e + resCode + strResponse));
         }
 
         con.disconnect();

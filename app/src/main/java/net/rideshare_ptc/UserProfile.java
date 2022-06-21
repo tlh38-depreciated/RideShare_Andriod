@@ -19,7 +19,7 @@ public class UserProfile extends AppCompatActivity {
 
         Button btnReturnHome = (Button) findViewById(R.id.btnReturnHome);
         Button btnCarInfo = (Button) findViewById(R.id.btnCarInfo);
-        Button btnLogout = (Button) findViewById(R.id.btnLogout);
+        Button btnLogout = (Button) findViewById(R.id.btnMainMyRides);
 
         TextView fName = (TextView) findViewById(R.id.txtFirstName);
         TextView lName = (TextView) findViewById(R.id.txtLastName);

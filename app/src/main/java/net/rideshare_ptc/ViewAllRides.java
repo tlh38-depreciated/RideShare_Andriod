@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -33,13 +34,13 @@ public class ViewAllRides extends AppCompatActivity {
     TextView dest;
     TextView rideDate; //used java.sql date
     Ride ride = new Ride();
+    Button retToMenu;
 @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_all_rides2);
-       // pickUpLoc = (TextView) findViewById(R.id.ViewRidesPickUp);
-      //  dest = (TextView) findViewById(R.id.ViewRidesDes);
-      //  rideDate = (TextView) findViewById(R.id.ViewRidesDateTime);
+        retToMenu = (Button) findViewById(R.id.btnAllRidesReturnMenu);
+
         int SDK_INT = Build.VERSION.SDK_INT;
         if (SDK_INT > 8) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -56,6 +57,15 @@ public class ViewAllRides extends AppCompatActivity {
                 e.printStackTrace();
                 startActivity(new Intent(ViewAllRides.this, DriverOnlySplash.class).putExtra("Success Ride Posted", "IO Error: " + e.toString()));
             }
+
+            retToMenu.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(v.getContext(), MainMenu.class);
+                    startActivity(intent);
+                }
+
+            });
 
         }
 

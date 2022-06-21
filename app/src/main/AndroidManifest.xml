@@ -18,6 +18,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".MyRidesActivity"
+            android:exported="false" />
+        <activity
             android:name=".RideDetailsActivity"
             android:exported="false" />
         <activity
