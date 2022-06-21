@@ -3,6 +3,7 @@ package net.rideshare_ptc;
 
 public class Ride {
         int rideID;
+        int carID;
         String pickUpLoc;
         String dest;
         float duration;
@@ -188,6 +189,13 @@ public class Ride {
 
         public void setIsCompleted(Byte isCompleted) {
             this.isCompleted = isCompleted;
+        }
+         public int getCarID() {
+            return carID;
+        }
+
+         public void setCarID(int carID) {
+            this.carID = carID;
         }
 
 

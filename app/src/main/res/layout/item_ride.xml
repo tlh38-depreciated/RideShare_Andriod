@@ -1,38 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/pickUpText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:gravity="bottom|left"
+            android:textColor="@android:color/black"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            tools:ignore="RtlHardcoded" />
 
-    <TextView
-        android:id="@+id/label_note_id"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/PickupLocation" />
+        <TextView
+            android:id="@+id/desText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:gravity="top|left"
+            android:textColor="@color/PTCBlue"
+            android:textSize="18sp"
+            tools:ignore="RtlHardcoded" />
 
-    <TextView
-        android:id="@+id/value_note_id"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/value_note_title"
-        android:layout_alignTop="@+id/label_note_id" />
+        <TextView
+            android:id="@+id/dateText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:gravity="top|right"
+            android:textColor="@color/PTCBlue"
+            android:textSize="14sp"
+            tools:ignore="RtlHardcoded" />
 
-    <TextView
-        android:id="@+id/label_note_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/label_note_id"
-        android:layout_marginTop="12dp"
-        android:text="@string/Destination" />
-
-    <TextView
-        android:id="@+id/value_note_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/label_note_title"
-        android:layout_marginLeft="12dp"
-        android:layout_toRightOf="@+id/label_note_title" />
-
-</RelativeLayout>
+    </LinearLayout>
+</LinearLayout>

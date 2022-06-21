@@ -8,42 +8,49 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 
+import androidx.annotation.NonNull;
+
 import net.rideshare_ptc.R;
 import net.rideshare_ptc.Ride;
 
 import java.util.ArrayList;
 public class RideAdapter extends ArrayAdapter<Ride> {
-    private static class ViewHolder {
-        TextView id;
-        TextView title;
-    }
+
 
     public RideAdapter(Context context, ArrayList<Ride> Rides) {
         super(context, R.layout.item_ride, Rides);
     }
-
+    @NonNull
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        Ride ride = getItem(position);
-        ViewHolder viewHolder;
+        // convertView which is recyclable view
+        View currentItemView = convertView;
 
-        if (convertView == null) {
-            viewHolder = new ViewHolder();
-
-            LayoutInflater inflater = LayoutInflater.from(getContext());
-            convertView = inflater.inflate(R.layout.item_ride, parent, false);
-
-            viewHolder.id = (TextView) convertView.findViewById(R.id.value_note_id);
-            viewHolder.title = (TextView) convertView.findViewById(R.id.value_note_title);
-
-            convertView.setTag(viewHolder);
-        } else {
-            viewHolder = (ViewHolder) convertView.getTag();
+        // of the recyclable view is null then inflate the custom layout for the same
+        if (currentItemView == null) {
+            currentItemView = LayoutInflater.from(getContext()).inflate(R.layout.item_ride, parent, false);
         }
 
-        viewHolder.id.setText(ride.getPickUpLoc());
-        viewHolder.title.setText(ride.getDest());
+        // get the position of the view from the ArrayAdapter
+        Ride currentNumberPosition = getItem(position);
 
-        return convertView;
+        // then according to the position of the view assign the desired image for the same
+        //ImageView numbersImage = currentItemView.findViewById(R.id.imageView);
+        assert currentNumberPosition != null;
+        //numbersImage.setImageResource(currentNumberPosition.getNumbersImageId());
+
+        // then according to the position of the view assign the desired TextView 1 for the same
+        TextView textView1 = currentItemView.findViewById(R.id.pickUpText);
+        textView1.setText(currentNumberPosition.getPickUpLoc());
+
+        // then according to the position of the view assign the desired TextView 2 for the same
+        TextView textView2 = currentItemView.findViewById(R.id.desText);
+        textView2.setText(currentNumberPosition.getDest());
+
+        TextView textView3 = currentItemView.findViewById(R.id.dateText);
+        textView3.setText(currentNumberPosition.getRideDate());
+
+        // then return the recyclable view
+        return currentItemView;
     }
 }
