@@ -3,7 +3,6 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/PTC/ITP262 - Enterprise Apps/Peer Repos/Android/RideShare_Android/app/src/main/res/layout/activity_login.xml" value="0.19322916666666667" />
         <entry key="..\:/Users/ChristinaSereday/AndroidStudioProjects/RideShare_PTC/app/src/main/res/layout/activity_driver_car_info.xml" value="0.2" />
         <entry key="..\:/Users/ChristinaSereday/AndroidStudioProjects/RideShare_PTC/app/src/main/res/layout/activity_driver_only_splash.xml" value="0.12952898550724637" />
         <entry key="..\:/Users/ChristinaSereday/AndroidStudioProjects/RideShare_PTC/app/src/main/res/layout/activity_driver_post_aride.xml" value="0.264" />
@@ -15,12 +14,6 @@
         <entry key="..\:/Users/ChristinaSereday/AndroidStudioProjects/RideShare_PTC/app/src/main/res/layout/activity_ride_details.xml" value="0.264" />
         <entry key="..\:/Users/ChristinaSereday/AndroidStudioProjects/RideShare_PTC/app/src/main/res/layout/activity_ride_posted_success.xml" value="0.18795289855072464" />
         <entry key="..\:/Users/ChristinaSereday/AndroidStudioProjects/RideShare_PTC/app/src/main/res/layout/activity_view_all_rides2.xml" value="0.12817028985507245" />
-        <entry key="..\:/Users/jdste/OneDrive/Documents/GitHub/RideShare_Andriod/app/src/main/res/layout/activity_driver_post_aride.xml" value="0.25" />
-        <entry key="..\:/Users/jdste/OneDrive/Documents/GitHub/RideShare_Andriod/app/src/main/res/layout/activity_login.xml" value="0.25" />
-        <entry key="..\:/Users/jdste/OneDrive/Documents/GitHub/RideShare_Andriod/app/src/main/res/layout/activity_main.xml" value="0.176" />
-        <entry key="..\:/Users/jdste/OneDrive/Documents/GitHub/RideShare_Andriod/app/src/main/res/layout/activity_main_menu.xml" value="0.25" />
-        <entry key="..\:/Users/jdste/OneDrive/Documents/GitHub/RideShare_Andriod/app/src/main/res/layout/activity_ride_posted_success.xml" value="0.25" />
-        <entry key="..\:/Users/jdste/OneDrive/Documents/GitHub/RideShare_Andriod/app/src/main/res/layout/activity_userprofile.xml" value="0.20471014492753623" />
       </map>
     </option>
   </component>

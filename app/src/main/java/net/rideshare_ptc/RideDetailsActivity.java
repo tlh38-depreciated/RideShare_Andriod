@@ -49,7 +49,7 @@ public class RideDetailsActivity extends AppCompatActivity {
     }
 
     private void getRidesFromDB() throws IOException {
-        //URL url = new URL("http://10.0.2.2:8080/viewRides?Origin="+New Jersey+"&"+Destination+"=New&DateTime="+5/26/2022");
+        URL url = new URL("http://10.0.2.2:8080/viewRides"); //?Origin="+New Jersey+"&"+Destination+"=New&DateTime="+5/26/2022");
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setUseCaches(false);
         con.setRequestMethod("GET");

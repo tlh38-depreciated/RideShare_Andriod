@@ -118,7 +118,7 @@ public class LoginActivity extends AppCompatActivity {
         }
         else
         {
-            startActivity(new Intent(LoginActivity.this, LoginWelcomeStatusActivity.class).putExtra("Login Status", "Invalid data returned"));
+            startActivity(new Intent(LoginActivity.this, LoginWelcomeStatusActivity.class).putExtra("Login Status", "Error with login, try again."));
         }
     }
 }
