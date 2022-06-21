@@ -72,7 +72,8 @@ public class ViewAllRides extends AppCompatActivity {
 
                     Ride selItem = (Ride) Rides.get(position); //
                     String rideInfo = selItem.toString(); //getter method
-                    Toast.makeText(ViewAllRides.this, rideInfo, Toast.LENGTH_LONG).show();
+                    //Toast.makeText(ViewAllRides.this, rideInfo, Toast.LENGTH_LONG).show();
+                    startActivity(new Intent(ViewAllRides.this, RideDetailsActivity.class).putExtra("Ride Details", "Ride Details:"+selItem.toString()));
                 }
             });
         }

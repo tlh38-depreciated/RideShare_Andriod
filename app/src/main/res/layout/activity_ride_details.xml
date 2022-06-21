@@ -18,7 +18,7 @@
         app:srcCompat="@drawable/ptc_logo_2" />
 
     <TextView
-        android:id="@+id/txtViewRideDetails"
+        android:id="@+id/txtViewRideDetail"
         android:layout_width="333dp"
         android:layout_height="287dp"
         android:layout_marginBottom="272dp"
@@ -29,10 +29,6 @@
         app:layout_constraintTop_toBottomOf="@+id/txtRideDetailTitle"
         app:layout_constraintVertical_bias="1.0">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" />
     </TextView>
 
     <TextView
@@ -58,7 +54,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtViewRideDetails" />
+        app:layout_constraintTop_toBottomOf="@+id/txtViewRideDetail" />
 
     <Button
         android:id="@+id/btnCancelRide"
