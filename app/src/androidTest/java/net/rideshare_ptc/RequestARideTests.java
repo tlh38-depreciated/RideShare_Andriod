@@ -5,14 +5,19 @@ import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
 import static androidx.test.espresso.matcher.ViewMatchers.withHint;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static org.junit.Assert.*;
 
+import android.widget.DatePicker;
+
 import androidx.test.espresso.action.ViewActions;
+import androidx.test.espresso.contrib.PickerActions;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import org.hamcrest.Matchers;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -20,6 +25,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.io.IOException;
+
+import dagger.hilt.android.testing.HiltAndroidTest;
 
 /**
  * Integration tests for Ride Posting features in the app
@@ -45,10 +52,7 @@ public class RequestARideTests {
         onView(withId(R.id.txtInputLoginEM)).perform(typeText("RSC14@students.ptcollege.edu"), ViewActions.closeSoftKeyboard());
 
         //type in the password
-        onView(withId(R.id.txtInputLoginPW)).perform(typeText("Password12!"), ViewActions.closeSoftKeyboard());
-
-        //Use fingerprint
-        Runtime.getRuntime().exec("adb -e emu finger touch 1");
+        onView(withId(R.id.txtInputLoginPW)).perform(typeText("password1"), ViewActions.closeSoftKeyboard());
 
         //click submit
         onView(withId(R.id.btnSubmitUser)).perform(click());
@@ -61,6 +65,21 @@ public class RequestARideTests {
      */
     private void navigateToRequestARide(){
         onView(withId(R.id.btnMenuReq)).perform(click());
+    }
+
+    /**
+     * Picks the date and time from the date-time picker button
+     * on the Request A Ride Page
+     */
+    private void pickDateAndTime(){
+        //click on the calendar button
+        onView(withId(R.id.btnCalendar)).perform(click());
+
+        //Find the calendar and set a date
+        onView(withClassName(Matchers.equalTo(DatePicker.class.getName()))).perform(PickerActions.setDate(2000, 1, 1));
+
+        //Find the Clock and set a time
+
     }
 
     /**
@@ -77,6 +96,7 @@ public class RequestARideTests {
 
     @After
     public void tearDown() throws Exception {
+
     }
 
     @Test
@@ -101,7 +121,9 @@ public class RequestARideTests {
      */
     @Test
     public void Test_RequestARide_PostInformationIsCorrect(){
-        onView(withId(R.id.btnCalendar)).perform(typeText("12-12-2000"), ViewActions.closeSoftKeyboard());
+        navigateToRequestARide();
+        pickDateAndTime();
+
 
         /*
         //Pick up location and destination use the examples from the sample distance matrix api request
