@@ -20,6 +20,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.io.IOException;
+
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest //"You can also create a medium test but, hey go big or go home." -Cottrell
@@ -35,6 +37,15 @@ public class LoginActivityTest {
     @After
     public void tearDown() throws Exception {
     }
+
+    /*public void useFingerprint(){
+        //use fingerprint
+        try{
+            Runtime.getRuntime().exec("adb -e emu finger touch 1");
+        }catch(IOException e){
+            e.printStackTrace();
+        }
+    }*/
 
 
     @Test
@@ -60,18 +71,20 @@ public class LoginActivityTest {
      * REMEMBER TO HAVE THE WEBSERVICE RUNNING ON YOUR LOCALHOST WHEN YOU RUN THIS TEST
      */
     @Test
-    public void Test_LoginPage_LogsInWithCredentials()
-    {
+    public void Test_LoginPage_LogsInWithCredentials(){
         //type in the username
         onView(withId(R.id.txtInputLoginEM)).perform(typeText("RSC14@students.ptcollege.edu"), ViewActions.closeSoftKeyboard());
 
         //type in the password
-        onView(withId(R.id.txtInputLoginPW)).perform(typeText("Password12!"), ViewActions.closeSoftKeyboard());
+        onView(withId(R.id.txtInputLoginPW)).perform(typeText("password1"), ViewActions.closeSoftKeyboard());
+
+        //useFingerprint();
+
 
         //click submit
         onView(withId(R.id.btnSubmitUser)).perform(click());
 
-        onView(withId(R.id.txtPostSucc)).check(matches(isDisplayed()));
+        onView(withId(R.id.imgLogoMenu)).check(matches(isDisplayed()));
 
     }
 
@@ -89,6 +102,8 @@ public class LoginActivityTest {
 
         //type in the password
         onView(withId(R.id.txtInputLoginPW)).perform(typeText("FakePasswordForMyEquallyFakeEmail!"), ViewActions.closeSoftKeyboard());
+
+        //useFingerprint();
 
         //click submit
         onView(withId(R.id.btnSubmitUser)).perform(click());
