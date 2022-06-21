@@ -145,8 +145,14 @@ public class LoginActivity extends AppCompatActivity {
                             startActivity(new Intent(LoginActivity.this, DriverOnlySplash.class).putExtra("Success Ride Posted", "User info: \n" + entEmailAdd));
                         }
                     }
+                    else if (entEmailAdd.contains(ptcCheck) && (entPassword.isEmpty()) || !entPassword.equals("password1")){
+                        startActivity(new Intent(LoginActivity.this, LoginWelcomeStatusActivity.class).putExtra("Login Status", "Please enter correct password or use fingerprint authentication. \n"));
+                    }
+                    else if (!entEmailAdd.contains(ptcCheck)){
+                        startActivity(new Intent(LoginActivity.this, LoginWelcomeStatusActivity.class).putExtra("Login Status", "Please use a valid registered PTC Studetn E-mail address \n"));
+                    }
                     else {
-                        startActivity(new Intent(LoginActivity.this, LoginWelcomeStatusActivity.class).putExtra("Login Status", "This user-name does not appear to be registered. \n"));
+                        startActivity(new Intent(LoginActivity.this, LoginWelcomeStatusActivity.class).putExtra("Login Status", "This username does not appear to be registered. \n"));
                     }
                 }
             }
