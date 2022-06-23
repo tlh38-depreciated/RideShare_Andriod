@@ -222,7 +222,7 @@ public class Ride {
         {
             float mpg = 25.7f; //nation average MPG of light-duty vehicles www.greencarcongress.com/2021/03/20210316-epatrends.html#:~:text=16%20March%202021,light%2Dduty%20vehicle%20fuel%20economy.
             float avgGallon = 4.37f; //source as of May 14, 2022: https: //www.chooseenergy.com/data-center/cost-of-driving-by-state/
-                final float staticCost = 5f;
+                final float staticCost = 5.00f;
             float Cost = (((duration / mpg) * avgGallon) + staticCost) ;
             float finalCost = BigDecimal.valueOf(Cost).setScale(2,BigDecimal.ROUND_HALF_EVEN).floatValue();
             return finalCost;
