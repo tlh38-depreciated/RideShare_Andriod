@@ -4,18 +4,9 @@ package net.rideshare_ptc;
 import java.util.ArrayList;
 import java.util.List;
 
-//This is one big experiment I have never done before.
 public class LoginManager {
     //The purpose of this class is to manage the one and only logged in user.
-    //Plan is to create a list/ array which will hold the logged in user upon their login
-    //and remove it when they log off, and ideally prevent other users from logging in if
-    //the list already has the 1 user. (i.e. user in list is logged in until some condition
-    //logs them off and removes them from the list).
-    //This is creating a 'singleton' which creates this class and keeps the resulting object instance
-    //accessible throughout the entire program, supposedly.
-    //This class holds the variable list which will monitor and handle user login/logoff activity.
 
-    //Trying this as a 'singleton' and creating the instance of this class at load time
     private static LoginManager obj = new LoginManager();
     //The variable that the singleton object will maintain (the list)
     List<User> loggedInUsers = new ArrayList<User>(); // size of this list should be 1 or 0 always.

@@ -134,7 +134,7 @@ public class RideTest {
     @Test
     public void setSmoking() {
         Ride testRide = new Ride();
-        Byte expected = 1;
+        Byte expected = ((byte) 1);
         testRide.setSmoking(expected);
         Byte actual = testRide.getSmoking();
 
@@ -144,7 +144,7 @@ public class RideTest {
     @Test
     public void setEating() {
         Ride testRide = new Ride();
-        Byte expected = 1;
+        Byte expected = ((byte) 1);
         testRide.setEating(expected);
         Byte actual = testRide.getEating();
 
@@ -154,7 +154,7 @@ public class RideTest {
     @Test
     public void setTalking() {
         Ride testRide = new Ride();
-        Byte expected = 1;
+        Byte expected = ((byte) 1);
         testRide.setTalking(expected);
         Byte actual = testRide.getTalking();
 
@@ -164,7 +164,7 @@ public class RideTest {
     @Test
     public void setCarseat() {
         Ride testRide = new Ride();
-        Byte expected = 1;
+        Byte expected = ((byte) 1);
         testRide.setCarseat(expected);
         Byte actual = testRide.getCarseat();
 
@@ -174,7 +174,7 @@ public class RideTest {
     @Test
     public void setIsTaken() {
         Ride testRide = new Ride();
-        Byte expected = 1;
+        Byte expected = ((byte) 1);
         testRide.setIsTaken(expected);
         Byte actual = testRide.getIsTaken();
 
@@ -184,7 +184,7 @@ public class RideTest {
     @Test
     public void setIsCompleted() {
         Ride testRide = new Ride();
-        Byte expected = 1;
+        Byte expected = ((byte) 1);
         testRide.setIsCompleted(expected);
         Byte actual = testRide.getIsCompleted();
 
@@ -195,7 +195,7 @@ public class RideTest {
     public void testToString() {
         Byte oneBit = 1;
         Byte zeroBit = 0;
-        Ride testRide = new Ride("Starting Loc", "Dest", "1234", "12-12-2000", zeroBit,  zeroBit, oneBit, oneBit);
+        Ride testRide = new Ride("Starting Loc", "Dest", "1234", "12-12-2000", ((byte) 0),  ((byte) 0), ((byte) 0), ((byte) 0));
 
         String expected = "Ride Details: \nPick Up: Starting Loc\nDestination: Dest\nDate and Time: 12-12-2000";
         String actual = testRide.toString();

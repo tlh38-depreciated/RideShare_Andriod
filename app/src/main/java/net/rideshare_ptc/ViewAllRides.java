@@ -69,11 +69,38 @@ public class ViewAllRides extends AppCompatActivity {
             allRidesView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
                 public void onItemClick(AdapterView<?> adapter, View v, int position, long id) {
-
+                    ActiveRide active_ride = ActiveRide.getInstance();
                     Ride selItem = (Ride) Rides.get(position); //
+                    active_ride.setRideInfo(selItem);
                     String rideInfo = selItem.toString(); //getter method
+                    String attributes = "";
+
+                    Byte completed = selItem.getIsCompleted();
+                    if (completed ==1){
+                        attributes += "Ride Completed |";
+                    }
+
+                    Byte eating = selItem.getEating();
+                    if (eating == 1){
+                        attributes+= "Eating OK |";
+                    }
+                    Byte talking = selItem.getTalking();
+                    if (talking == 1){
+                        attributes +="Talking OK |";
+                    }
+                    Byte carseat = selItem.getCarseat();
+                    if (carseat == 1){
+                        attributes+="Has Carseat |";
+                    }
+                    Byte smoking = selItem.getSmoking();
+                    if (smoking == 1){
+                        attributes+="Smoking OK |";
+                    }
+                    selItem.setCost(selItem.calculateCost(selItem.duration));
+
+
                     //Toast.makeText(ViewAllRides.this, rideInfo, Toast.LENGTH_LONG).show();
-                    startActivity(new Intent(ViewAllRides.this, RideDetailsActivity.class).putExtra("Ride Details", "Ride Details:"+selItem.toString()));
+                    startActivity(new Intent(ViewAllRides.this, RideDetailsActivity.class).putExtra("Ride Details", "Ride Details:"+selItem.toString()+"Attributes: "+attributes));
                 }
             });
         }

@@ -199,10 +199,10 @@ public class DriverPostARide extends AppCompatActivity implements DatePickerDial
             //TODO: Enhance input validation- calendar selector for date/time, implement Google API for locations
             //TODO: Add calculations for duration, distance, cost similarly to how handled in webapp
             driverRidePost = new Ride();
-            driverRidePost.setCarseat((byte)0);
-            driverRidePost.setTalking((byte)0);
-            driverRidePost.setEating((byte)0);
-            driverRidePost.setSmoking((byte)0);
+            driverRidePost.setCarseat((byte) 0);
+            driverRidePost.setTalking((byte) 0);
+            driverRidePost.setEating((byte) 0);
+            driverRidePost.setSmoking((byte) 0);
             driverRidePost.setPickUpLoc(pickupLocI.getText().toString());
             driverRidePost.setDest(destLocI.getText().toString());
             driverRidePost.setRideDate(dateTime.toString());

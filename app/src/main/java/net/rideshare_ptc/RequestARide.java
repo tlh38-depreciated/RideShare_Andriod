@@ -204,10 +204,10 @@ public class RequestARide extends AppCompatActivity implements DatePickerDialog.
             riderRidePost = new Ride();
             riderRidePost.setRiderID(loggedInUser.getUserID());
             riderRidePost.setRiderScore(loggedInUser.getuRiderScore());
-            riderRidePost.setCarseat((byte)0);
-            riderRidePost.setTalking((byte)0);
-            riderRidePost.setEating((byte)0);
-            riderRidePost.setSmoking((byte)0);
+            riderRidePost.setCarseat((byte) 0);
+            riderRidePost.setTalking((byte) 0);
+            riderRidePost.setEating((byte) 0);
+            riderRidePost.setSmoking((byte) 0);
             riderRidePost.setPickUpLoc(rpickupLocI.getText().toString());
             riderRidePost.setDest(rdestLocI.getText().toString());
 
@@ -280,16 +280,16 @@ public class RequestARide extends AppCompatActivity implements DatePickerDialog.
 
 
             if (rsmokingI.isChecked()) {
-                riderRidePost.setSmoking((byte) 1);
+                riderRidePost.setSmoking((byte) 0);
             }
             if (rtalkingI.isChecked()) {
-                riderRidePost.setTalking((byte) 1);
+                riderRidePost.setTalking((byte) 0);
             }
             if (rcarseatI.isChecked()) {
-                riderRidePost.setCarseat((byte) 1);
+                riderRidePost.setCarseat((byte) 0);
             }
             if (reatingI.isChecked()) {
-                riderRidePost.setEating((byte) 1);
+                riderRidePost.setEating((byte) 0);
             }
 
             riderRidePost.setIsCompleted((byte) 0);
