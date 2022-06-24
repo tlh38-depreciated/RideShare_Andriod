@@ -20,9 +20,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
 
-public class rideRiderDriverProfile extends AppCompatActivity {
+public class rideDriverProfile extends AppCompatActivity {
     User aUser;
     Byte isADriver;
     Ride thisRide;
@@ -52,7 +51,7 @@ public class rideRiderDriverProfile extends AppCompatActivity {
 
             activeRideDriver = thisRide.getDriverID();
             if (activeRideDriver == null) {
-                startActivity(new Intent(rideRiderDriverProfile.this, DriverOnlySplash.class).putExtra("Success Ride Posted", "No driver accepted this requested ride yet."));
+                startActivity(new Intent(rideDriverProfile.this, DriverOnlySplash.class).putExtra("Success Ride Posted", "No driver accepted this requested ride yet."));
             } else {
                 try {
 
@@ -85,14 +84,14 @@ public class rideRiderDriverProfile extends AppCompatActivity {
         btnReturnHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(rideRiderDriverProfile.this, MainMenu.class));
+                startActivity(new Intent(rideDriverProfile.this, MainMenu.class));
             }
         });
 
         btnCarInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(rideRiderDriverProfile.this, DriverCarInfo.class));
+                startActivity(new Intent(rideDriverProfile.this, DriverCarInfo.class));
             }
         });
 
@@ -102,7 +101,7 @@ public class rideRiderDriverProfile extends AppCompatActivity {
                 LoginManager mgr = LoginManager.getInstance();
                 mgr.removeLoggedInUsers();
                 //startActivity(new Intent(MainMenu.this,DriverOnlySplash.class).putExtra("Success Ride Posted","User Logged out: "+ mgr.getLoggedInUserList().toString()));
-                startActivity(new Intent(rideRiderDriverProfile.this, MainActivity.class));
+                startActivity(new Intent(rideDriverProfile.this, MainActivity.class));
             }
         });
     }
@@ -140,9 +139,9 @@ public class rideRiderDriverProfile extends AppCompatActivity {
             } catch (JsonMappingException me) {
                 System.out.println(me);
             }
-            startActivity(new Intent(rideRiderDriverProfile.this, DriverOnlySplash.class).putExtra("Success Ride Posted", "Request Sent:  \n"+"URL"+ urld.toString()));
+
         } catch (IOException e){
-            startActivity(new Intent(rideRiderDriverProfile.this, DriverOnlySplash.class).putExtra("Success Ride Posted", "Connection Error: \n ERROR \n"+"URL"+ urld.toString()+"\n"+e));
+            startActivity(new Intent(rideDriverProfile.this, DriverOnlySplash.class).putExtra("Success Ride Posted", "Connection Error: \n ERROR \n"+"URL"+ urld.toString()+"\n"+e));
         }
         con.disconnect();
         return retUser;

@@ -18,7 +18,10 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".rideRiderDriverProfile"
+            android:name=".rideRiderProfile"
+            android:exported="false" />
+        <activity
+            android:name=".rideDriverProfile"
             android:exported="false" />
         <activity
             android:name=".MyRidesActivity"

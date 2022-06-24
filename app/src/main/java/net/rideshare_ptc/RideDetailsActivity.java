@@ -44,16 +44,16 @@ public class RideDetailsActivity extends AppCompatActivity {
                 //ActiveRide active_ride = ActiveRide.getInstance();
                 //String rideDriver = active_ride.getRideInfo().getDriverID();
                 //TODO: case handling when not assigned
-                startActivity(new Intent(RideDetailsActivity.this, rideRiderDriverProfile.class));
+                startActivity(new Intent(RideDetailsActivity.this, rideDriverProfile.class));
             }
         });
         riderDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ActiveRide active_ride = ActiveRide.getInstance();
-                String rideRider  =  active_ride.getRideInfo().getRiderID();
+                //ActiveRide active_ride = ActiveRide.getInstance();
+                //String rideRider  =  active_ride.getRideInfo().getRiderID();
                 //TODO: case handling when not assigned
-                startActivity(new Intent(RideDetailsActivity.this, DriverOnlySplash.class).putExtra("Success Ride Posted", rideRider + "just testing that I can keep this data, will update to driver profile" ));
+                startActivity(new Intent(RideDetailsActivity.this, rideRiderProfile.class));
             }
         });
 
