@@ -41,10 +41,10 @@ public class RideDetailsActivity extends AppCompatActivity {
         driverDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ActiveRide active_ride = ActiveRide.getInstance();
-                String rideDriver = active_ride.getRideInfo().getDriverID();
+                //ActiveRide active_ride = ActiveRide.getInstance();
+                //String rideDriver = active_ride.getRideInfo().getDriverID();
                 //TODO: case handling when not assigned
-                startActivity(new Intent(RideDetailsActivity.this, DriverOnlySplash.class));
+                startActivity(new Intent(RideDetailsActivity.this, rideRiderDriverProfile.class));
             }
         });
         riderDetails.setOnClickListener(new View.OnClickListener() {

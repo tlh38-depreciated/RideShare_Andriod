@@ -19,18 +19,17 @@
 
     <TextView
         android:id="@+id/txtViewRideDetail"
-        android:layout_width="333dp"
-        android:layout_height="287dp"
-        android:layout_marginBottom="272dp"
+        android:layout_width="355dp"
+        android:layout_height="257dp"
         android:scrollbarStyle="outsideInset"
+        android:scrollbars="vertical"
         android:textAlignment="viewStart"
-        android:textSize="18sp"
-        android:scrollbars = "vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:textColor="@color/ptc_DkBlue"
+        android:textSize="20sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtRideDetailTitle"
-        app:layout_constraintVertical_bias="1.0">
+        app:layout_constraintTop_toBottomOf="@+id/txtRideDetailTitle">
 
     </TextView>
 
@@ -52,59 +51,48 @@
         android:id="@+id/btnAcceptRide"
         android:layout_width="317dp"
         android:layout_height="52dp"
+        android:layout_marginTop="20dp"
         android:text="Accept Ride"
         android:textColor="@color/ptc_DkBlue"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintHorizontal_bias="0.446"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtViewRideDetail" />
 
     <Button
-        android:id="@+id/btnCancelRide"
+        android:id="@+id/btnViewRideDriver"
         android:layout_width="142dp"
         android:layout_height="49dp"
-        android:layout_marginStart="60dp"
-        android:layout_marginTop="28dp"
-        android:text="Cancel Ride"
-        android:textColor="@color/ptc_DkBlue"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnViewRideDriver" />
-
-    <Button
-        android:id="@+id/btnViewRideDriver"
-        android:layout_width="140dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginBottom="184dp"
         android:text="View  Driver"
         android:textColor="@color/ptc_DkBlue"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btnViewRideRider"
-        app:layout_constraintHorizontal_bias="0.753"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnAcceptRide" />
+        app:layout_constraintHorizontal_bias="0.583"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/btnViewRideRider"
-        android:layout_width="132dp"
-        android:layout_height="51dp"
-        android:layout_marginTop="8dp"
+        android:layout_width="133dp"
+        android:layout_height="49dp"
         android:layout_marginEnd="56dp"
+        android:layout_marginBottom="184dp"
         android:text="View Rider"
         android:textColor="@color/ptc_DkBlue"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnAcceptRide" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <Button
         android:id="@+id/btnRideRetMenu"
         android:layout_width="133dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="24dp"
+        android:layout_height="49dp"
         android:layout_marginBottom="84dp"
         android:text="Menu"
         android:textColor="@color/ptc_DkBlue"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/btnCancelRide"
-        app:layout_constraintTop_toBottomOf="@+id/btnViewRideRider"
-        app:layout_constraintVertical_bias="0.892" />
+        app:layout_constraintHorizontal_bias="0.485"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnAcceptRide"
+        app:layout_constraintVertical_bias="0.657" />
 </androidx.constraintlayout.widget.ConstraintLayout>
