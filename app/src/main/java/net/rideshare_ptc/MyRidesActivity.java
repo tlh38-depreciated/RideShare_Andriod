@@ -56,9 +56,15 @@ public class MyRidesActivity extends AppCompatActivity {
                 StrictMode.setThreadPolicy(policy);
                     try {
                         myRides = getUserRidesFromDB();
-                        RideAdapter myRideAdapter = new RideAdapter(this, myRides);
-                        myRidesView = findViewById(R.id.myRidesList);
-                        myRidesView.setAdapter(myRideAdapter);
+
+                        if (myRides == null){
+                            startActivity(new Intent(MyRidesActivity.this, DriverOnlySplash.class).putExtra("Success Ride Posted", "  You have no rides scheduled."));
+                        }
+                        else {
+                            RideAdapter myRideAdapter = new RideAdapter(this, myRides);
+                            myRidesView = findViewById(R.id.myRidesList);
+                            myRidesView.setAdapter(myRideAdapter);
+                        }
                     } catch (IOException e) {
                         e.printStackTrace();
                         startActivity(new Intent(MyRidesActivity.this, DriverOnlySplash.class).putExtra("Success Ride Posted", "IO Error: " + e.toString()));

@@ -43,5 +43,14 @@ public class DriverOnlySplash extends AppCompatActivity {
             }
         });
 
+        btnAllRides.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(view.getContext(), ViewAllRides.class);
+                startActivity(intent);
+            }
+
+        });
+
     }
 }

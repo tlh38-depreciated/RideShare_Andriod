@@ -148,7 +148,7 @@ public class DriverPostARide extends AppCompatActivity implements DatePickerDial
             else {
                 //splash screen message then re-route to main menu. For now, just re-route to main
                 //menu.
-                startActivity(new Intent(DriverPostARide.this,DriverOnlySplash.class).putExtra("Success Ride Posted","Unavailable: not a driver \n This feature is limited to approved drivers only."));
+                startActivity(new Intent(DriverPostARide.this,DriverOnlySplash.class).putExtra("Success Ride Posted"," Unavailable: Not a driver \n   This feature is limited to approved drivers only."));
                 //startActivity(new Intent(DriverPostARide.this, MainMenu.class));
             }
         }
