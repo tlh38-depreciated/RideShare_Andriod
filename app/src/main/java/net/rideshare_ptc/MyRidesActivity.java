@@ -116,7 +116,7 @@ public class MyRidesActivity extends AppCompatActivity {
         String strResponse = "";
         ArrayList<Ride> requestedRides = new ArrayList<Ride>();
 
-        URL url = new URL("http://10.0.2.2:8080/viewRides?User="+lUserId);
+        URL url = new URL("http://10.0.2.2:8080/viewMyRides?User="+lUserId);
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
 
         con.setUseCaches(false);

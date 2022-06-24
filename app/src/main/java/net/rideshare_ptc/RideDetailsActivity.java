@@ -14,14 +14,14 @@ public class RideDetailsActivity extends AppCompatActivity {
 
     TextView rideDetails;
     Ride ride = new Ride();
-    Button returnToRides;
+    Button returnToMenu;
     Button driverDetails;
     Button riderDetails;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ride_details);
-        returnToRides = (Button) findViewById(R.id.btnRideRetRides);
+        returnToMenu = (Button) findViewById(R.id.btnRideRetMenu);
         driverDetails = (Button) findViewById(R.id.btnViewRideDriver);
         riderDetails = (Button) findViewById(R.id.btnViewRideRider);
         Intent intent = this.getIntent();
@@ -31,10 +31,10 @@ public class RideDetailsActivity extends AppCompatActivity {
         msg.setMovementMethod(new ScrollingMovementMethod());
         msg.setText(rideInformation);
 
-        returnToRides.setOnClickListener(new View.OnClickListener() {
+        returnToMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(RideDetailsActivity.this, ViewAllRides.class));
+                startActivity(new Intent(RideDetailsActivity.this, MainMenu.class));
             }
         });
 

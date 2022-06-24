@@ -61,16 +61,14 @@
 
     <Button
         android:id="@+id/btnCancelRide"
-        android:layout_width="139dp"
-        android:layout_height="51dp"
+        android:layout_width="142dp"
+        android:layout_height="49dp"
         android:layout_marginStart="60dp"
-        android:layout_marginBottom="52dp"
+        android:layout_marginTop="28dp"
         android:text="Cancel Ride"
         android:textColor="@color/ptc_DkBlue"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnViewRideDriver"
-        app:layout_constraintVertical_bias="0.487" />
+        app:layout_constraintTop_toBottomOf="@+id/btnViewRideDriver" />
 
     <Button
         android:id="@+id/btnViewRideDriver"
@@ -88,23 +86,25 @@
         android:id="@+id/btnViewRideRider"
         android:layout_width="132dp"
         android:layout_height="51dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="56dp"
-        android:layout_marginBottom="28dp"
         android:text="View Rider"
         android:textColor="@color/ptc_DkBlue"
-        app:layout_constraintBottom_toTopOf="@+id/btnRideRetRides"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnAcceptRide" />
 
     <Button
-        android:id="@+id/btnRideRetRides"
-        android:layout_width="134dp"
-        android:layout_height="51dp"
+        android:id="@+id/btnRideRetMenu"
+        android:layout_width="133dp"
+        android:layout_height="48dp"
         android:layout_marginStart="24dp"
         android:layout_marginBottom="84dp"
-        android:text="All Rides"
+        android:text="Menu"
         android:textColor="@color/ptc_DkBlue"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/btnCancelRide" />
+        app:layout_constraintStart_toEndOf="@+id/btnCancelRide"
+        app:layout_constraintTop_toBottomOf="@+id/btnViewRideRider"
+        app:layout_constraintVertical_bias="0.892" />
 </androidx.constraintlayout.widget.ConstraintLayout>
