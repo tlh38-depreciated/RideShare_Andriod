@@ -35,7 +35,7 @@ public class MyRidesActivity extends AppCompatActivity {
         String lUserId;
         Button retMyRideToMenu;
         ListView myRidesView;
-        ArrayList<Ride> Rides;
+
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +46,8 @@ public class MyRidesActivity extends AppCompatActivity {
             loggedInUser = mgr.getLoggedInUser();
             lUserId = loggedInUser.getUserID();
             retMyRideToMenu = (Button) findViewById(R.id.btnMyRidesReturn);
-            Rides = new ArrayList<Ride>();
+            ArrayList<Ride> myRides = new ArrayList<Ride>();
+
 
 
             int SDK_INT = Build.VERSION.SDK_INT;
@@ -54,14 +55,50 @@ public class MyRidesActivity extends AppCompatActivity {
                 StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
                 StrictMode.setThreadPolicy(policy);
                     try {
-                        Rides = getUserRidesFromDB();
-                        RideAdapter rideAdapter = new RideAdapter(this, Rides);
+                        myRides = getUserRidesFromDB();
+                        RideAdapter myRideAdapter = new RideAdapter(this, myRides);
                         myRidesView = findViewById(R.id.myRidesList);
-                        myRidesView.setAdapter(rideAdapter);
+                        myRidesView.setAdapter(myRideAdapter);
                     } catch (IOException e) {
                         e.printStackTrace();
                         startActivity(new Intent(MyRidesActivity.this, DriverOnlySplash.class).putExtra("Success Ride Posted", "IO Error: " + e.toString()));
                     }
+                ArrayList<Ride> finalMyRides = myRides;
+                myRidesView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+                    public void onItemClick(AdapterView<?> adapter, View v, int position, long id) {
+                        ActiveRide active_ride = ActiveRide.getInstance();
+                        Ride selItem = (Ride) finalMyRides.get(position); //
+                        active_ride.setRideInfo(selItem);
+                        String rideInfo = selItem.toString(); //getter method
+                        String attributes = "";
+
+                        Byte completed = selItem.getIsCompleted();
+                        if (completed ==1){
+                            attributes += "Ride Completed |";
+                        }
+
+                        Byte eating = selItem.getEating();
+                        if (eating == 1){
+                            attributes+= "Eating OK |";
+                        }
+                        Byte talking = selItem.getTalking();
+                        if (talking == 1){
+                            attributes +="Talking OK |";
+                        }
+                        Byte carseat = selItem.getCarseat();
+                        if (carseat == 1){
+                            attributes+="Has Carseat |";
+                        }
+                        Byte smoking = selItem.getSmoking();
+                        if (smoking == 1){
+                            attributes+="Smoking OK |";
+                        }
+                        selItem.setCost(selItem.calculateCost(selItem.duration));
+                        startActivity(new Intent(MyRidesActivity.this, RideDetailsActivity.class).putExtra("Ride Details", "Ride Details:"+selItem.toString()+"Attributes: "+attributes));
+                    }
+                });
+
 
             }
             retMyRideToMenu.setOnClickListener(new View.OnClickListener() {
@@ -70,42 +107,7 @@ public class MyRidesActivity extends AppCompatActivity {
                     startActivity(new Intent(MyRidesActivity.this, MainMenu.class));
                 }
             });
-            myRidesView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
-                public void onItemClick(AdapterView<?> adapter, View v, int position, long id) {
-                    ActiveRide active_ride = ActiveRide.getInstance();
-                    Ride selItem = (Ride) Rides.get(position); //
-                    active_ride.setRideInfo(selItem);
-                    String rideInfo = selItem.toString(); //getter method
-                    String attributes = "";
-
-                    Byte completed = selItem.getIsCompleted();
-                    if (completed ==1){
-                        attributes += "Ride Completed |";
-                    }
-
-                    Byte eating = selItem.getEating();
-                    if (eating == 1){
-                        attributes+= "Eating OK |";
-                    }
-                    Byte talking = selItem.getTalking();
-                    if (talking == 1){
-                        attributes +="Talking OK |";
-                    }
-                    Byte carseat = selItem.getCarseat();
-                    if (carseat == 1){
-                        attributes+="Has Carseat |";
-                    }
-                    Byte smoking = selItem.getSmoking();
-                    if (smoking == 1){
-                        attributes+="Smoking OK |";
-                    }
-                    selItem.setCost(selItem.calculateCost(selItem.duration));
-
-                    //Toast.makeText(ViewAllRides.this, rideInfo, Toast.LENGTH_LONG).show();
-                    startActivity(new Intent(MyRidesActivity.this, RideDetailsActivity.class).putExtra("Ride Details", "Ride Details:"+selItem.toString()+"Attributes: "+attributes));
-                }
-            });
 
         }
 
