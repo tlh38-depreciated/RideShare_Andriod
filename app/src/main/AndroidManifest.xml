@@ -17,6 +17,7 @@
         android:theme="@style/Theme.RideShare_PTC"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
+
         <activity
             android:name=".MyRidesActivity"
             android:exported="false" />

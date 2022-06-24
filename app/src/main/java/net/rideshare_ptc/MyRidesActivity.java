@@ -6,6 +6,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -33,6 +34,8 @@ public class MyRidesActivity extends AppCompatActivity {
         User loggedInUser;
         String lUserId;
         Button retMyRideToMenu;
+        ListView myRidesView;
+        ArrayList<Ride> Rides;
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +46,7 @@ public class MyRidesActivity extends AppCompatActivity {
             loggedInUser = mgr.getLoggedInUser();
             lUserId = loggedInUser.getUserID();
             retMyRideToMenu = (Button) findViewById(R.id.btnMyRidesReturn);
-            ArrayList<Ride> Rides = new ArrayList<Ride>();
+            Rides = new ArrayList<Ride>();
 
 
             int SDK_INT = Build.VERSION.SDK_INT;
@@ -53,8 +56,8 @@ public class MyRidesActivity extends AppCompatActivity {
                     try {
                         Rides = getUserRidesFromDB();
                         RideAdapter rideAdapter = new RideAdapter(this, Rides);
-                        ListView allRidesView = findViewById(R.id.myRidesList);
-                        allRidesView.setAdapter(rideAdapter);
+                        myRidesView = findViewById(R.id.myRidesList);
+                        myRidesView.setAdapter(rideAdapter);
                     } catch (IOException e) {
                         e.printStackTrace();
                         startActivity(new Intent(MyRidesActivity.this, DriverOnlySplash.class).putExtra("Success Ride Posted", "IO Error: " + e.toString()));
@@ -67,9 +70,45 @@ public class MyRidesActivity extends AppCompatActivity {
                     startActivity(new Intent(MyRidesActivity.this, MainMenu.class));
                 }
             });
+            myRidesView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
+                public void onItemClick(AdapterView<?> adapter, View v, int position, long id) {
+                    ActiveRide active_ride = ActiveRide.getInstance();
+                    Ride selItem = (Ride) Rides.get(position); //
+                    active_ride.setRideInfo(selItem);
+                    String rideInfo = selItem.toString(); //getter method
+                    String attributes = "";
+
+                    Byte completed = selItem.getIsCompleted();
+                    if (completed ==1){
+                        attributes += "Ride Completed |";
+                    }
+
+                    Byte eating = selItem.getEating();
+                    if (eating == 1){
+                        attributes+= "Eating OK |";
+                    }
+                    Byte talking = selItem.getTalking();
+                    if (talking == 1){
+                        attributes +="Talking OK |";
+                    }
+                    Byte carseat = selItem.getCarseat();
+                    if (carseat == 1){
+                        attributes+="Has Carseat |";
+                    }
+                    Byte smoking = selItem.getSmoking();
+                    if (smoking == 1){
+                        attributes+="Smoking OK |";
+                    }
+                    selItem.setCost(selItem.calculateCost(selItem.duration));
+
+                    //Toast.makeText(ViewAllRides.this, rideInfo, Toast.LENGTH_LONG).show();
+                    startActivity(new Intent(MyRidesActivity.this, RideDetailsActivity.class).putExtra("Ride Details", "Ride Details:"+selItem.toString()+"Attributes: "+attributes));
+                }
+            });
 
         }
+
 
 
     private ArrayList<Ride> getUserRidesFromDB() throws IOException {
@@ -110,7 +149,16 @@ public class MyRidesActivity extends AppCompatActivity {
         }
         con.disconnect();
         return requestedRides;
-
     }
 
+
+
 }
+
+
+
+
+
+
+
+

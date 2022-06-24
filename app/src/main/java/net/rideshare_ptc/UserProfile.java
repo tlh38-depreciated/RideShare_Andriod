@@ -17,15 +17,15 @@ public class UserProfile extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_userprofile);
 
-        Button btnReturnHome = (Button) findViewById(R.id.btnReturnHome);
-        Button btnCarInfo = (Button) findViewById(R.id.btnCarInfo);
-        Button btnLogout = (Button) findViewById(R.id.btnMainMyRides);
+        Button btnReturnHome = (Button) findViewById(R.id.btnReturnHome2);
+        Button btnCarInfo = (Button) findViewById(R.id.btnCarInfo2);
+        Button btnLogout = (Button) findViewById(R.id.btnLogout2);
 
-        TextView fName = (TextView) findViewById(R.id.txtFirstName);
-        TextView lName = (TextView) findViewById(R.id.txtLastName);
-        TextView riderScore = (TextView) findViewById(R.id.txtRiderScore);
-        TextView driverScore = (TextView) findViewById(R.id.txtDriverScore);
-        TextView role = (TextView) findViewById(R.id.txtRole);
+        TextView fName = (TextView) findViewById(R.id.txtFirstName2);
+        TextView lName = (TextView) findViewById(R.id.txtLastName2);
+        TextView riderScore = (TextView) findViewById(R.id.txtRiderScore2);
+        TextView driverScore = (TextView) findViewById(R.id.txtDriverScore2);
+        TextView role = (TextView) findViewById(R.id.txtRole2);
 
 
         // Get Logged in user's info

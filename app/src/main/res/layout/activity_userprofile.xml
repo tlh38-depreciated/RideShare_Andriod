@@ -43,7 +43,7 @@
         app:srcCompat="@drawable/placeholder" />
 
     <TextView
-        android:id="@+id/FirstNameText"
+        android:id="@+id/FirstNameText2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/FirstNameText"
@@ -56,7 +56,7 @@
         app:layout_constraintVertical_bias="0.16" />
 
     <TextView
-        android:id="@+id/LastNameText"
+        android:id="@+id/LastNameText2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/LastNameText"
@@ -65,11 +65,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.282"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/FirstNameText"
+        app:layout_constraintTop_toBottomOf="@+id/FirstNameText2"
         app:layout_constraintVertical_bias="0.083" />
 
     <TextView
-        android:id="@+id/RiderScoreText"
+        android:id="@+id/RiderScoreText2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/RiderScoreText"
@@ -78,11 +78,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.286"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/LastNameText"
+        app:layout_constraintTop_toBottomOf="@+id/LastNameText2"
         app:layout_constraintVertical_bias="0.132" />
 
     <TextView
-        android:id="@+id/DriverScoreText"
+        android:id="@+id/DriverScoreText2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/DriverScoreText"
@@ -91,11 +91,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.29"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/RiderScoreText"
+        app:layout_constraintTop_toBottomOf="@+id/RiderScoreText2"
         app:layout_constraintVertical_bias="0.18" />
 
     <Button
-        android:id="@+id/btnMainMyRides"
+        android:id="@+id/btnLogout2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Logout"
@@ -108,7 +108,7 @@
         app:layout_constraintVertical_bias="0.85" />
 
     <Button
-        android:id="@+id/btnReturnHome"
+        android:id="@+id/btnReturnHome2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Return Home"
@@ -121,55 +121,55 @@
         app:layout_constraintVertical_bias="0.85" />
 
     <TextView
-        android:id="@+id/txtFirstName"
+        android:id="@+id/txtFirstName2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/ptc_DkBlue"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.448"
-        app:layout_constraintStart_toEndOf="@+id/FirstNameText"
+        app:layout_constraintStart_toEndOf="@+id/FirstNameText2"
         app:layout_constraintTop_toBottomOf="@+id/imageView7"
         app:layout_constraintVertical_bias="0.123" />
 
     <TextView
-        android:id="@+id/txtLastName"
+        android:id="@+id/txtLastName2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/ptc_DkBlue"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.45"
-        app:layout_constraintStart_toEndOf="@+id/LastNameText"
-        app:layout_constraintTop_toBottomOf="@+id/txtFirstName"
+        app:layout_constraintStart_toEndOf="@+id/LastNameText2"
+        app:layout_constraintTop_toBottomOf="@+id/txtFirstName2"
         app:layout_constraintVertical_bias="0.083" />
 
     <TextView
-        android:id="@+id/txtRiderScore"
+        android:id="@+id/txtRiderScore2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/ptc_DkBlue"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.439"
-        app:layout_constraintStart_toEndOf="@+id/RiderScoreText"
-        app:layout_constraintTop_toBottomOf="@+id/txtLastName"
+        app:layout_constraintStart_toEndOf="@+id/RiderScoreText2"
+        app:layout_constraintTop_toBottomOf="@+id/txtLastName2"
         app:layout_constraintVertical_bias="0.093" />
 
     <TextView
-        android:id="@+id/txtDriverScore"
+        android:id="@+id/txtDriverScore2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/ptc_DkBlue"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.429"
-        app:layout_constraintStart_toEndOf="@+id/DriverScoreText"
-        app:layout_constraintTop_toBottomOf="@+id/txtRiderScore"
+        app:layout_constraintStart_toEndOf="@+id/DriverScoreText2"
+        app:layout_constraintTop_toBottomOf="@+id/txtRiderScore2"
         app:layout_constraintVertical_bias="0.106" />
 
     <TextView
-        android:id="@+id/txtRole"
+        android:id="@+id/txtRole2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/ptc_DkBlue"
@@ -181,13 +181,13 @@
         app:layout_constraintVertical_bias="0.022" />
 
     <Button
-        android:id="@+id/btnCarInfo"
+        android:id="@+id/btnCarInfo2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Car Info"
         android:textColor="@color/ptc_DkBlue"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btnReturnHome"
+        app:layout_constraintEnd_toStartOf="@+id/btnReturnHome2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.85" />

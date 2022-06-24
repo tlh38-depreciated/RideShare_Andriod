@@ -13,7 +13,7 @@ public class MainMenu extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
-        Button btnMyRides = (Button) findViewById(R.id.btnMainMyRides);
+        Button btnMyRides = (Button) findViewById(R.id.btnLogout2);
         Button btnReqRide = (Button) findViewById(R.id.btnMenuReq);
         Button btnLogout = (Button) findViewById(R.id.btnMenuLogOut);
         Button btnPostRide  = (Button) findViewById(R.id.btnMenuPost);

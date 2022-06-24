@@ -42,9 +42,9 @@ public class RideDetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 ActiveRide active_ride = ActiveRide.getInstance();
-                String rideDriver  =  active_ride.getRideInfo().getDriverID();
+                String rideDriver = active_ride.getRideInfo().getDriverID();
                 //TODO: case handling when not assigned
-                startActivity(new Intent(RideDetailsActivity.this, DriverOnlySplash.class).putExtra("Success Ride Posted", rideDriver + "just testing that I can keep this data, will update to driver profile" ));
+                startActivity(new Intent(RideDetailsActivity.this, DriverOnlySplash.class));
             }
         });
         riderDetails.setOnClickListener(new View.OnClickListener() {
