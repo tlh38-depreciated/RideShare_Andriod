@@ -2,10 +2,11 @@ package net.rideshare_ptc;
 
 
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
 
 public class Ride {
         int rideID;
-        int carID;
+        String carID;
         String pickUpLoc;
         String dest;
         float duration;
@@ -13,8 +14,8 @@ public class Ride {
         float cost;
         String driverID;
         String riderID;
-        float driverScore;
-        float riderScore;
+        String driverScore;
+        String riderScore;
         String rideDate; //used java.sql date
         Byte smoking;
         Byte eating;
@@ -22,6 +23,10 @@ public class Ride {
         Byte carseat;
         Byte isTaken;
         Byte isCompleted;
+        String costPattern = "###,###.##";
+        DecimalFormat costFormat = new DecimalFormat(costPattern);
+        String timePattern = "##.##";
+        DecimalFormat timeFormat = new DecimalFormat(costPattern);
 
 
         public int getRideID() {
@@ -104,22 +109,22 @@ public class Ride {
         }
 
 
-        public float getDriverScore() {
+        public String getDriverScore() {
             return driverScore;
         }
 
 
-        public void setDriverScore(float driverScore) {
+        public void setDriverScore(String driverScore) {
             this.driverScore = driverScore;
         }
 
 
-        public float getRiderScore() {
+        public String getRiderScore() {
             return riderScore;
         }
 
 
-        public void setRiderScore(float riderScore) {
+        public void setRiderScore(String riderScore) {
             this.riderScore = riderScore;
         }
 
@@ -192,11 +197,12 @@ public class Ride {
         public void setIsCompleted(Byte isCompleted) {
             this.isCompleted = isCompleted;
         }
-         public int getCarID() {
+
+        public String getCarID() {
             return carID;
         }
 
-         public void setCarID(int carID) {
+        public void setCarID(String carID) {
             this.carID = carID;
         }
 
@@ -220,18 +226,19 @@ public class Ride {
         }
         public float calculateCost(float duration)
         {
+
             float mpg = 25.7f; //nation average MPG of light-duty vehicles www.greencarcongress.com/2021/03/20210316-epatrends.html#:~:text=16%20March%202021,light%2Dduty%20vehicle%20fuel%20economy.
             float avgGallon = 4.37f; //source as of May 14, 2022: https: //www.chooseenergy.com/data-center/cost-of-driving-by-state/
                 final float staticCost = 5.00f;
-            float Cost = (((duration / mpg) * avgGallon) + staticCost) ;
-            float finalCost = BigDecimal.valueOf(Cost).setScale(2,BigDecimal.ROUND_HALF_EVEN).floatValue();
+            float Cost = (((distance / mpg) * avgGallon) + staticCost) ;
+            float finalCost = (float) (Math.round(Cost*2)/2.0);
             return finalCost;
         }
 
 
         @Override
         public String toString() {
-            return "RiderID: \nPick Up: " + pickUpLoc + "\nDestination: " + dest + "\nDate and Time: " + rideDate+ "\nDuration (hours): " + (duration/36.00) + "\nDistance: " + distance + "\nCost: " + cost+"\n";
+            return "\n  Pick Up: " + pickUpLoc + "\n  Destination: " + dest + "\n  Date and Time: " + rideDate+ "\n  Duration (hours): " + timeFormat.format((duration/3600)) + "\n  Distance (miles): " + distance + "\n  Cost: $" + String.valueOf(costFormat.format(cost))+"\n";
         }
 
     }

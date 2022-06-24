@@ -103,9 +103,9 @@ public class RideTest {
     @Test
     public void setDriverScore() {
         Ride testRide = new Ride();
-        float expected = 10.0f;
+        String expected = "10.0";
         testRide.setDriverScore(expected);
-        float actual = testRide.getDriverScore();
+        String actual = testRide.getDriverScore();
 
         assertEquals(expected, actual, 0);
     }
@@ -113,9 +113,9 @@ public class RideTest {
     @Test
     public void setRiderScore() {
         Ride testRide = new Ride();
-        float expected = 10.0f;
+        String expected = "10.0";
         testRide.setRiderScore(expected);
-        float actual = testRide.getRiderScore();
+        String actual = testRide.getRiderScore();
 
         assertEquals(expected, actual, 0);
     }

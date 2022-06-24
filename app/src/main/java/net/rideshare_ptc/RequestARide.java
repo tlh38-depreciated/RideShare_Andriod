@@ -198,22 +198,23 @@ public class RequestARide extends AppCompatActivity implements DatePickerDialog.
 
 
         private void getRiderRideData() {
-            //get the data from the form and add to Ride object
-            //cannot get an object mapper to work, trying construction JSON Object instead
-            //TODO: Add calculations for duration, distance, cost similarly to how handled in webapp
+            float Distance = 0.0f;
+            float Cost =0.0f;
             riderRidePost = new Ride();
             riderRidePost.setRiderID(loggedInUser.getUserID());
-            riderRidePost.setRiderScore(loggedInUser.getuRiderScore());
+            riderRidePost.setRiderScore(String.valueOf(loggedInUser.getuRiderScore()));
             riderRidePost.setCarseat((byte) 0);
             riderRidePost.setTalking((byte) 0);
             riderRidePost.setEating((byte) 0);
             riderRidePost.setSmoking((byte) 0);
             riderRidePost.setPickUpLoc(rpickupLocI.getText().toString());
             riderRidePost.setDest(rdestLocI.getText().toString());
-
             riderRidePost.setRideDate(dateTime.toString());
+            riderRidePost.setRiderScore(null);
+            riderRidePost.setDriverScore(null);
+            riderRidePost.setCarID(null);
 
-            //Get Distance Using Google Maps API
+
             try{
                 URL url = new URL("https://maps.googleapis.com/maps/api/distancematrix/json?origins=" + rpickupLocI.getText().toString() + "&destinations=" + rdestLocI.getText().toString() + "&units=imperial&key=" + apiKey); //set URL
                 HttpURLConnection con = (HttpURLConnection) url.openConnection(); //open connection
@@ -253,6 +254,8 @@ public class RequestARide extends AppCompatActivity implements DatePickerDialog.
                         riderRidePost.setDuration(totalMins);
                         riderRidePost.setDistance(distance);
                         riderRidePost.setRideDate(dateTime.toString());
+                        Distance = riderRidePost.getDistance();
+                        Cost = riderRidePost.calculateCost(Distance);
 
                     }
                     catch (JsonGenerationException ge){
@@ -278,22 +281,22 @@ public class RequestARide extends AppCompatActivity implements DatePickerDialog.
             }
 
 
-
             if (rsmokingI.isChecked()) {
-                riderRidePost.setSmoking((byte) 0);
+                riderRidePost.setSmoking((byte) 1);
             }
             if (rtalkingI.isChecked()) {
-                riderRidePost.setTalking((byte) 0);
+                riderRidePost.setTalking((byte) 1);
             }
             if (rcarseatI.isChecked()) {
-                riderRidePost.setCarseat((byte) 0);
+                riderRidePost.setCarseat((byte) 1);
             }
             if (reatingI.isChecked()) {
-                riderRidePost.setEating((byte) 0);
+                riderRidePost.setEating((byte) 1);
             }
 
             riderRidePost.setIsCompleted((byte) 0);
             riderRidePost.setIsTaken((byte) 0);
+            riderRidePost.setCost(Cost);
             //map to JSON
             ObjectMapper mapper = new ObjectMapper();
             try {

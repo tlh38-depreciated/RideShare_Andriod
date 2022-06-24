@@ -31,7 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ViewAllRides extends AppCompatActivity {
-    static ArrayList<Ride> Rides = new ArrayList<Ride>();
+    ArrayList<Ride> Rides;// = new ArrayList<Ride>();
     TextView pickUpLoc;
     TextView dest;
     TextView rideDate; //used java.sql date
@@ -43,6 +43,7 @@ public class ViewAllRides extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_all_rides2);
         retToMenu = (Button) findViewById(R.id.btnAllRidesReturnMenu);
+        Rides = new ArrayList<Ride>();
 
         int SDK_INT = Build.VERSION.SDK_INT;
         if (SDK_INT > 8) {

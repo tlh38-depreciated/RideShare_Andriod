@@ -25,23 +25,25 @@ import java.util.ArrayList;
 
 public class MyRidesActivity extends AppCompatActivity {
 
-        static ArrayList<Ride> Rides = new ArrayList<Ride>();
+
         TextView pickUpLoc;
         TextView dest;
         TextView rideDate; //used java.sql date
         Ride ride = new Ride();
         User loggedInUser;
         String lUserId;
+        Button retMyRideToMenu;
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_view_all_rides2);
+            setContentView(R.layout.activity_my_rides);
             // Get MY RIDES Specific
             LoginManager mgr = LoginManager.getInstance();
             loggedInUser = mgr.getLoggedInUser();
             lUserId = loggedInUser.getUserID();
-            Button retMyRideToMenu = (Button) findViewById(R.id.btnMyRidesReturn);
+            retMyRideToMenu = (Button) findViewById(R.id.btnMyRidesReturn);
+            ArrayList<Ride> Rides = new ArrayList<Ride>();
 
 
             int SDK_INT = Build.VERSION.SDK_INT;
@@ -49,9 +51,9 @@ public class MyRidesActivity extends AppCompatActivity {
                 StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
                 StrictMode.setThreadPolicy(policy);
                     try {
-                        getUserRidesFromDB();
+                        Rides = getUserRidesFromDB();
                         RideAdapter rideAdapter = new RideAdapter(this, Rides);
-                        ListView allRidesView = findViewById(R.id.ridesList);
+                        ListView allRidesView = findViewById(R.id.myRidesList);
                         allRidesView.setAdapter(rideAdapter);
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -59,12 +61,21 @@ public class MyRidesActivity extends AppCompatActivity {
                     }
 
             }
+            retMyRideToMenu.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(MyRidesActivity.this, MainMenu.class));
+                }
+            });
+
+
         }
 
 
-    private void getUserRidesFromDB() throws IOException {
+    private ArrayList<Ride> getUserRidesFromDB() throws IOException {
         int resCode = 0;
         String strResponse = "";
+        ArrayList<Ride> requestedRides = new ArrayList<Ride>();
 
         URL url = new URL("http://10.0.2.2:8080/viewRides?User="+lUserId);
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -87,7 +98,7 @@ public class MyRidesActivity extends AppCompatActivity {
             resCode = con.getResponseCode();
             ObjectMapper mapper = new ObjectMapper();
             try {
-                Rides = mapper.readValue(strResponse, new TypeReference<ArrayList<Ride>>(){});
+                requestedRides = mapper.readValue(strResponse, new TypeReference<ArrayList<Ride>>(){});
             } catch (JsonGenerationException ge) {
                 System.out.println(ge);
             } catch (JsonMappingException me) {
@@ -97,8 +108,9 @@ public class MyRidesActivity extends AppCompatActivity {
         } catch (IOException e){
             startActivity(new Intent(MyRidesActivity.this, DriverOnlySplash.class).putExtra("Success Ride Posted", "Connection Error: \n ERROR \n"+"URL"+ url.toString()+"\n"+e));
         }
-
         con.disconnect();
+        return requestedRides;
+
     }
 
 }
