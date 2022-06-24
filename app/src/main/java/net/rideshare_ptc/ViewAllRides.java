@@ -31,26 +31,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ViewAllRides extends AppCompatActivity {
-    ArrayList<Ride> Rides;// = new ArrayList<Ride>();
+
     TextView pickUpLoc;
     TextView dest;
     TextView rideDate; //used java.sql date
     Ride ride = new Ride();
     Button retToMenu;
     ListView allRidesView;
+    ArrayList<Ride> Rides = new ArrayList<Ride>();
+
 @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_all_rides2);
         retToMenu = (Button) findViewById(R.id.btnAllRidesReturnMenu);
-        Rides = new ArrayList<Ride>();
+
 
         int SDK_INT = Build.VERSION.SDK_INT;
         if (SDK_INT > 8) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
             try {
-                getRidesFromDB();
+                Rides = getRidesFromDB();
                 RideAdapter rideAdapter = new RideAdapter(this, Rides);
                 allRidesView = findViewById(R.id.ridesList);
                 allRidesView.setAdapter(rideAdapter);
@@ -107,7 +109,8 @@ public class ViewAllRides extends AppCompatActivity {
         }
     }
 
-    private void getRidesFromDB() throws IOException {
+    private ArrayList<Ride> getRidesFromDB() throws IOException {
+        ArrayList<Ride> retrievedRides = new ArrayList<Ride>();
         int resCode = 0;
         String strResponse = "";
         URL url = new URL("http://10.0.2.2:8080/viewRides");
@@ -129,7 +132,7 @@ public class ViewAllRides extends AppCompatActivity {
              resCode = con.getResponseCode();
             ObjectMapper mapper = new ObjectMapper();
             try {
-                Rides = mapper.readValue(strResponse, new TypeReference<ArrayList<Ride>>(){});
+                retrievedRides = mapper.readValue(strResponse, new TypeReference<ArrayList<Ride>>(){});
             } catch (JsonGenerationException ge) {
                 System.out.println(ge);
             } catch (JsonMappingException me) {
@@ -140,5 +143,6 @@ public class ViewAllRides extends AppCompatActivity {
         }
 
     con.disconnect();
+        return retrievedRides;
     }
 }
